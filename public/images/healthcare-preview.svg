@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="100%" height="100%">
+  <defs>
+    <linearGradient id="medBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#030b1e"/>
+      <stop offset="50%" stop-color="#06163a"/>
+      <stop offset="100%" stop-color="#020612"/>
+    </linearGradient>
+    <linearGradient id="medGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="medGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" fill="url(#medBg)"/>
+
+  <!-- Technical HUD lines -->
+  <path d="M 100 120 L 1100 120 M 100 680 L 1100 680" stroke="#1e3a8a" stroke-width="1" opacity="0.4"/>
+  <path d="M 600 150 L 600 650" stroke="#1e3a8a" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+
+  <!-- Top App Header Mock -->
+  <rect x="120" y="70" width="960" height="50" rx="10" fill="#0b1736" stroke="#1e3a8a" stroke-width="1"/>
+  <circle cx="150" cy="95" r="5" fill="#ef4444"/>
+  <circle cx="168" cy="95" r="5" fill="#f59e0b"/>
+  <circle cx="186" cy="95" r="5" fill="#10b981"/>
+  <rect x="220" y="83" width="380" height="24" rx="5" fill="#10224d"/>
+  <text x="240" y="99" font-family="'JetBrains Mono', monospace" font-size="11" fill="#38bdf8">https://rahmantec18.github.io/health-care/</text>
+
+  <!-- Left Side: Title & AI Metrics -->
+  <text x="140" y="190" font-family="'Sora', sans-serif" font-weight="800" font-size="38" fill="#ffffff">PROFOLIO HEALTHCARE</text>
+  <text x="140" y="230" font-family="'Sora', sans-serif" font-weight="600" font-size="18" fill="url(#medGrad)">AI-ASSISTED CLINICAL INTELLIGENCE &amp; 3D DIAGNOSTICS</text>
+  <text x="140" y="270" font-family="'Inter', sans-serif" font-size="14" fill="#94a3b8">Interactive next-generation medical portal with spatial 3D organ visualization.</text>
+
+  <!-- Vital Signs Widget -->
+  <g transform="translate(140, 320)">
+    <rect width="400" height="130" rx="12" fill="#091430" stroke="#38bdf8" stroke-opacity="0.3"/>
+    <text x="25" y="35" font-family="'Sora', sans-serif" font-weight="600" font-size="14" fill="#38bdf8">ECG SIGNAL TELEMETRY</text>
+    <path d="M 25 80 L 80 80 L 100 50 L 115 110 L 130 65 L 140 85 L 150 80 L 220 80 L 235 45 L 250 115 L 265 60 L 275 80 L 375 80" 
+          fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#medGlow)"/>
+    <text x="25" y="115" font-family="'JetBrains Mono', monospace" font-size="11" fill="#64748b">HEART RATE: 72 BPM • STABLE • SPO2 99%</text>
+  </g>
+
+  <!-- Diagnostic Stats -->
+  <g transform="translate(140, 480)">
+    <rect width="190" height="140" rx="12" fill="#091430" stroke="#3b82f6" stroke-opacity="0.2"/>
+    <text x="20" y="35" font-family="'Inter', sans-serif" font-size="12" fill="#94a3b8">PATIENTS SERVED</text>
+    <text x="20" y="75" font-family="'Sora', sans-serif" font-weight="800" font-size="28" fill="#ffffff">12,480+</text>
+    <text x="20" y="110" font-family="'Inter', sans-serif" font-size="11" fill="#10b981">↑ 24% Efficiency</text>
+  </g>
+  <g transform="translate(350, 480)">
+    <rect width="190" height="140" rx="12" fill="#091430" stroke="#818cf8" stroke-opacity="0.2"/>
+    <text x="20" y="35" font-family="'Inter', sans-serif" font-size="12" fill="#94a3b8">AI DIAGNOSIS ACCURACY</text>
+    <text x="20" y="75" font-family="'Sora', sans-serif" font-weight="800" font-size="28" fill="#818cf8">99.4%</text>
+    <text x="20" y="110" font-family="'Inter', sans-serif" font-size="11" fill="#38bdf8">Real-time validation</text>
+  </g>
+
+  <!-- Right Side: 3D Wireframe / Anatomy Mockup -->
+  <g transform="translate(640, 170)">
+    <rect width="440" height="450" rx="16" fill="#091430" stroke="#1e3a8a" stroke-width="1"/>
+    <!-- Wireframe Sphere / Hologram Node -->
+    <circle cx="220" cy="210" r="130" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+    <ellipse cx="220" cy="210" rx="130" ry="50" fill="none" stroke="#818cf8" stroke-width="1.5" opacity="0.7"/>
+    <ellipse cx="220" cy="210" rx="50" ry="130" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.7"/>
+    <circle cx="220" cy="210" r="8" fill="#38bdf8" filter="url(#medGlow)"/>
+    <line x1="220" y1="210" x2="310" y2="120" stroke="#38bdf8" stroke-width="1"/>
+    <rect x="310" y="105" width="100" height="24" rx="4" fill="#1e3a8a"/>
+    <text x="320" y="122" font-family="'JetBrains Mono', monospace" font-size="10" fill="#ffffff">3D MODEL: ACTIVE</text>
+    <text x="220" y="380" text-anchor="middle" font-family="'Sora', sans-serif" font-size="14" fill="#94a3b8">Interactive 3D Anatomical Telemetry</text>
+    <text x="220" y="405" text-anchor="middle" font-family="'Inter', sans-serif" font-size="12" fill="#38bdf8">Rotate • Zoom • Isolate System Layers</text>
+  </g>
+</svg>
