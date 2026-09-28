@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { techSkills } from "../data/skills";
 import TubeLight from "./framer/TubeLight";
+import MiniCyberTheme from "./MiniCyberTheme";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -174,80 +175,8 @@ export default function TechWorld() {
           })}
         </div>
 
-        {/* Cyber Security Themed Defensive Infrastructure Module */}
-        <div className="mt-16 rounded-3xl glass-card border border-emerald-500/20 p-6 sm:p-8 space-y-6">
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                <Cpu className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-ui font-bold text-sm text-white block">
-                  CYBER SECURITY &amp; SECURE ARCHITECTURES
-                </span>
-                <span className="text-[10px] font-mono text-emerald-400 tracking-wider">
-                  SPECIALIZED DEFENSIVE CS CURRICULUM
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 font-mono text-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span>DEFENSE INTEGRITY: 100%</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
-              <span className="text-[11px] font-mono text-cyan-400 font-semibold uppercase">
-                01 • SECURE CODING &amp; OWASP
-              </span>
-              <h4 className="text-sm font-bold text-slate-200 font-ui">
-                Web Application Hardening
-              </h4>
-              <p className="text-xs text-slate-400 font-body">
-                Defending against XSS, CSRF, SQLi, and unauthorized access through strict input validation and sanitization.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
-              <span className="text-[11px] font-mono text-emerald-400 font-semibold uppercase">
-                02 • CRYPTOGRAPHY &amp; HASHING
-              </span>
-              <h4 className="text-sm font-bold text-slate-200 font-ui">
-                Data Confidentiality &amp; Auth
-              </h4>
-              <p className="text-xs text-slate-400 font-body">
-                Applying modern cryptographic algorithms (AES-GCM, SHA-256), public-key infrastructure, and secure tokens.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
-              <span className="text-[11px] font-mono text-purple-400 font-semibold uppercase">
-                03 • NETWORK &amp; SYSTEMS SECURITY
-              </span>
-              <h4 className="text-sm font-bold text-slate-200 font-ui">
-                Zero Trust Principles
-              </h4>
-              <p className="text-xs text-slate-400 font-body">
-                Protocol inspection, safe deployment boundaries, principle of least privilege, and container security.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Studio Technical Console Snippet */}
-        <div className="mt-8 max-w-4xl mx-auto p-5 rounded-2xl bg-slate-950/80 border border-slate-800/80 font-mono text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-            <span className="text-slate-300 font-semibold">STACK ORCHESTRATION</span>
-            <span className="hidden sm:inline text-slate-600">|</span>
-            <span className="hidden sm:inline text-slate-500">React • Node • Express • GitHub Pages • Render</span>
-          </div>
-          <div className="text-cyan-400 text-[11px] tracking-widest uppercase">
-            STATUS: DEPLOYED &amp; OPTIMIZED
-          </div>
-        </div>
+        {/* Mini Cyber Theme Component */}
+        <MiniCyberTheme />
       </div>
     </section>
   );

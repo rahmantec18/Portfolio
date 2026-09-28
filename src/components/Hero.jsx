@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Code, Camera, Sparkles, Terminal, Layers } from "lucide-react";
+import { ArrowRight, Code, Camera, Sparkles, Terminal, Layers, Eye, Download } from "lucide-react";
 import HeroScene3D from "./3d/HeroScene3D";
 import Ridgelume from "./framer/Ridgelume";
 import ShaderButton from "./framer/ShaderButton";
 import FluidButton from "./framer/FluidButton";
 import TubeLight from "./framer/TubeLight";
 
-export default function Hero({ isEnhanced = true }) {
+export default function Hero({ isEnhanced = true, onOpenResume }) {
   const heroRef = useRef(null);
 
   const phrases = ["I DESIGN.", "I CAPTURE.", "I EDIT."];
@@ -137,14 +137,26 @@ export default function Hero({ isEnhanced = true }) {
             EXPLORE WORK
           </ShaderButton>
 
-          <a
-            href={`${import.meta.env.BASE_URL}Abdur_Rahman_I_Resume.pdf`}
-            download="Abdur_Rahman_I_Resume.pdf"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-ui font-semibold text-sm tracking-wide bg-gradient-to-r from-cyan-950/80 to-slate-900/80 text-cyan-300 border border-cyan-400/40 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,242,254,0.25)] transition-all duration-300 hover:-translate-y-0.5"
-          >
-            <span>DOWNLOAD RESUME</span>
-            <span className="text-cyan-400 text-base">↓</span>
-          </a>
+          <div className="inline-flex rounded-xl p-0.5 bg-gradient-to-r from-cyan-950/90 to-slate-900/90 border border-cyan-400/40 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,242,254,0.25)] transition-all duration-300">
+            <button
+              onClick={onOpenResume}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg font-ui font-semibold text-sm tracking-wide text-cyan-200 hover:text-white hover:bg-cyan-500/15 transition-all cursor-pointer"
+            >
+              <Eye className="w-4 h-4 text-cyan-400" />
+              <span>VIEW RESUME</span>
+            </button>
+            <a
+              href={`${import.meta.env.BASE_URL}Abdur_Rahman_I_Resume.pdf`}
+              download="Abdur_Rahman_I_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-3 rounded-lg hover:bg-white/10 text-cyan-300 text-xs font-mono font-semibold transition-all border-l border-cyan-400/30"
+              title="Download Official PDF"
+            >
+              <Download className="w-3.5 h-3.5 text-cyan-400" />
+              <span>PDF</span>
+            </a>
+          </div>
 
           <FluidButton
             href="#photography"

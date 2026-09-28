@@ -17,10 +17,12 @@ import Services from "./components/Services";
 import BeyondWork from "./components/BeyondWork";
 import Contact from "./components/Contact";
 import BreathingFooter from "./components/framer/BreathingFooter";
+import ResumeModal from "./components/ResumeModal";
 
 export default function App() {
   const [isPreloaded, setIsPreloaded] = useState(false);
   const [isEnhanced, setIsEnhanced] = useState(true);
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   useEffect(() => {
     // Initialize Lenis smooth scrolling once DOM is ready
@@ -46,15 +48,16 @@ export default function App() {
       <BreathingNavbar
         onToggleAesthetics={(val) => setIsEnhanced(val)}
         isEnhanced={isEnhanced}
+        onOpenResume={() => setIsResumeOpen(true)}
       />
 
       {/* 5. Main Cinematic Journey Sequence */}
       <main className="relative z-10 w-full overflow-hidden">
         {/* HERO */}
-        <Hero isEnhanced={isEnhanced} />
+        <Hero isEnhanced={isEnhanced} onOpenResume={() => setIsResumeOpen(true)} />
 
         {/* ABOUT ME: Authentic portrait with distant -> approach -> focus journey */}
-        <About />
+        <About onOpenResume={() => setIsResumeOpen(true)} />
 
         {/* TECH / WEB DEVELOPMENT: 3D skill cards with tilt, elevate, glow */}
         <TechWorld />
@@ -89,6 +92,9 @@ export default function App() {
 
       {/* 6. Breathing Footer with Final Screen Message */}
       <BreathingFooter />
+
+      {/* 7. High-Res Resume Lightbox Modal */}
+      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
     </div>
   );
 }

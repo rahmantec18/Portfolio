@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Eye, Download } from "lucide-react";
 import TubeLight from "./TubeLight";
 
 const navItems = [
@@ -14,7 +14,7 @@ const navItems = [
   { label: "CONTACT", href: "#contact" }
 ];
 
-export default function BreathingNavbar({ onToggleAesthetics, isEnhanced }) {
+export default function BreathingNavbar({ onToggleAesthetics, isEnhanced, onOpenResume }) {
   const [activeSection, setActiveSection] = useState("hero");
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -113,14 +113,13 @@ export default function BreathingNavbar({ onToggleAesthetics, isEnhanced }) {
 
           {/* CTA & Resume */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <a
-              href={`${import.meta.env.BASE_URL}Abdur_Rahman_I_Resume.pdf`}
-              download="Abdur_Rahman_I_Resume.pdf"
-              className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 text-xs font-semibold tracking-wider font-ui transition-all"
+            <button
+              onClick={onOpenResume}
+              className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-slate-800/80 hover:bg-cyan-500/20 text-slate-200 hover:text-cyan-300 border border-slate-700 hover:border-cyan-400/50 text-xs font-semibold tracking-wider font-ui transition-all cursor-pointer"
             >
               <span>RESUME</span>
-              <span className="text-cyan-400">↓</span>
-            </a>
+              <Eye className="w-3 h-3 text-cyan-400" />
+            </button>
 
             <a
               href="#contact"
@@ -172,6 +171,17 @@ export default function BreathingNavbar({ onToggleAesthetics, isEnhanced }) {
                 </a>
               ))}
             </div>
+
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenResume && onOpenResume();
+              }}
+              className="w-full py-3 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-400/50 flex items-center justify-center gap-2 text-xs font-mono font-semibold tracking-wider transition-all"
+            >
+              <Eye className="w-4 h-4" />
+              <span>VIEW RESUME</span>
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

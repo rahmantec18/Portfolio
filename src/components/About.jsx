@@ -1,14 +1,14 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { GraduationCap, ShieldCheck, Sparkles, MapPin } from "lucide-react";
+import { GraduationCap, ShieldCheck, Sparkles, MapPin, Eye } from "lucide-react";
 import { profileImage } from "../data/photography";
 import TextRevealScroll from "./framer/TextRevealScroll";
 import TubeLight from "./framer/TubeLight";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function About() {
+export default function About({ onOpenResume }) {
   const sectionRef = useRef(null);
   const portraitContainerRef = useRef(null);
   const portraitImgRef = useRef(null);
@@ -204,14 +204,24 @@ export default function About() {
               <span>Based in Chennai, India • Open for Web, Visual, &amp; Media Collaborations</span>
             </div>
 
-            {/* Resume Download Action */}
-            <div className="flex flex-wrap items-center gap-4 pt-1">
+            {/* Resume Actions */}
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <button
+                onClick={onOpenResume}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-ui font-semibold text-xs tracking-wider bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-200 border border-cyan-400/50 hover:border-cyan-400 transition-all shadow-[0_0_15px_rgba(0,242,254,0.18)] cursor-pointer"
+              >
+                <Eye className="w-3.5 h-3.5 text-cyan-400" />
+                <span>VIEW RESUME</span>
+              </button>
+
               <a
                 href={`${import.meta.env.BASE_URL}Abdur_Rahman_I_Resume.pdf`}
                 download="Abdur_Rahman_I_Resume.pdf"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-ui font-semibold text-xs tracking-wider bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 hover:border-cyan-400 transition-all shadow-[0_0_15px_rgba(0,242,254,0.15)]"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-ui font-semibold text-xs tracking-wider bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-slate-700 hover:border-slate-600 transition-all"
               >
-                <span>DOWNLOAD CURRICULUM VITAE</span>
+                <span>DOWNLOAD CV</span>
                 <span className="text-cyan-400">↓</span>
               </a>
 

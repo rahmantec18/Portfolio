@@ -1,41 +1,137 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Film, Play, Pause, FastForward, Clock, Scissors, Video, Sparkles, Layers, Volume2 } from "lucide-react";
+import { Film, Play, Pause, FastForward, Clock, Scissors, Video, Sparkles, Layers, Volume2, Sliders, Activity } from "lucide-react";
 import TubeLight from "./framer/TubeLight";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const CLIPS = [
+  {
+    id: "clip-01",
+    name: "CLIP 01: INTRO SEQUENCE",
+    range: "00:00:00:00 – 00:00:05:00",
+    start: 4,
+    end: 28,
+    color: "#00f2fe",
+    border: "border-cyan-400/80",
+    bg: "from-cyan-950/70 to-blue-900/40",
+    activeText: "text-cyan-300",
+    badge: "HOOK & PACING"
+  },
+  {
+    id: "clip-02",
+    name: "CLIP 02: SPEED RAMP",
+    range: "00:00:05:00 – 00:00:10:00",
+    start: 28,
+    end: 52,
+    color: "#c084fc",
+    border: "border-purple-400/80",
+    bg: "from-purple-950/70 to-indigo-900/40",
+    activeText: "text-purple-300",
+    badge: "ACCELERATION"
+  },
+  {
+    id: "clip-03",
+    name: "CLIP 03: COLOR GRADE",
+    range: "00:00:10:00 – 00:00:15:00",
+    start: 52,
+    end: 76,
+    color: "#f43f5e",
+    border: "border-pink-400/80",
+    bg: "from-rose-950/70 to-pink-900/40",
+    activeText: "text-pink-300",
+    badge: "LUT & CONTRAST"
+  },
+  {
+    id: "clip-04",
+    name: "CLIP 04: OUTRO CLIMAX",
+    range: "00:00:15:00 – 00:00:20:00",
+    start: 76,
+    end: 98,
+    color: "#fbbf24",
+    border: "border-amber-400/80",
+    bg: "from-amber-950/70 to-orange-900/40",
+    activeText: "text-amber-300",
+    badge: "AUDIO CRESCENDO"
+  }
+];
+
 export default function VideoEditing() {
   const sectionRef = useRef(null);
+  const timelineStripRef = useRef(null);
   const playheadRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [playProgress, setPlayProgress] = useState(25);
-  const [timecode, setTimecode] = useState("00:01:24:18");
+  const playheadGlowRef = useRef(null);
 
-  // Calibrated playback loop for TIMELINE 01: CINEMATIC REEL
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [playProgress, setPlayProgress] = useState(12);
+  const [activeClipIndex, setActiveClipIndex] = useState(0);
+  const [timecode, setTimecode] = useState("00:00:02:14");
+  const [hoverPosition, setHoverPosition] = useState(null);
+
+  const progressRef = useRef(12);
+  const isPlayingRef = useRef(true);
+  const speedRef = useRef(1);
+
+  // Sync refs with state
+  useEffect(() => {
+    isPlayingRef.current = isPlaying;
+  }, [isPlaying]);
+
+  useEffect(() => {
+    speedRef.current = playbackSpeed;
+  }, [playbackSpeed]);
+
+  // Compute SMPTE timecode (24fps format)
+  const formatTimecode = (pct) => {
+    const totalSeconds = (pct / 100) * 20; // 20s total timeline length
+    const totalFrames = Math.floor(totalSeconds * 24);
+    const seconds = Math.floor(totalFrames / 24);
+    const frames = totalFrames % 24;
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `00:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}:${String(frames).padStart(2, "0")}`;
+  };
+
+  // High-performance 60fps/120fps hardware-accelerated animation loop
   useEffect(() => {
     let animId;
     let lastTime = performance.now();
+    let lastStateUpdateTime = performance.now();
 
     const loop = (now) => {
-      const dt = (now - lastTime) / 1000;
+      const dt = Math.min((now - lastTime) / 1000, 0.1); // Guard against giant delta
       lastTime = now;
 
-      if (isPlaying) {
-        setPlayProgress((prev) => {
-          const next = prev + dt * 14; // Smooth cinematic progress speed
-          if (next >= 94) return 6; // Loop back smoothly to beginning of reel
-          return next;
-        });
+      if (isPlayingRef.current) {
+        // Increment progress smoothly
+        let next = progressRef.current + dt * (100 / 20) * speedRef.current; // 20s loop duration at 1x
+        if (next >= 98) {
+          next = 4; // Loop back seamlessly
+        }
+        progressRef.current = next;
 
-        // Compute realistic SMPTE timecode (24fps)
-        const totalFrames = Math.floor((playProgress / 100) * 1440);
-        const seconds = Math.floor(totalFrames / 24);
-        const frames = totalFrames % 24;
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        setTimecode(`00:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}:${String(frames).padStart(2, "0")}`);
+        // Directly update DOM transform on the playhead for 120fps buttery smoothness
+        if (playheadRef.current) {
+          playheadRef.current.style.transform = `translateX(${next}%)`;
+        }
+        if (playheadGlowRef.current) {
+          playheadGlowRef.current.style.transform = `translateX(${next}%)`;
+        }
+
+        // Throttle React state update to ~24fps (40ms) to eliminate React re-render jank
+        if (now - lastStateUpdateTime > 40) {
+          lastStateUpdateTime = now;
+          setPlayProgress(next);
+          setTimecode(formatTimecode(next));
+
+          // Determine active clip
+          const idx = CLIPS.findIndex((c) => next >= c.start && next < c.end);
+          if (idx !== -1) {
+            setActiveClipIndex(idx);
+          }
+        }
       }
 
       animId = requestAnimationFrame(loop);
@@ -43,25 +139,38 @@ export default function VideoEditing() {
 
     animId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animId);
-  }, [isPlaying, playProgress]);
+  }, []);
 
-  // Connect scroll scrub to timecode when scrolling through
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top 70%",
-        end: "bottom 30%",
-        onUpdate: (self) => {
-          if (!isPlaying) {
-            setPlayProgress(6 + self.progress * 88);
-          }
-        }
-      });
-    }, sectionRef);
+  // Scrub timeline to click/drag position smoothly
+  const handleTimelineScrub = useCallback((e) => {
+    if (!timelineStripRef.current) return;
+    const rect = timelineStripRef.current.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const pct = Math.max(4, Math.min(96, (clickX / rect.width) * 100));
 
-    return () => ctx.revert();
-  }, [isPlaying]);
+    progressRef.current = pct;
+    setPlayProgress(pct);
+    setTimecode(formatTimecode(pct));
+
+    if (playheadRef.current) {
+      playheadRef.current.style.transform = `translateX(${pct}%)`;
+    }
+    if (playheadGlowRef.current) {
+      playheadGlowRef.current.style.transform = `translateX(${pct}%)`;
+    }
+
+    const idx = CLIPS.findIndex((c) => pct >= c.start && pct < c.end);
+    if (idx !== -1) setActiveClipIndex(idx);
+  }, []);
+
+  // Handle timeline hover for scrub preview
+  const handleTimelineMouseMove = (e) => {
+    if (!timelineStripRef.current) return;
+    const rect = timelineStripRef.current.getBoundingClientRect();
+    const hoverX = e.clientX - rect.left;
+    const pct = Math.max(0, Math.min(100, (hoverX / rect.width) * 100));
+    setHoverPosition({ pct, x: hoverX, time: formatTimecode(pct) });
+  };
 
   return (
     <section
@@ -111,141 +220,247 @@ export default function VideoEditing() {
           </p>
         </div>
 
-        {/* Interactive NLE Video Editing Timeline Studio Interface */}
-        <div className="rounded-3xl glass-panel border border-slate-800 p-6 sm:p-8 space-y-6 shadow-2xl">
+        {/* Interactive NLE Video Editing Timeline Studio Interface with Smooth Playhead Animation */}
+        <div className="rounded-3xl glass-panel border border-purple-500/20 p-6 sm:p-8 space-y-6 shadow-[0_0_50px_rgba(168,85,247,0.08)] relative">
           {/* Top Player & Timecode Bar */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-800">
             <div className="flex items-center gap-3">
+              {/* Play / Pause Toggle Button */}
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
                 aria-label={isPlaying ? "Pause Timeline" : "Play Timeline"}
-                className="w-9 h-9 rounded-xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 flex items-center justify-center text-red-400 transition-colors cursor-pointer"
+                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-lg ${
+                  isPlaying
+                    ? "bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 text-red-400 shadow-[0_0_15px_rgba(239,68,68,0.25)]"
+                    : "bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/50 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.25)]"
+                }`}
               >
                 {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
               </button>
+
               <div>
-                <span className="font-ui font-bold text-sm text-white block">TIMELINE 01: CINEMATIC REEL</span>
-                <span className="text-[10px] font-mono text-slate-400">24 FPS • PRORES 422HQ • 4K</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-ui font-bold text-sm text-white tracking-wide">
+                    TIMELINE 01: CINEMATIC REEL
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-mono bg-purple-950 text-purple-300 border border-purple-800">
+                    <Activity className="w-2.5 h-2.5 animate-pulse text-purple-400" />
+                    <span>SMOOTH REEL</span>
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono text-slate-400">
+                  24 FPS • PRORES 422HQ • 4K ULTRA HD
+                </span>
               </div>
             </div>
 
-            {/* Audio Waveform Equalizer Meters */}
-            <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800">
+            {/* Dynamic Equalizer Audio Waveform Visualizer */}
+            <div className="hidden md:flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 shadow-inner">
               <Volume2 className="w-3.5 h-3.5 text-emerald-400 mr-1" />
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="w-1 bg-gradient-to-t from-emerald-500 to-cyan-400 rounded-full transition-all duration-150"
-                  style={{
-                    height: isPlaying ? `${Math.sin(playProgress * 0.4 + i) * 10 + 14}px` : "6px"
-                  }}
-                />
-              ))}
+              {Array.from({ length: 16 }).map((_, i) => {
+                // Organic smooth sine wave calculation for audio bars
+                const barHeight = isPlaying
+                  ? Math.sin(playProgress * 0.45 + i * 0.5) * 8 + 14
+                  : 5;
+                return (
+                  <div
+                    key={i}
+                    className="w-1 rounded-full transition-all duration-100"
+                    style={{
+                      height: `${barHeight}px`,
+                      background:
+                        i > 12
+                          ? "linear-gradient(to top, #ef4444, #f59e0b)"
+                          : i > 8
+                          ? "linear-gradient(to top, #3b82f6, #06b6d4)"
+                          : "linear-gradient(to top, #10b981, #34d399)"
+                    }}
+                  />
+                );
+              })}
             </div>
 
-            <div className="flex items-center gap-4 font-mono text-sm">
-              <span className="text-slate-400 text-xs">TIMECODE:</span>
-              <span className="px-3 py-1 rounded bg-slate-900 border border-slate-700 text-cyan-400 font-bold tracking-widest text-xs">
-                {timecode}
-              </span>
+            {/* Playback Speed Switcher & SMPTE Timecode Display */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5 text-[11px] font-mono">
+                {[1, 1.5, 2].map((spd) => (
+                  <button
+                    key={spd}
+                    onClick={() => setPlaybackSpeed(spd)}
+                    className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
+                      playbackSpeed === spd
+                        ? "bg-purple-500/30 text-purple-200 border border-purple-500/40"
+                        : "text-slate-400 hover:text-slate-200"
+                    }`}
+                  >
+                    {spd}x
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-2 font-mono">
+                <span className="text-slate-500 text-xs hidden sm:inline">TC:</span>
+                <span className="px-3 py-1 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-300 font-bold tracking-widest text-xs shadow-[0_0_10px_rgba(0,242,254,0.15)]">
+                  {timecode}
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Film Strip Preview Mockup */}
-          <div className="relative w-full h-28 rounded-xl overflow-hidden bg-slate-950 border border-slate-800 flex items-center select-none">
-            {/* Film Perforations Top & Bottom */}
-            <div className="absolute top-1 left-0 right-0 flex justify-between px-2 pointer-events-none opacity-40">
-              {Array.from({ length: 24 }).map((_, i) => (
-                <span key={i} className="w-2.5 h-1.5 bg-slate-400 rounded-sm" />
+          {/* Interactive Scrubbable Film Strip & Clips Area */}
+          <div
+            ref={timelineStripRef}
+            onClick={handleTimelineScrub}
+            onMouseMove={handleTimelineMouseMove}
+            onMouseLeave={() => setHoverPosition(null)}
+            className="relative w-full h-32 rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 select-none cursor-ew-resize shadow-inner group"
+          >
+            {/* Film Perforations (Top & Bottom Sprockets) */}
+            <div className="absolute top-1 left-0 right-0 flex justify-between px-3 pointer-events-none opacity-30 z-10">
+              {Array.from({ length: 32 }).map((_, i) => (
+                <span key={i} className="w-2 h-1.5 bg-slate-400 rounded-xs" />
               ))}
             </div>
-            <div className="absolute bottom-1 left-0 right-0 flex justify-between px-2 pointer-events-none opacity-40">
-              {Array.from({ length: 24 }).map((_, i) => (
-                <span key={i} className="w-2.5 h-1.5 bg-slate-400 rounded-sm" />
+            <div className="absolute bottom-1 left-0 right-0 flex justify-between px-3 pointer-events-none opacity-30 z-10">
+              {Array.from({ length: 32 }).map((_, i) => (
+                <span key={i} className="w-2 h-1.5 bg-slate-400 rounded-xs" />
               ))}
             </div>
 
-            {/* Video Frame Thumbnails with Clip Highlight on Playhead */}
-            <div className="flex items-center w-full px-4 gap-2 opacity-85">
-              <div
-                className={`flex-1 h-18 rounded border transition-all duration-200 flex flex-col items-center justify-center p-2 text-center ${
-                  playProgress < 28
-                    ? "bg-blue-900/40 border-cyan-400/80 shadow-[0_0_15px_rgba(0,242,254,0.2)]"
-                    : "bg-blue-950/40 border-white/10"
-                }`}
-              >
-                <span className="text-[10px] font-mono text-cyan-300 font-bold">CLIP 01: INTRO SEQUENCE</span>
-                <span className="text-[9px] font-mono text-slate-400">00:00:00:00 – 00:00:05:00</span>
-              </div>
+            {/* Video Frame Clips with Smooth Highlighting & Internal Progress */}
+            <div className="absolute inset-0 flex items-center px-4 gap-2.5 z-0">
+              {CLIPS.map((clip, idx) => {
+                const isActive = activeClipIndex === idx;
+                // Calculate clip internal progress percentage (0 - 100%)
+                const clipLength = clip.end - clip.start;
+                const clipInternalPct = Math.max(
+                  0,
+                  Math.min(100, ((playProgress - clip.start) / clipLength) * 100)
+                );
 
-              <div
-                className={`flex-1 h-18 rounded border transition-all duration-200 flex flex-col items-center justify-center p-2 text-center ${
-                  playProgress >= 28 && playProgress < 52
-                    ? "bg-purple-900/40 border-purple-400/80 shadow-[0_0_15px_rgba(192,132,252,0.2)]"
-                    : "bg-purple-950/40 border-white/10"
-                }`}
-              >
-                <span className="text-[10px] font-mono text-purple-300 font-bold">CLIP 02: SPEED RAMP</span>
-                <span className="text-[9px] font-mono text-slate-400">00:00:05:00 – 00:00:10:00</span>
-              </div>
+                return (
+                  <div
+                    key={clip.id}
+                    className={`relative flex-1 h-22 rounded-xl border transition-all duration-300 flex flex-col justify-between p-2.5 overflow-hidden shadow-md ${
+                      isActive
+                        ? `${clip.border} bg-gradient-to-br ${clip.bg}`
+                        : "border-slate-800/80 bg-slate-900/40 opacity-70 hover:opacity-90"
+                    }`}
+                    style={
+                      isActive ? { boxShadow: `0 0 25px ${clip.color}40` } : undefined
+                    }
+                  >
+                    {/* Active Clip Smooth Progress Bar Underlay */}
+                    {isActive && (
+                      <div
+                        className="absolute bottom-0 left-0 top-0 opacity-25 pointer-events-none transition-all duration-75"
+                        style={{
+                          width: `${clipInternalPct}%`,
+                          backgroundColor: clip.color
+                        }}
+                      />
+                    )}
 
-              <div
-                className={`flex-1 h-18 rounded border transition-all duration-200 flex flex-col items-center justify-center p-2 text-center ${
-                  playProgress >= 52 && playProgress < 74
-                    ? "bg-pink-900/40 border-pink-400/80 shadow-[0_0_15px_rgba(244,63,94,0.2)]"
-                    : "bg-pink-950/40 border-white/10"
-                }`}
-              >
-                <span className="text-[10px] font-mono text-pink-300 font-bold">CLIP 03: COLOR GRADE</span>
-                <span className="text-[9px] font-mono text-slate-400">00:00:10:00 – 00:00:15:00</span>
-              </div>
+                    {/* Clip Header with Badge */}
+                    <div className="flex items-center justify-between z-10">
+                      <span className={`text-[10px] font-mono font-bold tracking-wider ${isActive ? clip.activeText : "text-slate-300"}`}>
+                        {clip.name}
+                      </span>
+                      <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-slate-300">
+                        {clip.badge}
+                      </span>
+                    </div>
 
-              <div
-                className={`flex-1 h-18 rounded border transition-all duration-200 flex flex-col items-center justify-center p-2 text-center ${
-                  playProgress >= 74
-                    ? "bg-amber-900/40 border-amber-400/80 shadow-[0_0_15px_rgba(251,191,36,0.2)]"
-                    : "bg-amber-950/40 border-white/10"
-                }`}
-              >
-                <span className="text-[10px] font-mono text-amber-300 font-bold">CLIP 04: OUTRO CLIMAX</span>
-                <span className="text-[9px] font-mono text-slate-400">00:00:15:00 – 00:00:20:00</span>
-              </div>
+                    {/* Clip Timestamp & Status */}
+                    <div className="flex items-center justify-between text-[9px] font-mono text-slate-400 z-10">
+                      <span>{clip.range}</span>
+                      {isActive && (
+                        <span className={`font-bold ${clip.activeText} flex items-center gap-1`}>
+                          <span className="w-1.5 h-1.5 rounded-full animate-ping" style={{ backgroundColor: clip.color }} />
+                          PLAYING
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
-            {/* Calibrated Smooth Playhead with Neon Marker */}
+            {/* Smooth Ambient Glow Column that sweeps behind playhead */}
+            <div
+              ref={playheadGlowRef}
+              className="absolute top-0 bottom-0 w-16 -ml-8 pointer-events-none z-10 opacity-30 blur-md transition-none"
+              style={{
+                left: 0,
+                transform: `translateX(${playProgress}%)`,
+                background: "radial-gradient(ellipse at center, rgba(239, 68, 68, 0.8), transparent 70%)"
+              }}
+            />
+
+            {/* Smooth Neon Laser Playhead Marker */}
             <div
               ref={playheadRef}
-              className="absolute top-0 bottom-0 w-[2px] bg-red-500 shadow-[0_0_12px_#ef4444] z-20 pointer-events-none transition-all duration-75"
-              style={{ left: `${playProgress}%` }}
+              className="absolute top-0 bottom-0 w-[2px] bg-red-500 shadow-[0_0_14px_#ef4444] z-20 pointer-events-none transition-none"
+              style={{
+                left: 0,
+                transform: `translateX(${playProgress}%)`
+              }}
             >
-              <div className="absolute -top-1 -left-1.5 w-3.5 h-3.5 bg-red-500 rotate-45 rounded-sm shadow-md" />
+              {/* Playhead Diamond Head */}
+              <div className="absolute -top-1.5 -left-1.5 w-3.5 h-3.5 bg-red-500 rotate-45 rounded-xs shadow-[0_0_10px_#ef4444]" />
+              {/* Playhead Bottom Inverted Diamond */}
+              <div className="absolute -bottom-1.5 -left-1.5 w-3.5 h-3.5 bg-red-500 rotate-45 rounded-xs shadow-[0_0_10px_#ef4444]" />
             </div>
+
+            {/* Hover Tooltip when hovering over timeline */}
+            {hoverPosition && (
+              <div
+                className="absolute top-2 pointer-events-none z-30 transform -translate-x-1/2 px-2 py-1 rounded bg-black/90 border border-cyan-400 text-cyan-300 font-mono text-[10px] shadow-lg"
+                style={{ left: `${hoverPosition.pct}%` }}
+              >
+                {hoverPosition.time}
+              </div>
+            )}
           </div>
 
-          {/* Timeline Multitrack Channels */}
+          {/* Timeline Multitrack Channels (NLE Layer Tracks) */}
           <div className="space-y-2 pt-2 font-mono text-xs">
             <div className="flex items-center gap-3">
-              <span className="w-16 text-slate-400 text-[11px]">V1 VIDEO</span>
-              <div className="flex-1 h-7 rounded bg-blue-950/60 border border-blue-500/30 flex items-center px-3 text-cyan-300">
-                MAIN NARRATIVE EDIT [4K 60FPS A-ROLL]
+              <span className="w-16 text-slate-400 text-[11px] font-semibold flex items-center gap-1.5">
+                <Video className="w-3 h-3 text-cyan-400" />
+                V1 VIDEO
+              </span>
+              <div className="flex-1 h-7 rounded-lg bg-blue-950/60 border border-blue-500/30 flex items-center justify-between px-3 text-cyan-300 text-[11px] shadow-xs">
+                <span>MAIN NARRATIVE EDIT [4K 60FPS A-ROLL]</span>
+                <span className="text-[9px] text-cyan-400/70">SYNCED</span>
               </div>
             </div>
+
             <div className="flex items-center gap-3">
-              <span className="w-16 text-slate-400 text-[11px]">V2 FX</span>
-              <div className="flex-1 h-7 rounded bg-purple-950/60 border border-purple-500/30 flex items-center px-3 text-purple-300">
-                DYNAMIC SPEED RAMPS &amp; MOTION GRAPHICS
+              <span className="w-16 text-slate-400 text-[11px] font-semibold flex items-center gap-1.5">
+                <Layers className="w-3 h-3 text-purple-400" />
+                V2 FX
+              </span>
+              <div className="flex-1 h-7 rounded-lg bg-purple-950/60 border border-purple-500/30 flex items-center justify-between px-3 text-purple-300 text-[11px] shadow-xs">
+                <span>DYNAMIC SPEED RAMPS &amp; MOTION GRAPHICS</span>
+                <span className="text-[9px] text-purple-400/70">KEYFRAMED</span>
               </div>
             </div>
+
             <div className="flex items-center gap-3">
-              <span className="w-16 text-slate-400 text-[11px]">A1 AUDIO</span>
-              <div className="flex-1 h-7 rounded bg-emerald-950/60 border border-emerald-500/30 flex items-center px-3 text-emerald-300">
-                MASTER AUDIO • FOLEY • BEAT DROPS • ATMOSPHERES
+              <span className="w-16 text-slate-400 text-[11px] font-semibold flex items-center gap-1.5">
+                <Volume2 className="w-3 h-3 text-emerald-400" />
+                A1 AUDIO
+              </span>
+              <div className="flex-1 h-7 rounded-lg bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-between px-3 text-emerald-300 text-[11px] shadow-xs">
+                <span>MASTER AUDIO • FOLEY • BEAT DROPS • ATMOSPHERES</span>
+                <span className="text-[9px] text-emerald-400/70">-6.0 dB PEAK</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Section 28 Transition: MOTION BECOMES DESIGN */}
+        {/* Section Transition: MOTION BECOMES DESIGN */}
         <div className="pt-16 pb-8 text-center space-y-3 border-t border-slate-800/80">
           <span className="text-xs font-mono text-pink-400 tracking-[0.3em] uppercase font-semibold">
             WORKSPACE TRANSFORMATION
