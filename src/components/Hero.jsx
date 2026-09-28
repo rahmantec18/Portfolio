@@ -16,7 +16,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
     <section
       id="hero"
       ref={heroRef}
-      className="relative min-h-screen w-full flex items-center justify-center pt-24 pb-16 overflow-hidden bg-[#020205]"
+      className="relative min-h-screen w-full flex items-center justify-center pt-24 pb-16 overflow-hidden bg-transparent"
     >
       {/* 3D Canvas Background */}
       {isEnhanced && <HeroScene3D />}

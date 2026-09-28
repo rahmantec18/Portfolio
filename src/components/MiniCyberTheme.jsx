@@ -20,7 +20,7 @@ const COMMANDS = {
       "[LANGUAGES] Python, Java, HTML5, CSS3, JavaScript",
       "[CORE] Computer Fundamentals, Network Architecture, Secure Coding",
       "[DESIGN & MEDIA] Adobe Photoshop, Canva, Figma, Premiere / CapCut",
-      "[WORK] Web Developer @ Profolio • Video Editing @ Team O7",
+      "[WORK] Web Developer Intern @ Profolio (Aug – Oct 2026) • Video Editing @ Team O7",
       "[CERTIFICATIONS] 2 Professional Certifications Completed"
     ]
   },

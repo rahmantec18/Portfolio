@@ -17,15 +17,15 @@ export default function Projects() {
       projectCardsRef.current.forEach((card, idx) => {
         if (!card) return;
 
-        // 3D perspective shift on scroll
+        // 3D perspective shift on scroll: settles into full clarity when centered in viewport
         gsap.fromTo(
           card,
           {
-            rotateX: 16,
-            rotateY: idx % 2 === 0 ? -8 : 8,
-            z: -150,
-            opacity: 0.3,
-            scale: 0.92
+            rotateX: 10,
+            rotateY: idx % 2 === 0 ? -4 : 4,
+            z: -60,
+            opacity: 0.4,
+            scale: 0.95
           },
           {
             rotateX: 0,
@@ -36,9 +36,9 @@ export default function Projects() {
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 85%",
-              end: "top 35%",
-              scrub: 1
+              start: "top 90%",
+              end: "center center",
+              scrub: 0.8
             }
           }
         );
@@ -52,7 +52,7 @@ export default function Projects() {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative min-h-screen w-full py-28 bg-[#03030a] text-slate-100 overflow-hidden"
+      className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden"
     >
       {/* Background Lighting */}
       <div className="absolute top-1/3 right-10 w-[600px] h-[600px] bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none" />

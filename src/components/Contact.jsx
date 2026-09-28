@@ -81,7 +81,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative min-h-screen w-full py-28 bg-[#020205] text-slate-100 overflow-hidden flex flex-col justify-center"
+      className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden flex flex-col justify-center"
     >
       {/* Central Glowing Communication Core (Section 35) */}
       <div

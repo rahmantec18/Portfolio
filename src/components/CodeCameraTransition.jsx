@@ -14,35 +14,41 @@ export default function CodeCameraTransition() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Physical transformation: Code UI frame shrinks and rotates into Aperture blades, finishing when centered
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top center",
-          end: "bottom center",
-          scrub: 1
+          start: "top 85%",
+          end: "center center",
+          scrub: 0.8
         }
       });
 
-      // Physical transformation: Code UI frame shrinks and rotates into Aperture blades
-      tl.fromTo(
-        apertureRef.current,
-        { scale: 0.6, rotate: 0, opacity: 0.4 },
-        { scale: 1.25, rotate: 180, opacity: 1, ease: "power2.out" }
-      );
+      if (apertureRef.current) {
+        tl.fromTo(
+          apertureRef.current,
+          { scale: 0.7, rotate: 0, opacity: 0.4 },
+          { scale: 1.25, rotate: 180, opacity: 1, ease: "power2.out" }
+        );
+      }
 
-      tl.fromTo(
-        frameRef.current,
-        { borderRadius: "8px", borderColor: "rgba(0, 242, 254, 0.4)" },
-        { borderRadius: "50%", borderColor: "rgba(251, 191, 36, 0.6)", ease: "power2.out" },
-        0
-      );
+      if (frameRef.current) {
+        tl.fromTo(
+          frameRef.current,
+          { borderRadius: "8px", borderColor: "rgba(0, 242, 254, 0.4)" },
+          { borderRadius: "50%", borderColor: "rgba(251, 191, 36, 0.6)", ease: "power2.out" },
+          0
+        );
+      }
 
-      tl.fromTo(
-        textRef.current,
-        { letterSpacing: "0.05em", opacity: 0.5 },
-        { letterSpacing: "0.2em", opacity: 1, ease: "none" },
-        0
-      );
+      if (textRef.current) {
+        tl.fromTo(
+          textRef.current,
+          { letterSpacing: "0.05em", opacity: 0.5 },
+          { letterSpacing: "0.2em", opacity: 1, ease: "none" },
+          0
+        );
+      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -51,7 +57,7 @@ export default function CodeCameraTransition() {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-[60vh] w-full py-20 bg-gradient-to-b from-[#03030a] via-[#05040d] to-[#080512] flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-[60vh] w-full py-20 bg-transparent flex flex-col items-center justify-center overflow-hidden"
     >
       {/* Optic light streaks */}
       <div className="absolute w-[80vw] h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent blur-sm opacity-30 transform -rotate-12 pointer-events-none" />

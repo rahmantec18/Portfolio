@@ -10,7 +10,7 @@ export default function Photography() {
   return (
     <section
       id="photography"
-      className="relative min-h-screen w-full py-28 bg-[#040209] text-slate-100 overflow-hidden flex flex-col justify-center"
+      className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden flex flex-col justify-center"
     >
       {/* Cinematic Ambient Glows */}
       <div className="absolute top-1/3 left-10 w-[550px] h-[550px] bg-amber-600/10 rounded-full blur-[170px] pointer-events-none" />

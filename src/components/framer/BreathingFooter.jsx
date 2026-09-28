@@ -10,7 +10,7 @@ export default function BreathingFooter() {
   };
 
   return (
-    <footer className="relative bg-[#020205] text-slate-400 overflow-hidden border-t border-slate-800/80">
+    <footer className="relative bg-transparent text-slate-400 overflow-hidden border-t border-slate-800/80">
       {/* Top Breathing Glow & Tube Light */}
       <div className="absolute top-0 left-0 right-0 h-[2px]">
         <TubeLight stop4="#00f2fe" stop3="#8b5cf6" height={2} />

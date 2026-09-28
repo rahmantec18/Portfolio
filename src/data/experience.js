@@ -12,9 +12,9 @@ export const timelineExperience = [
     year: "2026",
     role: "Web Developer Intern",
     organization: "Profolio",
-    period: "July – August 2026",
+    period: "August – October 2026",
     type: "Internship",
-    description: "Official 2-month engineering internship architecting interactive web applications, frontend component systems, and high-performance digital portfolio solutions.",
+    description: "Official engineering internship architecting interactive web applications, frontend component systems, and high-performance digital portfolio solutions.",
     highlight: "Core Web Architecture"
   },
   {

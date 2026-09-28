@@ -56,7 +56,7 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="relative min-h-screen w-full py-28 bg-[#030209] text-slate-100 overflow-hidden"
+      className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden"
     >
       {/* Ambient Lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-r from-cyan-600/10 via-purple-600/10 to-transparent blur-[160px] pointer-events-none" />

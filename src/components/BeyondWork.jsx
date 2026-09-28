@@ -31,7 +31,7 @@ export default function BeyondWork() {
   return (
     <section
       id="beyond"
-      className="relative min-h-[60vh] w-full py-24 bg-[#020206] text-slate-100 overflow-hidden"
+      className="relative min-h-[60vh] w-full py-24 bg-transparent text-slate-100 overflow-hidden"
     >
       <div className="max-w-6xl mx-auto px-6 relative z-10 w-full space-y-12">
         {/* Section Header */}

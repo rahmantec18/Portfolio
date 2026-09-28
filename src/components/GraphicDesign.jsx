@@ -24,39 +24,40 @@ export default function GraphicDesign() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Assemble layers on scroll: SHAPE -> LAYER -> IMAGE -> TYPOGRAPHY
+      // Assemble layers on scroll: smoothly converges and finishes completely when centered in viewport
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: layersContainerRef.current,
-          start: "top 80%",
-          end: "bottom 30%",
-          scrub: 1
+          start: "top 85%",
+          end: "center center",
+          scrub: 0.8
         }
       });
 
-      tl.fromTo(
-        layer1Ref.current,
-        { x: -100, rotate: -8, opacity: 0 },
-        { x: 0, rotate: 0, opacity: 1, ease: "power2.out" }
-      );
-      tl.fromTo(
-        layer2Ref.current,
-        { y: 80, scale: 0.85, opacity: 0 },
-        { y: 0, scale: 1, opacity: 1, ease: "power2.out" },
-        0.1
-      );
-      tl.fromTo(
-        layer3Ref.current,
-        { x: 100, rotate: 8, opacity: 0 },
-        { x: 0, rotate: 0, opacity: 1, ease: "power2.out" },
-        0.2
-      );
-      tl.fromTo(
-        layer4Ref.current,
-        { scale: 0.7, opacity: 0 },
-        { scale: 1, opacity: 1, ease: "power2.out" },
-        0.3
-      );
+      if (layer1Ref.current) {
+        tl.fromTo(
+          layer1Ref.current,
+          { x: -60, rotate: -6, opacity: 0.2 },
+          { x: 0, rotate: 0, opacity: 1, ease: "power2.out" },
+          0
+        );
+      }
+      if (layer2Ref.current) {
+        tl.fromTo(
+          layer2Ref.current,
+          { y: 50, scale: 0.92, opacity: 0.3 },
+          { y: 0, scale: 1, opacity: 1, ease: "power2.out" },
+          0
+        );
+      }
+      if (layer3Ref.current) {
+        tl.fromTo(
+          layer3Ref.current,
+          { x: 60, rotate: 6, opacity: 0.2 },
+          { x: 0, rotate: 0, opacity: 1, ease: "power2.out" },
+          0
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -66,7 +67,7 @@ export default function GraphicDesign() {
     <section
       id="design"
       ref={sectionRef}
-      className="relative min-h-screen w-full py-28 bg-[#04020a] text-slate-100 overflow-hidden"
+      className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden"
     >
       {/* Dynamic Creative Glows */}
       <div className="absolute top-1/3 left-10 w-[550px] h-[550px] bg-pink-600/10 rounded-full blur-[160px] pointer-events-none" />

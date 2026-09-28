@@ -11,8 +11,8 @@ const CLIPS = [
     id: "clip-01",
     name: "CLIP 01: INTRO SEQUENCE",
     range: "00:00:00:00 – 00:00:05:00",
-    start: 4,
-    end: 28,
+    start: 0,
+    end: 25,
     color: "#00f2fe",
     border: "border-cyan-400/80",
     bg: "from-cyan-950/70 to-blue-900/40",
@@ -23,8 +23,8 @@ const CLIPS = [
     id: "clip-02",
     name: "CLIP 02: SPEED RAMP",
     range: "00:00:05:00 – 00:00:10:00",
-    start: 28,
-    end: 52,
+    start: 25,
+    end: 50,
     color: "#c084fc",
     border: "border-purple-400/80",
     bg: "from-purple-950/70 to-indigo-900/40",
@@ -35,8 +35,8 @@ const CLIPS = [
     id: "clip-03",
     name: "CLIP 03: COLOR GRADE",
     range: "00:00:10:00 – 00:00:15:00",
-    start: 52,
-    end: 76,
+    start: 50,
+    end: 75,
     color: "#f43f5e",
     border: "border-pink-400/80",
     bg: "from-rose-950/70 to-pink-900/40",
@@ -47,8 +47,8 @@ const CLIPS = [
     id: "clip-04",
     name: "CLIP 04: OUTRO CLIMAX",
     range: "00:00:15:00 – 00:00:20:00",
-    start: 76,
-    end: 98,
+    start: 75,
+    end: 100,
     color: "#fbbf24",
     border: "border-amber-400/80",
     bg: "from-amber-950/70 to-orange-900/40",
@@ -107,17 +107,17 @@ export default function VideoEditing() {
       if (isPlayingRef.current) {
         // Increment progress smoothly
         let next = progressRef.current + dt * (100 / 20) * speedRef.current; // 20s loop duration at 1x
-        if (next >= 98) {
-          next = 4; // Loop back seamlessly
+        if (next >= 100) {
+          next = 0; // Loop back seamlessly to start
         }
         progressRef.current = next;
 
-        // Directly update DOM transform on the playhead for 120fps buttery smoothness
+        // Directly update DOM left position on the playhead for 120fps buttery smoothness
         if (playheadRef.current) {
-          playheadRef.current.style.transform = `translateX(${next}%)`;
+          playheadRef.current.style.left = `${next}%`;
         }
         if (playheadGlowRef.current) {
-          playheadGlowRef.current.style.transform = `translateX(${next}%)`;
+          playheadGlowRef.current.style.left = `${next}%`;
         }
 
         // Throttle React state update to ~24fps (40ms) to eliminate React re-render jank
@@ -130,6 +130,8 @@ export default function VideoEditing() {
           const idx = CLIPS.findIndex((c) => next >= c.start && next < c.end);
           if (idx !== -1) {
             setActiveClipIndex(idx);
+          } else if (next >= 100) {
+            setActiveClipIndex(3);
           }
         }
       }
@@ -153,10 +155,10 @@ export default function VideoEditing() {
     setTimecode(formatTimecode(pct));
 
     if (playheadRef.current) {
-      playheadRef.current.style.transform = `translateX(${pct}%)`;
+      playheadRef.current.style.left = `${pct}%`;
     }
     if (playheadGlowRef.current) {
-      playheadGlowRef.current.style.transform = `translateX(${pct}%)`;
+      playheadGlowRef.current.style.left = `${pct}%`;
     }
 
     const idx = CLIPS.findIndex((c) => pct >= c.start && pct < c.end);
@@ -176,7 +178,7 @@ export default function VideoEditing() {
     <section
       id="video"
       ref={sectionRef}
-      className="relative min-h-screen w-full py-28 bg-[#04020a] text-slate-100 overflow-hidden"
+      className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden"
     >
       {/* Film Spool / Timeline Background Accents */}
       <div className="absolute top-1/4 -right-20 w-[550px] h-[550px] bg-purple-600/10 rounded-full blur-[160px] pointer-events-none" />
@@ -389,27 +391,25 @@ export default function VideoEditing() {
             {/* Smooth Ambient Glow Column that sweeps behind playhead */}
             <div
               ref={playheadGlowRef}
-              className="absolute top-0 bottom-0 w-16 -ml-8 pointer-events-none z-10 opacity-30 blur-md transition-none"
+              className="absolute top-0 bottom-0 w-16 -translate-x-1/2 pointer-events-none z-10 opacity-40 blur-md transition-none"
               style={{
-                left: 0,
-                transform: `translateX(${playProgress}%)`,
-                background: "radial-gradient(ellipse at center, rgba(239, 68, 68, 0.8), transparent 70%)"
+                left: `${playProgress}%`,
+                background: "radial-gradient(ellipse at center, rgba(239, 68, 68, 0.85), transparent 70%)"
               }}
             />
 
             {/* Smooth Neon Laser Playhead Marker */}
             <div
               ref={playheadRef}
-              className="absolute top-0 bottom-0 w-[2px] bg-red-500 shadow-[0_0_14px_#ef4444] z-20 pointer-events-none transition-none"
+              className="absolute top-0 bottom-0 w-[2px] -translate-x-1/2 bg-red-500 shadow-[0_0_16px_#ef4444,0_0_2px_#ffffff] z-20 pointer-events-none transition-none"
               style={{
-                left: 0,
-                transform: `translateX(${playProgress}%)`
+                left: `${playProgress}%`
               }}
             >
-              {/* Playhead Diamond Head */}
-              <div className="absolute -top-1.5 -left-1.5 w-3.5 h-3.5 bg-red-500 rotate-45 rounded-xs shadow-[0_0_10px_#ef4444]" />
+              {/* Playhead Diamond Head (Centered on 2px playhead) */}
+              <div className="absolute -top-1.5 -left-[5px] w-3 h-3 bg-red-500 rotate-45 rounded-xs shadow-[0_0_10px_#ef4444] border border-white/60" />
               {/* Playhead Bottom Inverted Diamond */}
-              <div className="absolute -bottom-1.5 -left-1.5 w-3.5 h-3.5 bg-red-500 rotate-45 rounded-xs shadow-[0_0_10px_#ef4444]" />
+              <div className="absolute -bottom-1.5 -left-[5px] w-3 h-3 bg-red-500 rotate-45 rounded-xs shadow-[0_0_10px_#ef4444] border border-white/60" />
             </div>
 
             {/* Hover Tooltip when hovering over timeline */}

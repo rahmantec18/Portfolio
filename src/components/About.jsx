@@ -17,31 +17,31 @@ export default function About({ onOpenResume }) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Cinematic Portrait Journey: DISTANT -> APPROACH -> FOCUS -> REVEAL
+      // Clear Portrait Reveal: smoothly approaches and completely finishes when content reaches the center
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.2
+          trigger: portraitContainerRef.current || sectionRef.current,
+          start: "top 90%",
+          end: "center center",
+          scrub: 0.8
         }
       });
 
       if (portraitContainerRef.current) {
-        // Initially distant, blurred, tilted in 3D perspective
+        // Smoothly transitions from slight distance into crystal clear focus at center
         tl.fromTo(
           portraitContainerRef.current,
           {
-            scale: 0.72,
-            z: -300,
-            rotateX: 18,
-            rotateY: -12,
-            filter: "blur(12px) brightness(0.6)",
-            opacity: 0.2
+            scale: 0.88,
+            z: -80,
+            rotateX: 8,
+            rotateY: -6,
+            filter: "blur(6px) brightness(0.7)",
+            opacity: 0.35
           },
           {
-            scale: 1.05,
-            z: 50,
+            scale: 1,
+            z: 0,
             rotateX: 0,
             rotateY: 0,
             filter: "blur(0px) brightness(1)",
@@ -69,15 +69,16 @@ export default function About({ onOpenResume }) {
       if (infoRef.current) {
         gsap.fromTo(
           infoRef.current,
-          { opacity: 0, x: 50 },
+          { opacity: 0, x: 40 },
           {
             opacity: 1,
             x: 0,
-            duration: 1,
+            duration: 0.8,
             ease: "power3.out",
             scrollTrigger: {
               trigger: infoRef.current,
-              start: "top 80%"
+              start: "top 85%",
+              toggleActions: "play none none reverse"
             }
           }
         );
@@ -91,7 +92,7 @@ export default function About({ onOpenResume }) {
     <section
       id="about"
       ref={sectionRef}
-      className="relative min-h-screen w-full py-28 bg-[#030308] text-slate-100 overflow-hidden flex flex-col justify-center"
+      className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden flex flex-col justify-center"
     >
       {/* Ambient background glows */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none" />

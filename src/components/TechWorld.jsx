@@ -43,22 +43,22 @@ export default function TechWorld() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 3D Depth Scatter on Scroll for Skill Cards
+      // 3D Depth Approach on Scroll: settles into full clarity when cards reach viewport center
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
-        const depth = (i % 3 + 1) * 60;
-        const rotateDir = i % 2 === 0 ? 8 : -8;
-        const xOffset = ((i % 4) - 1.5) * 40;
+        const depth = (i % 3 + 1) * 35;
+        const rotateDir = i % 2 === 0 ? 5 : -5;
+        const xOffset = ((i % 4) - 1.5) * 20;
 
         gsap.fromTo(
           card,
           {
             z: -depth,
-            y: 80,
+            y: 45,
             x: xOffset,
-            rotateX: 15,
+            rotateX: 8,
             rotateY: rotateDir,
-            opacity: 0
+            opacity: 0.35
           },
           {
             z: 0,
@@ -67,12 +67,11 @@ export default function TechWorld() {
             rotateX: 0,
             rotateY: 0,
             opacity: 1,
-            duration: 1,
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 90%",
-              end: "top 60%",
+              start: "top 92%",
+              end: "center center",
               scrub: 0.8
             }
           }
@@ -87,7 +86,7 @@ export default function TechWorld() {
     <section
       id="tech"
       ref={sectionRef}
-      className="relative min-h-screen w-full py-28 bg-[#02030a] text-slate-100 overflow-hidden flex flex-col justify-center"
+      className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden flex flex-col justify-center"
     >
       {/* Background Cyber Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />

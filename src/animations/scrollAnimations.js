@@ -28,13 +28,13 @@ export function createDepthApproach(element, trigger, options = {}) {
   if (!element || !trigger) return null;
 
   const {
-    startZ = -400,
+    startZ = -100,
     endZ = 0,
-    startScale = 0.75,
+    startScale = 0.88,
     endScale = 1,
-    startBlur = 10,
+    startBlur = 6,
     endBlur = 0,
-    scrub = 1
+    scrub = 0.8
   } = options;
 
   return gsap.fromTo(
@@ -43,7 +43,7 @@ export function createDepthApproach(element, trigger, options = {}) {
       z: startZ,
       scale: startScale,
       filter: `blur(${startBlur}px)`,
-      opacity: 0.3
+      opacity: 0.4
     },
     {
       z: endZ,
@@ -53,7 +53,7 @@ export function createDepthApproach(element, trigger, options = {}) {
       ease: "power2.out",
       scrollTrigger: {
         trigger,
-        start: "top 80%",
+        start: "top 90%",
         end: "center center",
         scrub
       }

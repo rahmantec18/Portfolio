@@ -53,7 +53,7 @@ export default function Experience() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative min-h-screen w-full py-28 bg-[#020207] text-slate-100 overflow-hidden"
+      className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden"
     >
       {/* Background Ambience */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-cyan-900/10 rounded-full blur-[170px] pointer-events-none" />
