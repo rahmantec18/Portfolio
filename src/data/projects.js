@@ -2,6 +2,18 @@ const base = import.meta.env.BASE_URL;
 
 export const webProjects = [
   {
+    id: "jjk-cursed-energy",
+    title: "Jujutsu Kaisen Cursed Energy",
+    category: "Exclusive 3D WebGL & AI Computer Vision Experience",
+    url: `${base}projects/jjk-cursed-energy/`,
+    description: "Immersive 3D WebGL cursed energy simulation built with Three.js and real-time MediaPipe AI hand tracking. Form authentic hand gestures to unleash Domain Expansions: Infinite Void, Malevolent Shrine, Secret Technique: Hollow Purple, and Reverse Cursed Technique: Red across 20,000 volumetric bloom particles.",
+    tags: ["Three.js", "MediaPipe AI", "WebGL 20K Particles", "Unreal Bloom", "Computer Vision"],
+    badge: "Exclusive 3D / AI",
+    accentColor: "#bb00ff",
+    accentGradient: "from-purple-600/30 via-cyan-500/20 to-rose-600/30",
+    previewImage: `${base}images/jjk-preview.svg`
+  },
+  {
     id: "profolio",
     title: "Profolio",
     category: "Web Development & Portfolio Service",

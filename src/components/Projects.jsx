@@ -105,8 +105,15 @@ export default function Projects() {
                   </div>
 
                   {/* Project Tag Badge */}
-                  <div className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-cyan-400/10 text-cyan-300 border border-cyan-400/20">
-                    {project.badge}
+                  <div className={`text-[11px] font-mono px-3 py-0.5 rounded-full flex items-center gap-1.5 ${
+                    project.id === "jjk-cursed-energy"
+                      ? "bg-purple-500/20 text-purple-300 border border-purple-400/50 shadow-[0_0_12px_rgba(187,0,255,0.3)]"
+                      : "bg-cyan-400/10 text-cyan-300 border border-cyan-400/20"
+                  }`}>
+                    {project.id === "jjk-cursed-energy" && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-ping" />
+                    )}
+                    <span>{project.badge}</span>
                   </div>
                 </div>
 
@@ -153,16 +160,16 @@ export default function Projects() {
                     </div>
 
                     {/* Interactive Button */}
-                    <div className="pt-4">
+                    <div className="pt-4 flex flex-wrap items-center gap-3">
                       <ShaderButton
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        cursorText="EXPLORE"
+                        cursorText={project.id === "jjk-cursed-energy" ? "LAUNCH" : "EXPLORE"}
                         icon={ArrowUpRight}
                         variant="primary"
                       >
-                        EXPLORE PROJECT →
+                        {project.id === "jjk-cursed-energy" ? "LAUNCH 3D EXPERIENCE ⚡" : "EXPLORE PROJECT →"}
                       </ShaderButton>
                     </div>
                   </div>
