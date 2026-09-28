@@ -16,7 +16,7 @@ export default function SmoothCursor() {
 
   useEffect(() => {
     // Detect touch device
-    if (window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window) {
+    if (typeof window !== "undefined" && (window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window)) {
       setIsTouch(true);
       return;
     }
@@ -35,30 +35,22 @@ export default function SmoothCursor() {
       setIsVisible(true);
     };
 
+    // Clean event delegation for hover detection (zero memory leaks, high performance)
+    const handleMouseOver = (e) => {
+      const target = e.target && e.target.closest && e.target.closest("a, button, input, textarea, select, [role='button'], .cursor-pointer");
+      setIsHovered(!!target);
+    };
+
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave);
     document.addEventListener("mouseenter", handleMouseEnter);
-
-    // Subtle scale trigger when hovering interactive elements (buttons, links, inputs, cards)
-    const handleElementHover = () => {
-      const interactiveElements = document.querySelectorAll(
-        "a, button, input, textarea, select, [role='button'], .cursor-pointer"
-      );
-      interactiveElements.forEach((el) => {
-        el.addEventListener("mouseenter", () => setIsHovered(true));
-        el.addEventListener("mouseleave", () => setIsHovered(false));
-      });
-    };
-
-    handleElementHover();
-    const observer = new MutationObserver(handleElementHover);
-    observer.observe(document.body, { childList: true, subtree: true });
+    document.addEventListener("mouseover", handleMouseOver, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
-      observer.disconnect();
+      document.removeEventListener("mouseover", handleMouseOver);
     };
   }, [mouseX, mouseY, isVisible]);
 
@@ -77,7 +69,7 @@ export default function SmoothCursor() {
         }}
       />
 
-      {/* Smooth Spring Follower Ring (No text, pure elegance) */}
+      {/* Smooth Spring Follower Ring */}
       <motion.div
         className="fixed top-0 left-0 w-8 h-8 rounded-full border border-cyan-400/40 pointer-events-none z-[9999] transition-colors duration-200"
         style={{

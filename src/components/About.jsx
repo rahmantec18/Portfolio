@@ -27,55 +27,61 @@ export default function About({ onOpenResume }) {
         }
       });
 
-      // Initially distant, blurred, tilted in 3D perspective
-      tl.fromTo(
-        portraitContainerRef.current,
-        {
-          scale: 0.72,
-          z: -300,
-          rotateX: 18,
-          rotateY: -12,
-          filter: "blur(12px) brightness(0.6)",
-          opacity: 0.2
-        },
-        {
-          scale: 1.05,
-          z: 50,
-          rotateX: 0,
-          rotateY: 0,
-          filter: "blur(0px) brightness(1)",
-          opacity: 1,
-          ease: "power2.out"
-        }
-      );
+      if (portraitContainerRef.current) {
+        // Initially distant, blurred, tilted in 3D perspective
+        tl.fromTo(
+          portraitContainerRef.current,
+          {
+            scale: 0.72,
+            z: -300,
+            rotateX: 18,
+            rotateY: -12,
+            filter: "blur(12px) brightness(0.6)",
+            opacity: 0.2
+          },
+          {
+            scale: 1.05,
+            z: 50,
+            rotateX: 0,
+            rotateY: 0,
+            filter: "blur(0px) brightness(1)",
+            opacity: 1,
+            ease: "power2.out"
+          }
+        );
+      }
 
       // Subtle parallax on the portrait inside frame
-      gsap.to(portraitImgRef.current, {
-        y: -40,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true
-        }
-      });
+      if (portraitImgRef.current && sectionRef.current) {
+        gsap.to(portraitImgRef.current, {
+          y: -40,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          }
+        });
+      }
 
       // Info card reveal
-      gsap.fromTo(
-        infoRef.current,
-        { opacity: 0, x: 50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: infoRef.current,
-            start: "top 80%"
+      if (infoRef.current) {
+        gsap.fromTo(
+          infoRef.current,
+          { opacity: 0, x: 50 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: infoRef.current,
+              start: "top 80%"
+            }
           }
-        }
-      );
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();

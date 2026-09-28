@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Terminal, Shield, Cpu, Lock, CheckCircle, Radio, Sparkles, AlertCircle, CornerDownLeft } from "lucide-react";
+import { Terminal, Shield, Cpu, Lock, CheckCircle, Radio, Sparkles } from "lucide-react";
 
 const COMMANDS = {
   whoami: {
@@ -48,7 +48,7 @@ const COMMANDS = {
 
 export default function MiniCyberTheme() {
   const [activeTab, setActiveTab] = useState("whoami");
-  const [typedLines, setTypedLines] = useState([]);
+  const [typedLines, setTypedLines] = useState(COMMANDS.whoami.output);
   const [isTyping, setIsTyping] = useState(false);
   const [radarAngle, setRadarAngle] = useState(0);
 
@@ -60,22 +60,27 @@ export default function MiniCyberTheme() {
     return () => clearInterval(interval);
   }, []);
 
-  // Simulate typing effect on tab change
+  // Safe typing simulation on tab change
   useEffect(() => {
-    const lines = COMMANDS[activeTab]?.output || [];
+    const commandData = COMMANDS[activeTab];
+    const lines = commandData?.output ? [...commandData.output] : [];
+
     setTypedLines([]);
     setIsTyping(true);
 
-    let currentLine = 0;
+    let idx = 0;
     const interval = setInterval(() => {
-      if (currentLine < lines.length) {
-        setTypedLines((prev) => [...prev, lines[currentLine]]);
-        currentLine++;
+      if (idx < lines.length) {
+        const nextLine = lines[idx];
+        if (typeof nextLine === "string") {
+          setTypedLines((prev) => [...prev, nextLine]);
+        }
+        idx++;
       } else {
         setIsTyping(false);
         clearInterval(interval);
       }
-    }, 120);
+    }, 80);
 
     return () => clearInterval(interval);
   }, [activeTab]);
@@ -107,7 +112,7 @@ export default function MiniCyberTheme() {
           </div>
         </div>
 
-        {/* Live Status Pill & Radar Sweeper */}
+        {/* Live Status Pill */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/70 border border-emerald-500/50 text-emerald-300 font-mono text-xs shadow-[0_0_12px_rgba(16,185,129,0.2)]">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
@@ -163,22 +168,31 @@ export default function MiniCyberTheme() {
               <span className="text-cyan-300">{COMMANDS[activeTab]?.cmd}</span>
             </div>
 
-            {typedLines.map((line, i) => (
-              <div key={i} className="leading-relaxed text-[11.5px] font-mono text-slate-300 flex items-start gap-2">
-                <span className="text-emerald-500 font-bold">›</span>
-                <span
-                  className={
-                    line.includes("Vulnerabilities: 0") || line.includes("100% NOMINAL") || line.includes("SECURE")
-                      ? "text-emerald-400 font-bold"
-                      : line.includes("[USER]") || line.includes("[DEGREE]")
-                      ? "text-cyan-300"
-                      : "text-slate-300"
-                  }
-                >
-                  {line}
-                </span>
-              </div>
-            ))}
+            {typedLines.map((line, i) => {
+              if (typeof line !== "string") return null;
+              const isHighlight =
+                line.includes("Vulnerabilities: 0") ||
+                line.includes("100% NOMINAL") ||
+                line.includes("SECURE");
+              const isPrimary = line.includes("[USER]") || line.includes("[DEGREE]");
+
+              return (
+                <div key={i} className="leading-relaxed text-[11.5px] font-mono text-slate-300 flex items-start gap-2">
+                  <span className="text-emerald-500 font-bold">›</span>
+                  <span
+                    className={
+                      isHighlight
+                        ? "text-emerald-400 font-bold"
+                        : isPrimary
+                        ? "text-cyan-300 font-semibold"
+                        : "text-slate-300"
+                    }
+                  >
+                    {line}
+                  </span>
+                </div>
+              );
+            })}
 
             {/* Blinking Cursor */}
             <div className="inline-flex items-center text-emerald-400 pt-1">
@@ -193,7 +207,7 @@ export default function MiniCyberTheme() {
               <CheckCircle className="w-3 h-3 text-emerald-400" />
               <span>EXIT_CODE: 0 (SUCCESS)</span>
             </span>
-            <span>PRESS TABS TO QUERY SYSTEM MODULES</span>
+            <span>CLICK TABS TO QUERY DEFENSIVE MODULES</span>
           </div>
         </div>
 

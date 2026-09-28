@@ -18,6 +18,7 @@ import BeyondWork from "./components/BeyondWork";
 import Contact from "./components/Contact";
 import BreathingFooter from "./components/framer/BreathingFooter";
 import ResumeModal from "./components/ResumeModal";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 export default function App() {
   const [isPreloaded, setIsPreloaded] = useState(false);
@@ -60,7 +61,9 @@ export default function App() {
         <About onOpenResume={() => setIsResumeOpen(true)} />
 
         {/* TECH / WEB DEVELOPMENT: 3D skill cards with tilt, elevate, glow */}
-        <TechWorld />
+        <ErrorBoundary>
+          <TechWorld />
+        </ErrorBoundary>
 
         {/* WEB PROJECTS: 3D interactive browser environments */}
         <Projects />
@@ -72,7 +75,9 @@ export default function App() {
         <Photography />
 
         {/* VIDEO EDITING: Scroll-driven playhead timeline & Team O7 */}
-        <VideoEditing />
+        <ErrorBoundary>
+          <VideoEditing />
+        </ErrorBoundary>
 
         {/* GRAPHIC DESIGN: Layer assembly & Creative suite */}
         <GraphicDesign />

@@ -21,6 +21,11 @@ export default function Ridgelume({
       const width = canvas.offsetWidth;
       const height = canvas.offsetHeight;
 
+      if (!width || !height) {
+        animId = requestAnimationFrame(render);
+        return;
+      }
+
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
         canvas.width = width * dpr;
@@ -30,8 +35,8 @@ export default function Ridgelume({
 
       ctx.clearRect(0, 0, width, height);
 
-      const lines = 28;
-      const stepY = height / (lines + 6);
+      const lines = 24;
+      const stepY = height / (lines + 4);
       time += 0.012;
 
       for (let i = 0; i < lines; i++) {
