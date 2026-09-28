@@ -114,7 +114,7 @@ export default function BreathingNavbar({ onToggleAesthetics, isEnhanced }) {
           {/* CTA & Resume */}
           <div className="flex items-center gap-2 sm:gap-3">
             <a
-              href="/Abdur_Rahman_I_Resume.pdf"
+              href={`${import.meta.env.BASE_URL}Abdur_Rahman_I_Resume.pdf`}
               download="Abdur_Rahman_I_Resume.pdf"
               className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 text-xs font-semibold tracking-wider font-ui transition-all"
             >

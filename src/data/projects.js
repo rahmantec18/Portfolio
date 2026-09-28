@@ -1,3 +1,5 @@
+const base = import.meta.env.BASE_URL;
+
 export const webProjects = [
   {
     id: "profolio",
@@ -9,7 +11,7 @@ export const webProjects = [
     badge: "Live Service",
     accentColor: "#00f2fe",
     accentGradient: "from-cyan-500/20 to-blue-600/20",
-    previewImage: "/images/profolio-preview.svg"
+    previewImage: `${base}images/profolio-preview.svg`
   },
   {
     id: "crochet-house",
@@ -21,7 +23,7 @@ export const webProjects = [
     badge: "Creative Web",
     accentColor: "#ec4899",
     accentGradient: "from-pink-500/20 to-purple-600/20",
-    previewImage: "/images/crochet-preview.svg"
+    previewImage: `${base}images/crochet-preview.svg`
   },
   {
     id: "profolio-healthcare",
@@ -33,6 +35,6 @@ export const webProjects = [
     badge: "3D / AI Concept",
     accentColor: "#3b82f6",
     accentGradient: "from-blue-500/20 to-indigo-600/20",
-    previewImage: "/images/healthcare-preview.svg"
+    previewImage: `${base}images/healthcare-preview.svg`
   }
 ];

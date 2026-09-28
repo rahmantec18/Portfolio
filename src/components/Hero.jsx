@@ -138,7 +138,7 @@ export default function Hero({ isEnhanced = true }) {
           </ShaderButton>
 
           <a
-            href="/Abdur_Rahman_I_Resume.pdf"
+            href={`${import.meta.env.BASE_URL}Abdur_Rahman_I_Resume.pdf`}
             download="Abdur_Rahman_I_Resume.pdf"
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-ui font-semibold text-sm tracking-wide bg-gradient-to-r from-cyan-950/80 to-slate-900/80 text-cyan-300 border border-cyan-400/40 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,242,254,0.25)] transition-all duration-300 hover:-translate-y-0.5"
           >

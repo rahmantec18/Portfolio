@@ -207,7 +207,7 @@ export default function About() {
             {/* Resume Download Action */}
             <div className="flex flex-wrap items-center gap-4 pt-1">
               <a
-                href="/Abdur_Rahman_I_Resume.pdf"
+                href={`${import.meta.env.BASE_URL}Abdur_Rahman_I_Resume.pdf`}
                 download="Abdur_Rahman_I_Resume.pdf"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-ui font-semibold text-xs tracking-wider bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 hover:border-cyan-400 transition-all shadow-[0_0_15px_rgba(0,242,254,0.15)]"
               >

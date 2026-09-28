@@ -1,16 +1,18 @@
-export const profileImage = "/images/abdur-rahman.jpg";
+const base = import.meta.env.BASE_URL;
+
+export const profileImage = `${base}images/abdur-rahman.jpg`;
 
 export const photographyImages = [
-  "/images/photo-01.jpg",
-  "/images/photo-02.jpg",
-  "/images/photo-03.jpg",
-  "/images/photo-04.jpg",
-  "/images/photo-05.jpg",
-  "/images/photo-06.jpg",
-  "/images/photo-07.jpg",
-  "/images/photo-08.jpg",
-  "/images/photo-09.jpg",
-  "/images/photo-10.jpg",
+  `${base}images/photo-01.jpg`,
+  `${base}images/photo-02.jpg`,
+  `${base}images/photo-03.jpg`,
+  `${base}images/photo-04.jpg`,
+  `${base}images/photo-05.jpg`,
+  `${base}images/photo-06.jpg`,
+  `${base}images/photo-07.jpg`,
+  `${base}images/photo-08.jpg`,
+  `${base}images/photo-09.jpg`,
+  `${base}images/photo-10.jpg`,
 ];
 
 export const photoFramesData = [
