@@ -177,16 +177,16 @@ export default function MiniCyberTheme() {
               const isPrimary = line.includes("[USER]") || line.includes("[DEGREE]");
 
               return (
-                <div key={i} className="leading-relaxed text-[11.5px] font-mono text-slate-300 flex items-start gap-2">
-                  <span className="text-emerald-500 font-bold">›</span>
+                <div key={i} className="leading-relaxed text-[11.5px] font-mono text-slate-300 flex items-start gap-2 break-words max-w-full">
+                  <span className="text-emerald-500 font-bold shrink-0">›</span>
                   <span
-                    className={
+                    className={`break-words ${
                       isHighlight
                         ? "text-emerald-400 font-bold"
                         : isPrimary
                         ? "text-cyan-300 font-semibold"
                         : "text-slate-300"
-                    }
+                    }`}
                   >
                     {line}
                   </span>

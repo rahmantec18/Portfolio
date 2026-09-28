@@ -192,7 +192,7 @@ export default function VideoEditing() {
             <span>NARRATIVE MOTION &amp; PACING</span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl font-display font-black tracking-tight text-white">
+          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
             I EDIT. I CREATE. I TELL STORIES.
           </h2>
 
@@ -200,30 +200,30 @@ export default function VideoEditing() {
             <TubeLight stop4="#c084fc" stop3="#f43f5e" height={1.5} />
           </div>
 
-          <p className="text-base sm:text-lg font-ui text-slate-300 leading-relaxed">
+          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed px-2">
             Where raw takes receive rhythm, intentional cuts, and audio pacing. Moving the viewer emotionally one frame at a time.
           </p>
         </div>
 
         {/* Video Production Milestone Card: Team O7 */}
-        <div className="max-w-2xl mx-auto p-8 rounded-3xl glass-card border border-purple-500/30 text-center space-y-3 shadow-2xl relative overflow-hidden">
+        <div className="max-w-2xl mx-auto p-5 sm:p-8 rounded-3xl glass-card border border-purple-500/30 text-center space-y-3 shadow-2xl relative overflow-hidden">
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl pointer-events-none" />
           <span className="text-xs font-mono text-purple-400 tracking-widest uppercase font-semibold">
             KEY PRODUCTION MILESTONE
           </span>
-          <h3 className="text-2xl sm:text-3xl font-display font-bold text-white">
+          <h3 className="text-xl sm:text-3xl font-display font-bold text-white break-words">
             VIDEO EDITING — TEAM O7
           </h3>
           <p className="text-sm font-mono text-cyan-300">
             July – August 2025
           </p>
-          <p className="text-xs font-body text-slate-400 max-w-md mx-auto pt-2">
+          <p className="text-xs font-body text-slate-400 max-w-md mx-auto pt-2 px-2">
             Dynamic video edits, short-form storytelling, and visual timing crafted for social distribution and audience engagement.
           </p>
         </div>
 
         {/* Interactive NLE Video Editing Timeline Studio Interface with Smooth Playhead Animation */}
-        <div className="rounded-3xl glass-panel border border-purple-500/20 p-6 sm:p-8 space-y-6 shadow-[0_0_50px_rgba(168,85,247,0.08)] relative">
+        <div className="rounded-3xl glass-panel border border-purple-500/20 p-4 sm:p-8 space-y-6 shadow-[0_0_50px_rgba(168,85,247,0.08)] relative">
           {/* Top Player & Timecode Bar */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-800">
             <div className="flex items-center gap-3">
@@ -364,22 +364,26 @@ export default function VideoEditing() {
                     )}
 
                     {/* Clip Header with Badge */}
-                    <div className="flex items-center justify-between z-10">
-                      <span className={`text-[10px] font-mono font-bold tracking-wider ${isActive ? clip.activeText : "text-slate-300"}`}>
-                        {clip.name}
+                    <div className="flex items-center justify-between z-10 gap-1">
+                      <span className={`text-[9px] sm:text-[10px] font-mono font-bold tracking-wider truncate max-w-[65px] sm:max-w-none ${isActive ? clip.activeText : "text-slate-300"}`}>
+                        <span className="sm:hidden">{clip.name.split(':')[0]}</span>
+                        <span className="hidden sm:inline">{clip.name}</span>
                       </span>
-                      <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-slate-300">
+                      <span className="text-[7px] sm:text-[8px] font-mono px-1 sm:px-1.5 py-0.5 rounded bg-black/60 border border-white/10 text-slate-300 shrink-0">
                         {clip.badge}
                       </span>
                     </div>
 
                     {/* Clip Timestamp & Status */}
-                    <div className="flex items-center justify-between text-[9px] font-mono text-slate-400 z-10">
-                      <span>{clip.range}</span>
+                    <div className="flex items-center justify-between text-[8px] sm:text-[9px] font-mono text-slate-400 z-10 gap-1">
+                      <span className="truncate">
+                        <span className="sm:hidden">{clip.start}s – {clip.end}s</span>
+                        <span className="hidden sm:inline">{clip.range}</span>
+                      </span>
                       {isActive && (
-                        <span className={`font-bold ${clip.activeText} flex items-center gap-1`}>
+                        <span className={`font-bold ${clip.activeText} flex items-center gap-1 shrink-0`}>
                           <span className="w-1.5 h-1.5 rounded-full animate-ping" style={{ backgroundColor: clip.color }} />
-                          PLAYING
+                          <span className="hidden xs:inline">PLAYING</span>
                         </span>
                       )}
                     </div>

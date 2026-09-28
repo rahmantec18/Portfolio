@@ -26,6 +26,25 @@ export default function DNACarousel({
 
   const count = items.length || 1;
 
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1200
+  );
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isSmallMobile = windowWidth < 480;
+  const isTablet = windowWidth < 768;
+
+  const responsiveCardWidth = isSmallMobile ? 200 : isTablet ? 230 : cardWidth;
+  const responsiveCardHeight = isSmallMobile ? 280 : isTablet ? 320 : cardHeight;
+  const responsiveSpread = isSmallMobile ? 30 : isTablet ? 55 : helixSpread;
+  const responsiveCurveDepth = isSmallMobile ? 120 : isTablet ? 160 : curveDepth;
+  const responsiveContainerHeight = isSmallMobile ? 340 : isTablet ? 380 : 440;
+
   // Animation Loop for inertia and autoPlay
   useEffect(() => {
     let lastTime = performance.now();
@@ -88,8 +107,8 @@ export default function DNACarousel({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      className={`relative w-full h-[420px] overflow-hidden flex items-center justify-center cursor-grab active:cursor-grabbing select-none touch-pan-y ${className}`}
-      style={{ perspective: `${perspective}px` }}
+      className={`relative w-full overflow-hidden flex items-center justify-center cursor-grab active:cursor-grabbing select-none touch-pan-y ${className}`}
+      style={{ perspective: `${perspective}px`, height: `${responsiveContainerHeight}px` }}
     >
       <div className="relative w-full h-full flex items-center justify-center preserve-3d">
         {items.map((item, idx) => {
@@ -99,8 +118,8 @@ export default function DNACarousel({
           while (dist < -count / 2) dist += count;
 
           const angle = (dist / count) * Math.PI * 2;
-          const x = Math.sin(angle) * (cardWidth * 1.8 + helixSpread);
-          const z = Math.cos(angle) * curveDepth - curveDepth;
+          const x = Math.sin(angle) * (responsiveCardWidth * 1.5 + responsiveSpread);
+          const z = Math.cos(angle) * responsiveCurveDepth - responsiveCurveDepth;
           const y = Math.sin(angle * 2) * curveHeight;
           const rotY = (angle * 180) / Math.PI;
 
@@ -114,8 +133,8 @@ export default function DNACarousel({
               onClick={(e) => handleCardClick(e, item, idx)}
               className="absolute transition-transform duration-75 will-change-transform rounded-2xl overflow-hidden glass-card shadow-2xl border border-white/10 group cursor-pointer hover:border-amber-400/60 hover:shadow-[0_0_35px_rgba(245,158,11,0.35)]"
               style={{
-                width: `${cardWidth}px`,
-                height: `${cardHeight}px`,
+                width: `${responsiveCardWidth}px`,
+                height: `${responsiveCardHeight}px`,
                 transform: `translate3d(${x}px, ${y}px, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
                 opacity,
                 zIndex

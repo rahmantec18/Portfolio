@@ -31,10 +31,10 @@ export default function BreathingFooter() {
           <span className="text-xs font-mono tracking-[0.3em] uppercase text-cyan-400 font-semibold">
             FINAL DESTINATION
           </span>
-          <h2 className="text-4xl sm:text-6xl font-display font-black text-slate-100 tracking-tight">
+          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black text-slate-100 tracking-tight break-words">
             THANKS FOR EXPLORING.
           </h2>
-          <p className="text-xl sm:text-2xl font-display text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-purple-400 font-bold">
+          <p className="text-lg xs:text-xl sm:text-2xl font-display text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-purple-400 font-bold break-words">
             — ABDUR RAHMAN I
           </p>
           <p className="text-sm font-ui text-slate-400 tracking-wider">
@@ -43,7 +43,7 @@ export default function BreathingFooter() {
         </motion.div>
 
         {/* Social dock buttons */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
+        <div className="mt-8 sm:mt-12 flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 max-w-full px-2">
           <a
             href={contactInfo.whatsappUrl}
             target="_blank"

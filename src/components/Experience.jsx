@@ -66,7 +66,7 @@ export default function Experience() {
             <span>TRAJECTORY &amp; ENGAGEMENTS</span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl font-display font-black tracking-tight text-white">
+          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
             EXPERIENCE.
           </h2>
 
@@ -74,13 +74,13 @@ export default function Experience() {
             <TubeLight stop4="#00f2fe" stop3="#8b5cf6" height={1.5} />
           </div>
 
-          <p className="text-base sm:text-lg font-ui text-slate-300 leading-relaxed max-w-xl mx-auto">
+          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed max-w-xl mx-auto px-2">
             Practical development, visual media coverage, and collaborative team roles.
           </p>
         </div>
 
         {/* Cinematic Vertical Timeline */}
-        <div className="relative border-l border-slate-800/80 ml-4 sm:ml-28 pl-6 sm:pl-10 space-y-10">
+        <div className="relative border-l border-slate-800/80 ml-2 pl-4 sm:ml-28 sm:pl-10 space-y-8 sm:space-y-10">
           {timelineExperience.map((exp, idx) => {
             const Icon = roleIcons[exp.role] || Briefcase;
             return (
@@ -101,7 +101,7 @@ export default function Experience() {
                 </div>
 
                 {/* Experience Card */}
-                <div className="p-6 sm:p-8 rounded-3xl glass-card border border-white/10 hover:border-cyan-400/40 transition-all duration-300 space-y-3 shadow-xl">
+                <div className="p-5 sm:p-8 rounded-3xl glass-card border border-white/10 hover:border-cyan-400/40 transition-all duration-300 space-y-3 shadow-xl">
                   {/* Top Year (Mobile) & Period */}
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="sm:hidden font-display font-bold text-lg text-cyan-400">

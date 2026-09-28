@@ -69,7 +69,7 @@ export default function Services() {
             <span>SOLUTIONS &amp; COLLABORATION</span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl font-display font-black tracking-tight text-white">
+          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
             LET'S BUILD SOMETHING.
           </h2>
 
@@ -77,7 +77,7 @@ export default function Services() {
             <TubeLight stop4="#00f2fe" stop3="#8b5cf6" height={1.5} />
           </div>
 
-          <p className="text-base sm:text-lg font-ui text-slate-300 leading-relaxed">
+          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed px-2">
             Multidisciplinary capabilities bridging digital engineering, visual art, and creative media.
           </p>
         </div>
@@ -91,7 +91,7 @@ export default function Services() {
                 key={service.id}
                 ref={(el) => (cardsRef.current[idx] = el)}
                 data-cursor="SERVICE"
-                className="p-8 rounded-3xl glass-card border border-white/10 hover:border-cyan-400/40 transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between group shadow-xl"
+                className="p-6 sm:p-8 rounded-3xl glass-card border border-white/10 hover:border-cyan-400/40 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group shadow-xl"
               >
                 <div className="space-y-4">
                   {/* Service Icon */}

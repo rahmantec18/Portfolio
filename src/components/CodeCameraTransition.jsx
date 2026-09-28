@@ -82,13 +82,13 @@ export default function CodeCameraTransition() {
         </div>
 
         {/* Climax Typography */}
-        <div className="space-y-2">
+        <div className="space-y-2 max-w-4xl mx-auto px-2">
           <p className="text-xs font-mono text-cyan-400 tracking-[0.3em] uppercase font-semibold">
             EVOLVING DIMENSIONS
           </p>
           <h3
             ref={textRef}
-            className="text-3xl sm:text-5xl md:text-6xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-amber-200 to-purple-400 uppercase tracking-tight"
+            className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-amber-200 to-purple-400 uppercase tracking-tight break-words"
           >
             TECHNOLOGY BECOMES CREATIVITY.
           </h3>

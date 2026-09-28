@@ -66,7 +66,7 @@ export default function Projects() {
             <span>FEATURED WEB PRODUCTIONS</span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl font-display font-black tracking-tight text-white">
+          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
             WEB PROJECTS.
           </h2>
 
@@ -74,38 +74,38 @@ export default function Projects() {
             <TubeLight stop4="#00f2fe" stop3="#3b82f6" height={1.5} />
           </div>
 
-          <p className="text-base sm:text-lg font-ui text-slate-300 leading-relaxed">
+          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed px-2">
             Explorations in high-performance web development, digital storefronts, and 3D healthcare interfaces.
           </p>
         </div>
 
         {/* Cinematic Projects Showcase: Large 3D Browser Environments */}
-        <div className="space-y-24 perspective-2000">
+        <div className="space-y-16 sm:space-y-24 perspective-2000">
           {webProjects.map((project, idx) => (
             <div
               key={project.id}
               ref={(el) => (projectCardsRef.current[idx] = el)}
-              className="group relative rounded-3xl glass-panel p-4 sm:p-8 border border-white/10 hover:border-cyan-400/40 transition-all duration-500 shadow-2xl preserve-3d"
+              className="group relative rounded-3xl glass-panel p-3 xs:p-4 sm:p-6 lg:p-8 border border-white/10 hover:border-cyan-400/40 transition-all duration-500 shadow-2xl preserve-3d"
             >
               {/* Outer Browser Window Frame */}
               <div className="w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-2xl">
                 {/* Browser Top Chrome / Nav Bar */}
-                <div className="flex items-center justify-between px-4 py-3 bg-[#070b19] border-b border-slate-800/80">
+                <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-[#070b19] border-b border-slate-800/80 gap-2">
                   {/* Traffic Light Dots */}
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-rose-500/80" />
-                    <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-                    <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500/80" />
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/80" />
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/80" />
                   </div>
 
                   {/* Browser URL Input Bar Mockup */}
-                  <div className="flex-1 max-w-md mx-4 px-4 py-1 rounded-md bg-slate-900/90 border border-slate-700/60 text-[11px] font-mono text-slate-400 truncate flex items-center justify-between">
+                  <div className="hidden xs:flex flex-1 max-w-xs sm:max-w-md mx-2 sm:mx-4 px-3 sm:px-4 py-1 rounded-md bg-slate-900/90 border border-slate-700/60 text-[10px] sm:text-[11px] font-mono text-slate-400 truncate items-center justify-between">
                     <span className="truncate">{project.url}</span>
                     <Globe className="w-3 h-3 text-cyan-400 shrink-0 ml-2" />
                   </div>
 
                   {/* Project Tag Badge */}
-                  <div className={`text-[11px] font-mono px-3 py-0.5 rounded-full flex items-center gap-1.5 ${
+                  <div className={`text-[10px] sm:text-[11px] font-mono px-2.5 sm:px-3 py-0.5 rounded-full flex items-center gap-1.5 shrink-0 ${
                     project.id === "jjk-cursed-energy"
                       ? "bg-purple-500/20 text-purple-300 border border-purple-400/50 shadow-[0_0_12px_rgba(187,0,255,0.3)]"
                       : "bg-cyan-400/10 text-cyan-300 border border-cyan-400/20"
@@ -118,7 +118,7 @@ export default function Projects() {
                 </div>
 
                 {/* Browser Content & Preview */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 sm:p-10 items-center bg-gradient-to-b from-[#070b19] to-[#04060e]">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 p-4 sm:p-6 lg:p-10 items-center bg-gradient-to-b from-[#070b19] to-[#04060e]">
                   {/* Left Column: Visual Mockup / Interactive Frame */}
                   <div className="lg:col-span-7 rounded-xl overflow-hidden border border-slate-800 relative group-hover:border-cyan-400/30 transition-all duration-500">
                     <img
@@ -133,12 +133,12 @@ export default function Projects() {
                   </div>
 
                   {/* Right Column: Project Details & Action */}
-                  <div className="lg:col-span-5 space-y-6">
+                  <div className="lg:col-span-5 space-y-4 sm:space-y-6">
                     <div>
                       <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">
                         {project.category}
                       </span>
-                      <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mt-1">
+                      <h3 className="text-xl xs:text-2xl sm:text-3xl font-display font-bold text-white mt-1 break-words">
                         {project.title}
                       </h3>
                     </div>

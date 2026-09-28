@@ -24,7 +24,7 @@ export default function Photography() {
             <span>SPATIAL 3D ARCHIVE</span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-black tracking-tight text-white uppercase">
+          <h2 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-display font-black tracking-tight text-white uppercase break-words">
             DRAG &amp; ROTATE THE HELIX ARCHIVE
           </h2>
 
@@ -32,13 +32,13 @@ export default function Photography() {
             <TubeLight stop4="#fbbf24" stop3="#f43f5e" height={1.5} />
           </div>
 
-          <p className="text-base sm:text-lg font-ui text-slate-300 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed max-w-2xl mx-auto px-2">
             Explore all 10 moments in interactive 3D space with continuous physics.
           </p>
         </div>
 
         {/* 3D DNA Helix Archive Carousel */}
-        <div className="py-6">
+        <div className="py-4 sm:py-6 w-full max-w-full overflow-hidden">
           <DNACarousel
             items={photoFramesData}
             cardWidth={280}
@@ -51,8 +51,8 @@ export default function Photography() {
         </div>
 
         {/* Interaction Hint */}
-        <div className="text-center pt-2">
-          <span className="text-xs font-mono text-slate-500 tracking-widest uppercase">
+        <div className="text-center pt-2 px-2">
+          <span className="text-[11px] sm:text-xs font-mono text-slate-500 tracking-widest uppercase">
             CLICK ANY FRAME TO EXPAND IN HIGH RESOLUTION • DRAG HORIZONTALLY TO SPIN
           </span>
         </div>
@@ -62,11 +62,11 @@ export default function Photography() {
       {selectedPhoto && (
         <div
           onClick={() => setSelectedPhoto(null)}
-          className="fixed inset-0 z-[10001] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center p-3 sm:p-6 cursor-zoom-out animate-in fade-in duration-200"
+          className="fixed inset-0 z-[10005] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center p-3 sm:p-6 cursor-zoom-out animate-in fade-in duration-200"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative max-w-7xl w-[96vw] max-h-[94vh] flex flex-col rounded-3xl overflow-hidden glass-panel border border-white/20 shadow-[0_0_80px_rgba(0,0,0,0.9)] p-3 sm:p-6 cursor-default"
+            className="relative max-w-5xl w-[94vw] max-h-[92vh] flex flex-col rounded-3xl overflow-hidden glass-panel border border-white/20 shadow-[0_0_80px_rgba(0,0,0,0.9)] p-3 sm:p-6 cursor-default"
           >
             {/* Top Close & Meta Bar */}
             <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/10">

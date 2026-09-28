@@ -81,7 +81,7 @@ export default function GraphicDesign() {
             <span>VISUAL IDENTITY &amp; CREATIVES</span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl font-display font-black tracking-tight text-white">
+          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
             I DESIGN VISUAL STORIES.
           </h2>
 
@@ -89,7 +89,7 @@ export default function GraphicDesign() {
             <TubeLight stop4="#ec4899" stop3="#8b5cf6" height={1.5} />
           </div>
 
-          <p className="text-base sm:text-lg font-ui text-slate-300 leading-relaxed">
+          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed px-2">
             From posters and social media creatives to photo editing and visual concepts, I enjoy turning simple ideas into visuals that stand out.
           </p>
         </div>
@@ -97,37 +97,37 @@ export default function GraphicDesign() {
         {/* Section 30: Assemble Layer Interaction Graphic Studio Showcase */}
         <div
           ref={layersContainerRef}
-          className="relative max-w-4xl mx-auto min-h-[420px] rounded-3xl glass-panel p-6 sm:p-12 border border-white/10 flex items-center justify-center overflow-hidden"
+          className="relative max-w-4xl mx-auto min-h-[360px] sm:min-h-[420px] rounded-3xl glass-panel p-4 sm:p-8 lg:p-12 border border-white/10 flex items-center justify-center overflow-hidden"
         >
           {/* Layer 1: Geometric Background Shape */}
           <div
             ref={layer1Ref}
-            className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-tr from-pink-500/20 via-purple-500/20 to-cyan-500/20 blur-xl pointer-events-none"
+            className="absolute w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-gradient-to-tr from-pink-500/20 via-purple-500/20 to-cyan-500/20 blur-xl pointer-events-none"
           />
 
           {/* Layer 2: Figma / Creative Canvas Artboard Frame */}
           <div
             ref={layer2Ref}
-            className="relative z-10 w-full max-w-lg p-6 rounded-2xl bg-slate-950/90 border border-pink-500/30 shadow-2xl space-y-4"
+            className="relative z-10 w-full max-w-lg p-4 sm:p-6 rounded-2xl bg-slate-950/90 border border-pink-500/30 shadow-2xl space-y-4"
           >
             {/* Top Toolbar */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-xs font-mono text-slate-400">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-[11px] sm:text-xs font-mono text-slate-400">
               <span className="text-pink-400 font-bold">ARTBOARD: SOCIAL_POSTER_01</span>
               <span>1080 × 1350 • CMYK</span>
             </div>
 
             {/* Poster Mock Content */}
-            <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-slate-900 via-purple-950 to-deep-950 p-6 flex flex-col justify-between border border-white/5 relative overflow-hidden">
+            <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-slate-900 via-purple-950 to-deep-950 p-4 sm:p-6 flex flex-col justify-between border border-white/5 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/20 rounded-full blur-xl" />
               <div>
                 <span className="text-[10px] font-mono tracking-widest text-cyan-400 uppercase">
                   CREATIVE DIRECTION
                 </span>
-                <h4 className="text-xl sm:text-2xl font-display font-black text-white leading-tight mt-1">
+                <h4 className="text-lg xs:text-xl sm:text-2xl font-display font-black text-white leading-tight mt-1 break-words">
                   BOLD VISUAL IDENTITY &amp; DESIGN
                 </h4>
               </div>
-              <div className="flex items-center justify-between pt-4 border-t border-white/10 text-[11px] font-mono text-slate-400">
+              <div className="flex items-center justify-between pt-4 border-t border-white/10 text-[10px] sm:text-[11px] font-mono text-slate-400">
                 <span>BY ABDUR RAHMAN I</span>
                 <span className="text-pink-400 font-bold">2026 EDITION</span>
               </div>
@@ -148,7 +148,7 @@ export default function GraphicDesign() {
           {/* Layer 3: Floating Design Tools Badge */}
           <div
             ref={layer3Ref}
-            className="hidden sm:block absolute -bottom-4 right-6 p-4 rounded-xl glass-card border border-white/15 text-xs font-mono text-cyan-300 z-20 shadow-xl"
+            className="hidden md:block absolute -bottom-4 right-6 p-4 rounded-xl glass-card border border-white/15 text-xs font-mono text-cyan-300 z-20 shadow-xl"
           >
             <span>LAYERS ASSEMBLED • 100% VECTOR PRECISION</span>
           </div>

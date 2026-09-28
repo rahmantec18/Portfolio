@@ -54,7 +54,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black tracking-tight text-white max-w-5xl leading-[1.08]"
+          className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black tracking-tight text-white max-w-5xl leading-[1.08] break-words"
         >
           I BUILD{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-purple-400">
@@ -67,10 +67,10 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-6 font-display font-bold text-lg sm:text-2xl text-slate-400"
+          className="mt-6 flex flex-wrap items-center justify-center gap-2 xs:gap-3 sm:gap-6 font-display font-bold text-sm xs:text-lg sm:text-2xl text-slate-400"
         >
           {phrases.map((phrase, idx) => (
-            <span key={phrase} className="flex items-center gap-3 sm:gap-6">
+            <span key={phrase} className="flex items-center gap-2 xs:gap-3 sm:gap-6">
               <span className="hover:text-cyan-300 transition-colors duration-300 tracking-wider">
                 {phrase}
               </span>
@@ -86,7 +86,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-6 text-base sm:text-lg font-ui font-medium text-slate-300 max-w-2xl tracking-wide"
+          className="mt-6 text-sm sm:text-lg font-ui font-medium text-slate-300 max-w-2xl tracking-wide px-2"
         >
           Web Developer • Creative Designer • Photographer • Video Editor
         </motion.p>
@@ -96,7 +96,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-3 text-xs sm:text-sm font-body text-slate-400 max-w-xl leading-relaxed"
+          className="mt-3 text-xs sm:text-sm font-body text-slate-400 max-w-xl leading-relaxed px-2"
         >
           A Cyber Security student with a creative mind and a passion for building experiences beyond code.
         </motion.p>
@@ -106,17 +106,17 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-3"
+          className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-2"
         >
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-cyan-500/20 text-cyan-300 text-xs font-mono backdrop-blur-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-cyan-500/20 text-cyan-300 text-[11px] sm:text-xs font-mono backdrop-blur-sm">
             <Code className="w-3.5 h-3.5" />
             <span>Creative Tech</span>
           </div>
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-emerald-500/20 text-emerald-300 text-xs font-mono backdrop-blur-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-emerald-500/20 text-emerald-300 text-[11px] sm:text-xs font-mono backdrop-blur-sm">
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
             <span>Cyber Security Focus</span>
           </div>
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-purple-500/20 text-purple-300 text-xs font-mono backdrop-blur-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-purple-500/20 text-purple-300 text-[11px] sm:text-xs font-mono backdrop-blur-sm">
             <Camera className="w-3.5 h-3.5" />
             <span>Cinematic Visuals</span>
           </div>
@@ -127,7 +127,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4 max-w-full px-2"
         >
           <ShaderButton
             href="#projects"
@@ -140,7 +140,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
           <div className="inline-flex rounded-xl p-0.5 bg-gradient-to-r from-cyan-950/90 to-slate-900/90 border border-cyan-400/40 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,242,254,0.25)] transition-all duration-300">
             <button
               onClick={onOpenResume}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg font-ui font-semibold text-sm tracking-wide text-cyan-200 hover:text-white hover:bg-cyan-500/15 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 sm:px-5 py-3 rounded-lg font-ui font-semibold text-xs sm:text-sm tracking-wide text-cyan-200 hover:text-white hover:bg-cyan-500/15 transition-all cursor-pointer"
             >
               <Eye className="w-4 h-4 text-cyan-400" />
               <span>VIEW RESUME</span>
@@ -150,7 +150,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
               download="Abdur_Rahman_I_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-3 rounded-lg hover:bg-white/10 text-cyan-300 text-xs font-mono font-semibold transition-all border-l border-cyan-400/30"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-3 rounded-lg hover:bg-white/10 text-cyan-300 text-xs font-mono font-semibold transition-all border-l border-cyan-400/30"
               title="Download Official PDF"
             >
               <Download className="w-3.5 h-3.5 text-cyan-400" />
@@ -173,8 +173,8 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
         </motion.div>
       </div>
 
-      {/* Floating Glassmorphic HUD Elements in Corners */}
-      <div className="hidden lg:block absolute bottom-12 left-10 text-left font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800 pointer-events-none">
+      {/* Floating Glassmorphic HUD Elements in Corners - Safe for wide desktop, hidden on laptop/tablet to prevent layer overlap */}
+      <div className="hidden xl:block absolute bottom-12 left-10 text-left font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800 pointer-events-none">
         <div className="text-cyan-400 font-semibold mb-1 flex items-center gap-1.5">
           <Terminal className="w-3 h-3" />
           <span>SYS.TELEMETRY • SEC_OPS</span>
@@ -184,7 +184,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
         <div>STATUS: ACTIVE &amp; VERIFIED</div>
       </div>
 
-      <div className="hidden lg:block absolute bottom-12 right-10 text-right font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800 pointer-events-none">
+      <div className="hidden xl:block absolute bottom-12 right-10 text-right font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800 pointer-events-none">
         <div className="text-purple-400 font-semibold mb-1 flex items-center justify-end gap-1.5">
           <Layers className="w-3 h-3" />
           <span>EXPERIENCE FLOW</span>

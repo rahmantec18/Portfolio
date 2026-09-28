@@ -35,7 +35,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#020205] text-slate-100 selection:bg-cyan-500/20 selection:text-cyan-300">
+    <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#020205] text-slate-100 selection:bg-cyan-500/20 selection:text-cyan-300">
       {/* 1. Preloader */}
       <MinimalPreloader onLoaded={() => setIsPreloaded(true)} />
 

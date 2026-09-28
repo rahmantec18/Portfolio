@@ -106,7 +106,7 @@ export default function About({ onOpenResume }) {
             <span>THE PERSON BEHIND THE WORK</span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-black tracking-tight text-white">
+          <h2 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-display font-black tracking-tight text-white break-words">
             MORE THAN CODE.
           </h2>
 
@@ -116,12 +116,12 @@ export default function About({ onOpenResume }) {
         </div>
 
         {/* 3D Cinematic Portrait & Bio Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           {/* Left Column: Authentic Portrait with 3D Depth & Camera Focus */}
           <div className="lg:col-span-6 flex justify-center perspective-1000">
             <div
               ref={portraitContainerRef}
-              className="relative w-full max-w-md aspect-[3/4] rounded-3xl overflow-hidden glass-card p-2 border border-cyan-400/25 shadow-2xl shadow-cyan-500/10 preserve-3d"
+              className="relative w-full max-w-[280px] xs:max-w-xs sm:max-w-md aspect-[3/4] rounded-3xl overflow-hidden glass-card p-2 border border-cyan-400/25 shadow-2xl shadow-cyan-500/10 preserve-3d"
             >
               {/* Glass Frame Bezel */}
               <div className="relative w-full h-full rounded-[22px] overflow-hidden bg-slate-950">
@@ -137,7 +137,7 @@ export default function About({ onOpenResume }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-deep-950/90 via-transparent to-black/20 pointer-events-none" />
 
                 {/* Portrait Overlay Metadata Tag */}
-                <div className="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-slate-950/70 backdrop-blur-md border border-white/10">
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 p-3 sm:p-4 rounded-xl bg-slate-950/70 backdrop-blur-md border border-white/10">
                   <div className="flex items-center justify-between">
                     <div>
                       <h4 className="font-ui font-bold text-white text-base">

@@ -103,7 +103,7 @@ export default function TechWorld() {
             <span>DEVELOPMENT ENVIRONMENT</span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl font-display font-black tracking-tight text-white">
+          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
             I BUILD DIGITAL EXPERIENCES.
           </h2>
 
@@ -111,13 +111,13 @@ export default function TechWorld() {
             <TubeLight stop4="#38bdf8" stop3="#6366f1" height={1.5} />
           </div>
 
-          <p className="text-base sm:text-lg font-ui text-slate-300 leading-relaxed">
+          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed px-2">
             From websites and interactive interfaces to backend systems and deployment, I enjoy turning ideas into functional digital experiences.
           </p>
         </div>
 
         {/* 3D Floating Tech Skill Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 perspective-1000">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 perspective-1000">
           {techSkills.map((tech, idx) => {
             const IconComponent = iconMap[tech.icon] || Code;
             return (
@@ -125,7 +125,7 @@ export default function TechWorld() {
                 key={tech.name}
                 ref={(el) => (cardsRef.current[idx] = el)}
                 data-cursor="TECH"
-                className="group relative p-6 rounded-2xl glass-card border border-white/10 hover:border-cyan-400/50 transition-all duration-300 hover:-translate-y-2 preserve-3d"
+                className="group relative p-4 sm:p-5 rounded-2xl glass-card border border-white/10 hover:border-cyan-400/50 transition-all duration-300 hover:-translate-y-1.5 preserve-3d"
               >
                 {/* Dynamic Card Glow on Hover */}
                 <div

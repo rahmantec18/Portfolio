@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: '420px',
+      },
       fontFamily: {
         display: ['"Behind The Nineties"', 'Syne', 'Cinzel', 'sans-serif'],
         body: ['Switzer', 'Plus Jakarta Sans', 'Inter', 'sans-serif'],

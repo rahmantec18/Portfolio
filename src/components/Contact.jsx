@@ -97,11 +97,11 @@ export default function Contact() {
             <span>COMMUNICATION NEXUS</span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-black tracking-tight text-white">
+          <h2 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-display font-black tracking-tight text-white break-words">
             HAVE AN IDEA?
           </h2>
 
-          <p className="text-xl sm:text-3xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-purple-400">
+          <p className="text-lg xs:text-xl sm:text-3xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-purple-400 break-words">
             LET'S TURN IT INTO SOMETHING REAL.
           </p>
 
@@ -109,17 +109,17 @@ export default function Contact() {
             <TubeLight stop4="#00f2fe" stop3="#8b5cf6" height={1.5} />
           </div>
 
-          <p className="text-sm sm:text-base font-ui text-slate-300 leading-relaxed max-w-xl mx-auto">
+          <p className="text-sm sm:text-base font-ui text-slate-300 leading-relaxed max-w-xl mx-auto px-2">
             Whether you need a cutting-edge web platform, creative branding, cinematic video pacing, or a photography shoot, let's talk.
           </p>
         </div>
 
         {/* Converging Contact Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
           {/* Left Column: Primary Direct Actions (WhatsApp & Email) */}
           <div ref={leftColRef} className="lg:col-span-6 space-y-6 flex flex-col justify-between">
             {/* Primary WhatsApp Card (Section 34) */}
-            <div className="p-8 rounded-3xl glass-card border border-emerald-500/30 hover:border-emerald-400/60 transition-all duration-300 relative overflow-hidden group shadow-2xl">
+            <div className="p-5 sm:p-8 rounded-3xl glass-card border border-emerald-500/30 hover:border-emerald-400/60 transition-all duration-300 relative overflow-hidden group shadow-2xl">
               <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
 
               <div className="flex items-center justify-between mb-4">
@@ -135,7 +135,7 @@ export default function Contact() {
                 <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
                   DIRECT WHATSAPP
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-display font-bold text-white">
+                <h3 className="text-xl xs:text-2xl sm:text-3xl font-display font-bold text-white break-words">
                   {contactInfo.whatsapp}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400 font-body">
@@ -158,7 +158,7 @@ export default function Contact() {
             </div>
 
             {/* Email Card (Section 34) */}
-            <div className="p-8 rounded-3xl glass-card border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-300 relative overflow-hidden group shadow-2xl">
+            <div className="p-5 sm:p-8 rounded-3xl glass-card border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-300 relative overflow-hidden group shadow-2xl">
               <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
 
               <div className="flex items-center justify-between mb-4">
@@ -177,7 +177,7 @@ export default function Contact() {
                 <a
                   href={`mailto:${contactInfo.email}`}
                   data-cursor="EMAIL"
-                  className="block text-lg sm:text-2xl font-mono font-bold text-cyan-300 hover:text-white transition-colors truncate"
+                  className="block text-base xs:text-xl sm:text-2xl font-mono font-bold text-cyan-300 hover:text-white transition-colors truncate"
                 >
                   {contactInfo.email}
                 </a>
