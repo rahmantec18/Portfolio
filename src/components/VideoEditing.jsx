@@ -180,27 +180,28 @@ export default function VideoEditing() {
       ref={sectionRef}
       className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden"
     >
-      {/* Film Spool / Timeline Background Accents */}
-      <div className="absolute top-1/4 -right-20 w-[550px] h-[550px] bg-purple-600/10 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-20 w-[550px] h-[550px] bg-rose-600/10 rounded-full blur-[160px] pointer-events-none" />
+      {/* Adaptive Cinema & Color-Grade Background: Teal & Orange Split Grading Glow */}
+      <div className="absolute top-1/4 -right-20 w-[85vw] max-w-[550px] h-[550px] bg-gradient-to-bl from-purple-600/15 via-rose-600/10 to-transparent rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-20 w-[85vw] max-w-[550px] h-[550px] bg-gradient-to-tr from-cyan-600/12 via-indigo-600/10 to-transparent rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:100%_2rem] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full space-y-16">
+      <div className="max-w-7xl mx-auto px-4 xs:px-6 relative z-10 w-full space-y-12 sm:space-y-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-950/60 border border-purple-500/30 text-xs font-mono text-purple-300 tracking-[0.25em] uppercase">
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 rounded-full bg-purple-950/60 border border-purple-500/30 text-xs font-mono text-purple-300 tracking-[0.25em] uppercase">
             <Film className="w-3.5 h-3.5" />
             <span>NARRATIVE MOTION &amp; PACING</span>
           </div>
 
-          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
+          <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-tight text-white break-words">
             I EDIT. I CREATE. I TELL STORIES.
           </h2>
 
-          <div className="w-36 mx-auto py-2">
+          <div className="w-36 mx-auto py-1">
             <TubeLight stop4="#c084fc" stop3="#f43f5e" height={1.5} />
           </div>
 
-          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed px-2">
+          <p className="text-xs xs:text-sm sm:text-base md:text-lg font-ui text-slate-300 leading-relaxed px-2">
             Where raw takes receive rhythm, intentional cuts, and audio pacing. Moving the viewer emotionally one frame at a time.
           </p>
         </div>

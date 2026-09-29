@@ -59,23 +59,27 @@ export default function CodeCameraTransition() {
       ref={containerRef}
       className="relative min-h-[60vh] w-full py-20 bg-transparent flex flex-col items-center justify-center overflow-hidden"
     >
+      {/* Adaptive Metamorphosis Lighting: Code Cyan blending into Camera Gold */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[70vw] max-w-[450px] h-[400px] bg-cyan-500/12 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[70vw] max-w-[450px] h-[400px] bg-amber-500/15 rounded-full blur-[140px] pointer-events-none" />
+
       {/* Optic light streaks */}
       <div className="absolute w-[80vw] h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent blur-sm opacity-30 transform -rotate-12 pointer-events-none" />
       <div className="absolute w-[80vw] h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent blur-sm opacity-25 transform rotate-12 pointer-events-none" />
 
       {/* Center Transforming Geometry: Code Frame -> Camera Aperture */}
-      <div className="relative z-10 flex flex-col items-center text-center space-y-6 px-6">
+      <div className="relative z-10 flex flex-col items-center text-center space-y-6 px-4 xs:px-6">
         <div
           ref={frameRef}
-          className="w-28 h-28 sm:w-36 sm:h-36 border-2 border-cyan-400/50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xl shadow-2xl transition-all duration-300"
+          className="w-24 h-24 xs:w-28 xs:h-28 sm:w-36 sm:h-36 border-2 border-cyan-400/50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xl shadow-2xl transition-all duration-300"
         >
           <div ref={apertureRef} className="text-amber-400 flex items-center justify-center">
-            <Aperture className="w-16 h-16 sm:w-20 sm:h-20 animate-pulse-slow" />
+            <Aperture className="w-14 h-14 xs:w-16 xs:h-16 sm:w-20 sm:h-20 animate-pulse-slow" />
           </div>
         </div>
 
         {/* Viewfinder crosshairs */}
-        <div className="flex items-center gap-4 text-xs font-mono text-slate-500">
+        <div className="flex items-center gap-3 sm:gap-4 text-[11px] sm:text-xs font-mono text-slate-400">
           <span>[ 35MM OPTIC ]</span>
           <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
           <span>F/1.4 DEPTH OF FIELD</span>
@@ -88,7 +92,7 @@ export default function CodeCameraTransition() {
           </p>
           <h3
             ref={textRef}
-            className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-amber-200 to-purple-400 uppercase tracking-tight break-words"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-amber-200 to-purple-400 uppercase tracking-tight break-words leading-tight"
           >
             TECHNOLOGY BECOMES CREATIVITY.
           </h3>

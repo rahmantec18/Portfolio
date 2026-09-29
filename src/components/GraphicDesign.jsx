@@ -69,27 +69,28 @@ export default function GraphicDesign() {
       ref={sectionRef}
       className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden"
     >
-      {/* Dynamic Creative Glows */}
-      <div className="absolute top-1/3 left-10 w-[550px] h-[550px] bg-pink-600/10 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-10 w-[550px] h-[550px] bg-purple-600/10 rounded-full blur-[160px] pointer-events-none" />
+      {/* Adaptive Creative Studio Background: CMYK & Pantone Dispersion Glow */}
+      <div className="absolute top-1/3 left-10 w-[85vw] max-w-[550px] h-[550px] bg-gradient-to-tr from-pink-600/15 via-rose-500/10 to-transparent rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-10 w-[85vw] max-w-[550px] h-[550px] bg-gradient-to-bl from-purple-600/15 via-cyan-500/10 to-transparent rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-10 right-1/3 w-48 h-48 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full space-y-20">
+      <div className="max-w-7xl mx-auto px-4 xs:px-6 relative z-10 w-full space-y-14 sm:space-y-20">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-950/60 border border-pink-500/30 text-xs font-mono text-pink-300 tracking-[0.25em] uppercase">
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 rounded-full bg-pink-950/60 border border-pink-500/30 text-xs font-mono text-pink-300 tracking-[0.25em] uppercase">
             <Palette className="w-3.5 h-3.5" />
             <span>VISUAL IDENTITY &amp; CREATIVES</span>
           </div>
 
-          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
+          <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-tight text-white break-words">
             I DESIGN VISUAL STORIES.
           </h2>
 
-          <div className="w-36 mx-auto py-2">
+          <div className="w-36 mx-auto py-1">
             <TubeLight stop4="#ec4899" stop3="#8b5cf6" height={1.5} />
           </div>
 
-          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed px-2">
+          <p className="text-xs xs:text-sm sm:text-base md:text-lg font-ui text-slate-300 leading-relaxed px-2">
             From posters and social media creatives to photo editing and visual concepts, I enjoy turning simple ideas into visuals that stand out.
           </p>
         </div>

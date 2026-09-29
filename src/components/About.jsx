@@ -94,19 +94,20 @@ export default function About({ onOpenResume }) {
       ref={sectionRef}
       className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden flex flex-col justify-center"
     >
-      {/* Ambient background glows */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 w-[450px] h-[450px] bg-purple-600/10 rounded-full blur-[130px] pointer-events-none" />
+      {/* Adaptive Portrait Studio Backlight */}
+      <div className="absolute top-1/3 left-1/4 -translate-y-1/2 w-[90vw] max-w-[550px] h-[500px] bg-gradient-to-tr from-amber-500/12 via-cyan-600/10 to-transparent rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-[80vw] max-w-[500px] h-[450px] bg-purple-600/12 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/2 right-10 w-40 h-40 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+      <div className="max-w-7xl mx-auto px-4 xs:px-6 relative z-10 w-full">
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-3">
+        <div className="text-center mb-12 sm:mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900/80 border border-slate-700 text-xs font-mono text-cyan-400 tracking-[0.25em] uppercase">
             <Sparkles className="w-3.5 h-3.5" />
             <span>THE PERSON BEHIND THE WORK</span>
           </div>
 
-          <h2 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-display font-black tracking-tight text-white break-words">
+          <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-tight text-white break-words">
             MORE THAN CODE.
           </h2>
 

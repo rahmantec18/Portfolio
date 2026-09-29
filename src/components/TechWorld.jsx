@@ -88,36 +88,36 @@ export default function TechWorld() {
       ref={sectionRef}
       className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden flex flex-col justify-center"
     >
-      {/* Background Cyber Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
+      {/* Adaptive Cyber Matrix & Tech Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00f2fe08_1px,transparent_1px),linear-gradient(to_bottom,#00f2fe08_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
-      {/* Atmospheric Tech Orbs */}
-      <div className="absolute top-1/4 -left-20 w-[550px] h-[550px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-20 w-[550px] h-[550px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none" />
+      {/* Atmospheric Tech Core Glows */}
+      <div className="absolute top-1/4 -left-20 w-[85vw] max-w-[550px] h-[550px] bg-gradient-to-tr from-cyan-600/15 via-blue-600/10 to-transparent rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-[80vw] max-w-[550px] h-[550px] bg-gradient-to-bl from-purple-600/15 via-indigo-600/10 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+      <div className="max-w-7xl mx-auto px-4 xs:px-6 relative z-10 w-full">
         {/* Section Heading & Description */}
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-950/50 border border-blue-500/30 text-xs font-mono text-cyan-400 tracking-[0.25em] uppercase">
             <Cpu className="w-3.5 h-3.5" />
             <span>DEVELOPMENT ENVIRONMENT</span>
           </div>
 
-          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
-            I BUILD DIGITAL EXPERIENCES.
+          <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-tight text-white break-words">
+            CREATIVE CODE &amp; TECH.
           </h2>
 
-          <div className="w-32 mx-auto py-2">
+          <div className="w-32 mx-auto py-1">
             <TubeLight stop4="#38bdf8" stop3="#6366f1" height={1.5} />
           </div>
 
-          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed px-2">
+          <p className="text-xs xs:text-sm sm:text-base md:text-lg font-ui text-slate-300 leading-relaxed px-2">
             From websites and interactive interfaces to backend systems and deployment, I enjoy turning ideas into functional digital experiences.
           </p>
         </div>
 
-        {/* 3D Floating Tech Skill Cards Grid */}
-        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 perspective-1000">
+        {/* 3D Floating Tech Skill Cards Grid - Optimized for Laptop (4-col), Tablet (3-col), Mobile (2-col/1-col) */}
+        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 perspective-1000">
           {techSkills.map((tech, idx) => {
             const IconComponent = iconMap[tech.icon] || Code;
             return (

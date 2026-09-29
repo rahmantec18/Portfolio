@@ -33,15 +33,18 @@ export default function BeyondWork() {
       id="beyond"
       className="relative min-h-[60vh] w-full py-24 bg-transparent text-slate-100 overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto px-6 relative z-10 w-full space-y-12">
+      {/* Adaptive Twilight & Warm Embers Background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] max-w-[650px] h-[400px] bg-gradient-to-tr from-rose-600/12 via-amber-600/10 to-purple-600/10 rounded-full blur-[150px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-4 xs:px-6 relative z-10 w-full space-y-10 sm:space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs font-mono text-cyan-400 tracking-[0.25em] uppercase">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs font-mono text-cyan-400 tracking-[0.25em] uppercase">
             <Heart className="w-3.5 h-3.5 text-rose-400" />
             <span>PERSONAL PASSIONS</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-display font-black tracking-tight text-white">
+          <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-display font-black tracking-tight text-white break-words">
             BEYOND THE SCREEN.
           </h2>
 
@@ -49,7 +52,7 @@ export default function BeyondWork() {
             <TubeLight stop4="#38bdf8" stop3="#8b5cf6" height={1.5} />
           </div>
 
-          <p className="text-xs sm:text-sm font-ui text-slate-400 leading-relaxed">
+          <p className="text-xs xs:text-sm sm:text-base font-ui text-slate-300 leading-relaxed px-2">
             There's more to me than technology and creative work. Subtle pursuits that keep curiosity alive.
           </p>
         </div>

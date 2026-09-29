@@ -44,19 +44,23 @@ export default function BreathingNavbar({ onToggleAesthetics, isEnhanced, onOpen
     const id = href.replace("#", "");
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      if (window.lenis) {
+        window.lenis.scrollTo(el, { offset: -60, duration: 1.2 });
+      } else {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
       setMobileMenuOpen(false);
     }
   };
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center p-4 sm:p-6 pointer-events-none">
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center p-2.5 xs:p-3 sm:p-5 pointer-events-none">
         <motion.nav
           initial={{ y: -60, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className={`pointer-events-auto relative flex items-center justify-between gap-4 md:gap-8 px-5 py-3 rounded-full transition-all duration-500 border ${
+          className={`pointer-events-auto relative flex items-center justify-between gap-2.5 xs:gap-3 sm:gap-6 lg:gap-8 px-3.5 xs:px-4 sm:px-6 py-2 sm:py-2.5 rounded-full transition-all duration-500 border ${
             isScrolled
               ? "bg-deep-950/85 backdrop-blur-xl border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
               : "bg-deep-950/50 backdrop-blur-md border-white/5 shadow-lg"

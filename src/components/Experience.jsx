@@ -55,32 +55,33 @@ export default function Experience() {
       ref={sectionRef}
       className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden"
     >
-      {/* Background Ambience */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-cyan-900/10 rounded-full blur-[170px] pointer-events-none" />
+      {/* Adaptive Career Journey & Milestone Beacon Background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] max-w-[700px] h-[700px] bg-gradient-to-tr from-cyan-900/15 via-blue-900/10 to-transparent rounded-full blur-[170px] pointer-events-none" />
+      <div className="absolute top-20 right-10 w-44 h-44 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto px-6 relative z-10 w-full space-y-16">
+      <div className="max-w-5xl mx-auto px-4 xs:px-6 relative z-10 w-full space-y-12 sm:space-y-16">
         {/* Section Header */}
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-xs font-mono text-cyan-300 tracking-[0.25em] uppercase">
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-xs font-mono text-cyan-300 tracking-[0.25em] uppercase">
             <Briefcase className="w-3.5 h-3.5" />
             <span>TRAJECTORY &amp; ENGAGEMENTS</span>
           </div>
 
-          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
+          <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-tight text-white break-words">
             EXPERIENCE.
           </h2>
 
-          <div className="w-36 mx-auto py-2">
+          <div className="w-36 mx-auto py-1">
             <TubeLight stop4="#00f2fe" stop3="#8b5cf6" height={1.5} />
           </div>
 
-          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed max-w-xl mx-auto px-2">
+          <p className="text-xs xs:text-sm sm:text-base md:text-lg font-ui text-slate-300 leading-relaxed max-w-xl mx-auto px-2">
             Practical development, visual media coverage, and collaborative team roles.
           </p>
         </div>
 
-        {/* Cinematic Vertical Timeline */}
-        <div className="relative border-l border-slate-800/80 ml-2 pl-4 sm:ml-28 sm:pl-10 space-y-8 sm:space-y-10">
+        {/* Cinematic Vertical Timeline - Clean 3-device alignment */}
+        <div className="relative border-l border-slate-800/80 ml-2 pl-4 sm:ml-24 md:ml-28 sm:pl-8 md:pl-10 space-y-8 sm:space-y-10">
           {timelineExperience.map((exp, idx) => {
             const Icon = roleIcons[exp.role] || Briefcase;
             return (

@@ -31,13 +31,13 @@ export default function BreathingFooter() {
           <span className="text-xs font-mono tracking-[0.3em] uppercase text-cyan-400 font-semibold">
             FINAL DESTINATION
           </span>
-          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black text-slate-100 tracking-tight break-words">
+          <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-display font-black text-slate-100 tracking-tight break-words">
             THANKS FOR EXPLORING.
           </h2>
-          <p className="text-lg xs:text-xl sm:text-2xl font-display text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-purple-400 font-bold break-words">
+          <p className="text-base xs:text-lg sm:text-xl md:text-2xl font-display text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-purple-400 font-bold break-words">
             — ABDUR RAHMAN I
           </p>
-          <p className="text-sm font-ui text-slate-400 tracking-wider">
+          <p className="text-xs sm:text-sm font-ui text-slate-400 tracking-wider">
             Keep exploring. Keep creating.
           </p>
         </motion.div>

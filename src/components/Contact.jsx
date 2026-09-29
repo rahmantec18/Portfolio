@@ -11,7 +11,9 @@ import {
   Send,
   Sparkles,
   PhoneCall,
-  Check
+  Check,
+  Radio,
+  Wifi
 } from "lucide-react";
 import { contactInfo } from "../data/personal";
 import ShaderButton from "./framer/ShaderButton";
@@ -27,14 +29,14 @@ export default function Contact() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Elements converge toward center as user scrolls (Section 35)
+      // Elements converge toward center as user scrolls
       gsap.fromTo(
         leftColRef.current,
-        { x: -80, opacity: 0 },
+        { x: -60, opacity: 0 },
         {
           x: 0,
           opacity: 1,
-          duration: 1,
+          duration: 0.9,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -45,11 +47,11 @@ export default function Contact() {
 
       gsap.fromTo(
         rightColRef.current,
-        { x: 80, opacity: 0 },
+        { x: 60, opacity: 0 },
         {
           x: 0,
           opacity: 1,
-          duration: 1,
+          duration: 0.9,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -81,54 +83,81 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden flex flex-col justify-center"
+      className="relative min-h-screen w-full py-24 sm:py-28 bg-transparent text-slate-100 overflow-hidden flex flex-col justify-center"
     >
-      {/* Central Glowing Communication Core (Section 35) */}
+      {/* =========================================
+          ADAPTIVE SMS & MESSAGING NEXUS BACKGROUND
+          ========================================= */}
+      
+      {/* Central Glowing Communication Core */}
       <div
         ref={centerGlowRef}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-gradient-to-tr from-cyan-600/10 via-purple-600/15 to-transparent rounded-full blur-[160px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[700px] h-[600px] bg-gradient-to-tr from-cyan-600/15 via-emerald-600/10 to-purple-600/15 rounded-full blur-[160px] pointer-events-none"
       />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full space-y-16">
+      {/* Floating SMS Message Bubble Silhouettes in Background */}
+      <div className="absolute top-20 left-8 sm:left-16 pointer-events-none opacity-20 sm:opacity-30">
+        <div className="relative p-3 sm:p-4 rounded-2xl rounded-bl-none bg-emerald-500/20 border border-emerald-400/40 backdrop-blur-md flex items-center gap-2 max-w-[200px] animate-float-slow">
+          <div className="flex gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-bounce" style={{ animationDelay: "0ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-bounce" style={{ animationDelay: "150ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-bounce" style={{ animationDelay: "300ms" }} />
+          </div>
+          <span className="text-[10px] font-mono text-emerald-300">SMS / LIVE</span>
+        </div>
+      </div>
+
+      <div className="absolute bottom-28 right-8 sm:right-16 pointer-events-none opacity-20 sm:opacity-30">
+        <div className="relative p-3 sm:p-4 rounded-2xl rounded-br-none bg-cyan-500/20 border border-cyan-400/40 backdrop-blur-md flex items-center gap-2 max-w-[220px] animate-pulse-slow">
+          <div className="w-2 h-2 rounded-full bg-cyan-400" />
+          <span className="text-[10px] font-mono text-cyan-300">DISPATCH READY • 24/7</span>
+        </div>
+      </div>
+
+      {/* Grid Communication Mesh */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00f2fe08_1px,transparent_1px),linear-gradient(to_bottom,#00f2fe08_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 xs:px-6 relative z-10 w-full space-y-12 sm:space-y-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-xs font-mono text-cyan-300 tracking-[0.25em] uppercase">
-            <Send className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-xs font-mono text-cyan-300 tracking-[0.25em] uppercase">
+            <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
             <span>COMMUNICATION NEXUS</span>
           </div>
 
-          <h2 className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-display font-black tracking-tight text-white break-words">
+          <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-tight text-white break-words">
             HAVE AN IDEA?
           </h2>
 
-          <p className="text-lg xs:text-xl sm:text-3xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-purple-400 break-words">
+          <p className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-purple-400 break-words">
             LET'S TURN IT INTO SOMETHING REAL.
           </p>
 
-          <div className="w-36 mx-auto py-2">
+          <div className="w-36 mx-auto py-1">
             <TubeLight stop4="#00f2fe" stop3="#8b5cf6" height={1.5} />
           </div>
 
-          <p className="text-sm sm:text-base font-ui text-slate-300 leading-relaxed max-w-xl mx-auto px-2">
+          <p className="text-xs xs:text-sm sm:text-base md:text-lg font-ui text-slate-300 leading-relaxed max-w-xl mx-auto px-2">
             Whether you need a cutting-edge web platform, creative branding, cinematic video pacing, or a photography shoot, let's talk.
           </p>
         </div>
 
-        {/* Converging Contact Cards Grid */}
+        {/* Converging Contact Cards Grid - Balanced across Laptop, Tablet, Mobile */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
           {/* Left Column: Primary Direct Actions (WhatsApp & Email) */}
           <div ref={leftColRef} className="lg:col-span-6 space-y-6 flex flex-col justify-between">
-            {/* Primary WhatsApp Card (Section 34) */}
-            <div className="p-5 sm:p-8 rounded-3xl glass-card border border-emerald-500/30 hover:border-emerald-400/60 transition-all duration-300 relative overflow-hidden group shadow-2xl">
+            {/* Primary WhatsApp Card */}
+            <div className="p-5 sm:p-7 rounded-3xl glass-card border border-emerald-500/30 hover:border-emerald-400/60 transition-all duration-300 relative overflow-hidden group shadow-2xl">
               <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
 
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-lg">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-lg group-hover:scale-105 transition-transform">
                   <MessageSquare className="w-6 h-6" />
                 </div>
-                <span className="text-[11px] font-mono text-emerald-400 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-800">
-                  INSTANT MESSAGING
-                </span>
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-800 text-[11px] font-mono text-emerald-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                  <span>DIRECT SMS &amp; CHAT</span>
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -138,7 +167,7 @@ export default function Contact() {
                 <h3 className="text-xl xs:text-2xl sm:text-3xl font-display font-bold text-white break-words">
                   {contactInfo.whatsapp}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-400 font-body">
+                <p className="text-xs sm:text-sm text-slate-300 font-body">
                   Available for rapid inquiry, project scoping, and creative consultations.
                 </p>
               </div>
@@ -157,12 +186,12 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Email Card (Section 34) */}
-            <div className="p-5 sm:p-8 rounded-3xl glass-card border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-300 relative overflow-hidden group shadow-2xl">
+            {/* Email Card */}
+            <div className="p-5 sm:p-7 rounded-3xl glass-card border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-300 relative overflow-hidden group shadow-2xl">
               <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
 
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-lg">
+                <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-lg group-hover:scale-105 transition-transform">
                   <Mail className="w-6 h-6" />
                 </div>
                 <span className="text-[11px] font-mono text-cyan-400 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-800">
@@ -177,11 +206,11 @@ export default function Contact() {
                 <a
                   href={`mailto:${contactInfo.email}`}
                   data-cursor="EMAIL"
-                  className="block text-base xs:text-xl sm:text-2xl font-mono font-bold text-cyan-300 hover:text-white transition-colors truncate"
+                  className="block text-base xs:text-lg sm:text-2xl font-mono font-bold text-cyan-300 hover:text-white transition-colors truncate"
                 >
                   {contactInfo.email}
                 </a>
-                <p className="text-xs sm:text-sm text-slate-400 font-body">
+                <p className="text-xs sm:text-sm text-slate-300 font-body">
                   Feel free to send proposals, collaboration requests, or direct RFPs.
                 </p>
               </div>
@@ -192,6 +221,7 @@ export default function Contact() {
                   cursorText="SEND"
                   icon={ArrowUpRight}
                   variant="primary"
+                  className="w-full sm:w-auto"
                 >
                   SEND EMAIL →
                 </ShaderButton>
@@ -200,7 +230,7 @@ export default function Contact() {
           </div>
 
           {/* Right Column: Social Channels & Profiles */}
-          <div ref={rightColRef} className="lg:col-span-6 space-y-4 flex flex-col justify-between">
+          <div ref={rightColRef} className="lg:col-span-6 space-y-3.5 sm:space-y-4 flex flex-col justify-between">
             <span className="text-xs font-mono tracking-widest text-slate-400 uppercase font-semibold">
               CONNECTED CHANNELS
             </span>
@@ -211,22 +241,22 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="OPEN"
-              className="p-5 rounded-2xl glass-card border border-white/10 hover:border-pink-500/40 transition-all flex items-center justify-between group"
+              className="p-4 sm:p-5 rounded-2xl glass-card border border-white/10 hover:border-pink-500/40 transition-all flex items-center justify-between group"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-pink-400 group-hover:scale-105 transition-transform">
-                  <Instagram className="w-6 h-6" />
+              <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-pink-400 group-hover:scale-105 transition-transform shrink-0">
+                  <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div>
-                  <h4 className="font-ui font-bold text-white text-base group-hover:text-pink-300 transition-colors">
+                <div className="min-w-0 truncate">
+                  <h4 className="font-ui font-bold text-white text-sm sm:text-base group-hover:text-pink-300 transition-colors truncate">
                     Instagram Main
                   </h4>
-                  <p className="text-xs font-mono text-pink-400">
+                  <p className="text-xs font-mono text-pink-400 truncate">
                     {contactInfo.instagram.handle}
                   </p>
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-pink-300 transition-colors" />
+              <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-pink-300 transition-colors shrink-0 ml-2" />
             </a>
 
             {/* Photography Instagram - Shuttersbytec */}
@@ -235,22 +265,22 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="OPEN"
-              className="p-5 rounded-2xl glass-card border border-white/10 hover:border-amber-500/40 transition-all flex items-center justify-between group"
+              className="p-4 sm:p-5 rounded-2xl glass-card border border-white/10 hover:border-amber-500/40 transition-all flex items-center justify-between group"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
-                  <Instagram className="w-6 h-6" />
+              <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform shrink-0">
+                  <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div>
-                  <h4 className="font-ui font-bold text-white text-base group-hover:text-amber-300 transition-colors">
+                <div className="min-w-0 truncate">
+                  <h4 className="font-ui font-bold text-white text-sm sm:text-base group-hover:text-amber-300 transition-colors truncate">
                     Photography Instagram
                   </h4>
-                  <p className="text-xs font-mono text-amber-400">
+                  <p className="text-xs font-mono text-amber-400 truncate">
                     {contactInfo.photographyInstagram.handle}
                   </p>
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-amber-300 transition-colors" />
+              <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-amber-300 transition-colors shrink-0 ml-2" />
             </a>
 
             {/* LinkedIn */}
@@ -259,22 +289,22 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="OPEN"
-              className="p-5 rounded-2xl glass-card border border-white/10 hover:border-blue-500/40 transition-all flex items-center justify-between group"
+              className="p-4 sm:p-5 rounded-2xl glass-card border border-white/10 hover:border-blue-500/40 transition-all flex items-center justify-between group"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
-                  <Linkedin className="w-6 h-6" />
+              <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform shrink-0">
+                  <Linkedin className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div>
-                  <h4 className="font-ui font-bold text-white text-base group-hover:text-blue-300 transition-colors">
+                <div className="min-w-0 truncate">
+                  <h4 className="font-ui font-bold text-white text-sm sm:text-base group-hover:text-blue-300 transition-colors truncate">
                     LinkedIn Network
                   </h4>
-                  <p className="text-xs font-mono text-blue-400">
+                  <p className="text-xs font-mono text-blue-400 truncate">
                     {contactInfo.linkedin.handle}
                   </p>
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-blue-300 transition-colors" />
+              <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-blue-300 transition-colors shrink-0 ml-2" />
             </a>
 
             {/* GitHub */}
@@ -283,22 +313,22 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="OPEN"
-              className="p-5 rounded-2xl glass-card border border-white/10 hover:border-purple-500/40 transition-all flex items-center justify-between group"
+              className="p-4 sm:p-5 rounded-2xl glass-card border border-white/10 hover:border-purple-500/40 transition-all flex items-center justify-between group"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
-                  <Github className="w-6 h-6" />
+              <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform shrink-0">
+                  <Github className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div>
-                  <h4 className="font-ui font-bold text-white text-base group-hover:text-purple-300 transition-colors">
+                <div className="min-w-0 truncate">
+                  <h4 className="font-ui font-bold text-white text-sm sm:text-base group-hover:text-purple-300 transition-colors truncate">
                     GitHub Codebases
                   </h4>
-                  <p className="text-xs font-mono text-purple-400">
+                  <p className="text-xs font-mono text-purple-400 truncate">
                     {contactInfo.github.handle}
                   </p>
                 </div>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-purple-300 transition-colors" />
+              <ArrowUpRight className="w-5 h-5 text-slate-400 group-hover:text-purple-300 transition-colors shrink-0 ml-2" />
             </a>
           </div>
         </div>

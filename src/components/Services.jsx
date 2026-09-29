@@ -58,26 +58,27 @@ export default function Services() {
       ref={sectionRef}
       className="relative min-h-screen w-full py-28 bg-transparent text-slate-100 overflow-hidden"
     >
-      {/* Ambient Lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gradient-to-r from-cyan-600/10 via-purple-600/10 to-transparent blur-[160px] pointer-events-none" />
+      {/* Adaptive Solutions & Services Spotlight Background */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[85vw] max-w-[700px] h-[500px] bg-gradient-to-r from-cyan-600/12 via-purple-600/12 to-transparent blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-10 right-10 w-52 h-52 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full space-y-16">
+      <div className="max-w-7xl mx-auto px-4 xs:px-6 relative z-10 w-full space-y-12 sm:space-y-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-xs font-mono text-cyan-300 tracking-[0.25em] uppercase">
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-xs font-mono text-cyan-300 tracking-[0.25em] uppercase">
             <Sparkles className="w-3.5 h-3.5" />
             <span>SOLUTIONS &amp; COLLABORATION</span>
           </div>
 
-          <h2 className="text-3xl xs:text-4xl sm:text-6xl font-display font-black tracking-tight text-white break-words">
+          <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-tight text-white break-words">
             LET'S BUILD SOMETHING.
           </h2>
 
-          <div className="w-36 mx-auto py-2">
+          <div className="w-36 mx-auto py-1">
             <TubeLight stop4="#00f2fe" stop3="#8b5cf6" height={1.5} />
           </div>
 
-          <p className="text-sm sm:text-lg font-ui text-slate-300 leading-relaxed px-2">
+          <p className="text-xs xs:text-sm sm:text-base md:text-lg font-ui text-slate-300 leading-relaxed px-2">
             Multidisciplinary capabilities bridging digital engineering, visual art, and creative media.
           </p>
         </div>

@@ -2,6 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Britney from Fontshare */
+@font-face {
+  font-family: 'Britney';
+  src: url('./assets/fonts/britney-regular.woff2') format('woff2'),
+       url('https://cdn.fontshare.com/wf/ZUJNGXS65F747JL4GFH2MSH25QOYBH4N/4EC74MBP2NXZZJABYQGPQPJKUIVJIT4V/TZNLC4T7WKMSFR6TU6AIXCJRIJGIMG3B.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Britney';
+  src: url('./assets/fonts/britney-bold.woff2') format('woff2'),
+       url('https://cdn.fontshare.com/wf/TWFUALX67A5DZ7ARIWU64XRAROOQLUNO/AYQHRIWI7YZ5VWXR3T67OJDWXFIREGDY/ZL52X4UE6RB5KF32U5FQL4NLVM6YM4BZ.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+/* Quicksand from Fontshare / Google Fonts */
+@font-face {
+  font-family: 'Quicksand';
+  src: url('./assets/fonts/quicksand-regular.ttf') format('truetype'),
+       url('https://fonts.gstatic.com/s/quicksand/v37/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkP8o18E.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('./assets/fonts/quicksand-medium.ttf') format('truetype'),
+       url('https://fonts.gstatic.com/s/quicksand/v37/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkM0o18E.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('./assets/fonts/quicksand-semibold.ttf') format('truetype'),
+       url('https://fonts.gstatic.com/s/quicksand/v37/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkCEv18E.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('./assets/fonts/quicksand-bold.ttf') format('truetype'),
+       url('https://fonts.gstatic.com/s/quicksand/v37/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkBgv18E.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
 @layer base {
   :root {
     --accent-glow: rgba(0, 242, 254, 0.15);
@@ -15,6 +71,7 @@
     overflow-x: hidden;
     max-width: 100vw;
     width: 100%;
+    font-family: 'Quicksand', sans-serif;
   }
 
   body {
@@ -23,6 +80,8 @@
     width: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Quicksand', sans-serif;
+    letter-spacing: 0.015em;
   }
 
   *, *::before, *::after {

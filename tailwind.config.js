@@ -10,9 +10,9 @@ export default {
         xs: '420px',
       },
       fontFamily: {
-        display: ['"Behind The Nineties"', 'Syne', 'Cinzel', 'sans-serif'],
-        body: ['Switzer', 'Plus Jakarta Sans', 'Inter', 'sans-serif'],
-        ui: ['Sora', 'Inter', 'sans-serif'],
+        display: ['Britney', 'Syne', 'sans-serif'],
+        body: ['Quicksand', 'sans-serif'],
+        ui: ['Quicksand', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
