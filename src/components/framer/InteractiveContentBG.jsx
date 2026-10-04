@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { onSmoothScroll } from "../../animations/lenisScroll";
 
 // Content-matched visual theme configurations tailored to Abdur Rahman's domains
 const THEMES = {
@@ -108,14 +109,17 @@ const SECTION_KEYS = Object.keys(THEMES);
 export default function InteractiveContentBG({ className = "" }) {
   const canvasRef = useRef(null);
   const [activeSectionId, setActiveSectionId] = useState("hero");
-  const [manualOverrideTheme, setManualOverrideTheme] = useState(null);
-  const [hudExpanded, setHudExpanded] = useState(false);
+  const activeSectionRef = useRef(activeSectionId);
+
+  // Keep ref synchronized with state for 60fps canvas loop without re-triggering effect
+  useEffect(() => {
+    activeSectionRef.current = activeSectionId;
+  }, [activeSectionId]);
 
   // Active theme reference
-  const currentThemeId = manualOverrideTheme || activeSectionId;
-  const currentTheme = THEMES[currentThemeId] || THEMES.hero;
+  const currentTheme = THEMES[activeSectionId] || THEMES.hero;
 
-  // Track active section as user scrolls through the portfolio
+  // Track active section automatically as user scrolls through the portfolio
   useEffect(() => {
     let ticking = false;
 
@@ -144,9 +148,13 @@ export default function InteractiveContentBG({ className = "" }) {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    const unregisterLenis = onSmoothScroll(handleScroll);
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      unregisterLenis();
+    };
   }, []);
 
   // Main Interactive Canvas Engine
@@ -223,8 +231,6 @@ export default function InteractiveContentBG({ className = "" }) {
 
     // Global click / tap listener for interactive shockwaves
     const handleClick = (e) => {
-      // Don't trigger if clicked on an interactive control button inside HUD
-      if (e.target && e.target.closest && e.target.closest(".interactive-bg-ctrl")) return;
       triggerShockwave(e.clientX, e.clientY);
     };
 
@@ -288,8 +294,8 @@ export default function InteractiveContentBG({ className = "" }) {
       mouse.lastX = mouse.smoothX;
       mouse.lastY = mouse.smoothY;
 
-      // 2. Continuous color interpolation (smooth lerp 0.06)
-      const target = THEMES[manualOverrideTheme || activeSectionId] || THEMES.hero;
+      // 2. Continuous color interpolation (smooth lerp 0.055)
+      const target = THEMES[activeSectionRef.current] || THEMES.hero;
       for (let c = 0; c < 3; c++) {
         currentColors.primary[c] += (target.primary[c] - currentColors.primary[c]) * 0.055;
         currentColors.secondary[c] += (target.secondary[c] - currentColors.secondary[c]) * 0.055;
@@ -644,133 +650,41 @@ export default function InteractiveContentBG({ className = "" }) {
       document.removeEventListener("mouseleave", handleMouseLeave);
       delete window.__triggerBgShockwave;
     };
-  }, [activeSectionId, manualOverrideTheme]);
-
-  // Handle manual shockwave click from HUD button
-  const handlePulseClick = () => {
-    if (typeof window.__triggerBgShockwave === "function") {
-      window.__triggerBgShockwave(window.innerWidth * 0.5, window.innerHeight * 0.5);
-    }
-  };
-
-  // Cycle through themes manually if user clicks "Cycle"
-  const handleCycleTheme = () => {
-    const currentIndex = SECTION_KEYS.indexOf(currentThemeId);
-    const nextIndex = (currentIndex + 1) % SECTION_KEYS.length;
-    setManualOverrideTheme(SECTION_KEYS[nextIndex]);
-  };
-
-  // Reset to auto scroll sync
-  const handleAutoSync = () => {
-    setManualOverrideTheme(null);
-  };
+  }, []);
 
   return (
-    <>
-      {/* Fixed Fullscreen Canvas Layer */}
+    <div
+      className={`fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#020205] ${className}`}
+      aria-hidden="true"
+    >
+      {/* Soft Multi-Octave Atmospheric Gradient Backdrop */}
       <div
-        className={`fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#020205] ${className}`}
-        aria-hidden="true"
-      >
-        {/* Soft Multi-Octave Atmospheric Gradient Backdrop */}
-        <div
-          className="absolute -top-[25%] -left-[15%] w-[75vw] h-[75vw] rounded-full blur-[160px] transition-colors duration-1000 ease-out pointer-events-none opacity-80"
-          style={{
-            background: `radial-gradient(circle, rgba(${currentTheme.primary.join(",")}, 0.16) 0%, rgba(${currentTheme.secondary.join(",")}, 0.06) 50%, transparent 80%)`
-          }}
-        />
-        <div
-          className="absolute top-[40%] -right-[20%] w-[70vw] h-[70vw] rounded-full blur-[170px] transition-colors duration-1000 ease-out pointer-events-none opacity-70"
-          style={{
-            background: `radial-gradient(circle, rgba(${currentTheme.secondary.join(",")}, 0.14) 0%, rgba(${currentTheme.accent.join(",")}, 0.05) 50%, transparent 80%)`
-          }}
-        />
-        <div
-          className="absolute -bottom-[20%] left-[20%] w-[65vw] h-[65vw] rounded-full blur-[150px] transition-colors duration-1000 ease-out pointer-events-none opacity-60"
-          style={{
-            background: `radial-gradient(circle, rgba(${currentTheme.primary.join(",")}, 0.12) 0%, transparent 70%)`
-          }}
-        />
+        className="absolute -top-[25%] -left-[15%] w-[75vw] h-[75vw] rounded-full blur-[160px] transition-colors duration-1000 ease-out pointer-events-none opacity-80"
+        style={{
+          background: `radial-gradient(circle, rgba(${currentTheme.primary.join(",")}, 0.16) 0%, rgba(${currentTheme.secondary.join(",")}, 0.06) 50%, transparent 80%)`
+        }}
+      />
+      <div
+        className="absolute top-[40%] -right-[20%] w-[70vw] h-[70vw] rounded-full blur-[170px] transition-colors duration-1000 ease-out pointer-events-none opacity-70"
+        style={{
+          background: `radial-gradient(circle, rgba(${currentTheme.secondary.join(",")}, 0.14) 0%, rgba(${currentTheme.accent.join(",")}, 0.05) 50%, transparent 80%)`
+        }}
+      />
+      <div
+        className="absolute -bottom-[20%] left-[20%] w-[65vw] h-[65vw] rounded-full blur-[150px] transition-colors duration-1000 ease-out pointer-events-none opacity-60"
+        style={{
+          background: `radial-gradient(circle, rgba(${currentTheme.primary.join(",")}, 0.12) 0%, transparent 70%)`
+        }}
+      />
 
-        {/* Generative Interactive Canvas */}
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none"
-        />
+      {/* Generative Interactive Canvas */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+      />
 
-        {/* Film Grain Texture Overlay */}
-        <div className="absolute inset-0 film-grain opacity-[0.38] pointer-events-none" />
-      </div>
-
-      {/* Interactive Atmosphere HUD Pill (Bottom Left) */}
-      <div className="fixed bottom-5 left-5 z-[80] pointer-events-auto">
-        <div
-          className="interactive-bg-ctrl flex flex-col gap-1.5 p-2 rounded-2xl glass-panel border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all duration-300 backdrop-blur-xl"
-          style={{
-            borderColor: `rgba(${currentTheme.primary.join(",")}, 0.35)`
-          }}
-        >
-          {/* Main Status Bar */}
-          <div className="flex items-center gap-2 px-2 py-1">
-            {/* Luminous Pulsing Theme Dot */}
-            <span
-              className="w-2.5 h-2.5 rounded-full animate-pulse transition-colors duration-500 shadow-sm"
-              style={{
-                backgroundColor: `rgb(${currentTheme.primary.join(",")})`,
-                boxShadow: `0 0 10px rgb(${currentTheme.primary.join(",")})`
-              }}
-            />
-
-            <div className="flex flex-col">
-              <span className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-white">
-                {currentTheme.label}
-              </span>
-              <span className="text-[9px] font-ui text-slate-400 hidden sm:inline">
-                {currentTheme.sub}
-              </span>
-            </div>
-
-            {/* Quick Interactive Pulse Trigger Button */}
-            <button
-              onClick={handlePulseClick}
-              title="Send shockwave pulse across background"
-              className="ml-2 px-2 py-0.5 rounded-lg bg-white/5 hover:bg-white/15 text-[10px] font-mono text-cyan-300 border border-white/10 hover:border-cyan-400/50 transition-all cursor-pointer"
-            >
-              ⚡ PULSE
-            </button>
-
-            {/* Expand / Controls toggle */}
-            <button
-              onClick={() => setHudExpanded(!hudExpanded)}
-              title="Toggle interactive ambience controls"
-              className="px-1.5 py-0.5 rounded-lg text-[10px] font-mono text-slate-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
-            >
-              {hudExpanded ? "▲" : "▼"}
-            </button>
-          </div>
-
-          {/* Expanded Atmosphere Options & Overrides */}
-          {hudExpanded && (
-            <div className="pt-2 border-t border-white/10 flex flex-wrap items-center gap-1.5 px-1 pb-1">
-              <button
-                onClick={handleCycleTheme}
-                className="px-2 py-1 rounded-md bg-purple-950/60 hover:bg-purple-900 text-[10px] font-mono text-purple-200 border border-purple-500/30 transition-all cursor-pointer"
-              >
-                ⇄ CYCLE THEME
-              </button>
-
-              {manualOverrideTheme && (
-                <button
-                  onClick={handleAutoSync}
-                  className="px-2 py-1 rounded-md bg-cyan-950/60 hover:bg-cyan-900 text-[10px] font-mono text-cyan-300 border border-cyan-400/30 transition-all cursor-pointer"
-                >
-                  ↺ AUTO SCROLL SYNC
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-    </>
+      {/* Film Grain Texture Overlay */}
+      <div className="absolute inset-0 film-grain opacity-[0.38] pointer-events-none" />
+    </div>
   );
 }
