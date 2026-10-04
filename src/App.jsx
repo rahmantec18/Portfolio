@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { initSmoothScroll } from "./animations/lenisScroll";
 import MinimalPreloader from "./components/framer/MinimalPreloader";
 import SmoothCursor from "./components/framer/SmoothCursor";
-import TimeBasedBG from "./components/framer/TimeBasedBG";
+import InteractiveContentBG from "./components/framer/InteractiveContentBG";
+import SmoothScrollProgress from "./components/framer/SmoothScrollProgress";
+import SectionTransitionDivider from "./components/framer/SectionTransitionDivider";
 import BreathingNavbar from "./components/framer/BreathingNavbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -66,8 +68,11 @@ export default function App() {
       {/* 2. Custom Smooth Spring Cursor */}
       <SmoothCursor />
 
-      {/* 3. Time of Day Ambient Glow System */}
-      <TimeBasedBG />
+      {/* 3. Global Interactive Content-Aware Background */}
+      <InteractiveContentBG />
+
+      {/* 3.5 Laser Scroll Progress & Circular Scroll-to-Top Navigator */}
+      <SmoothScrollProgress />
 
       {/* 4. Fixed Breathing Navbar (Slides in after entering portfolio) */}
       {!showIntro && (
@@ -84,39 +89,105 @@ export default function App() {
         {/* HERO */}
         <Hero isEnhanced={isEnhanced} onOpenResume={() => setIsResumeOpen(true)} />
 
+        <SectionTransitionDivider
+          gradient="from-transparent via-cyan-500/10 to-transparent"
+          lineGradient="from-transparent via-cyan-400/30 to-transparent"
+          glowColor="rgba(0, 242, 254, 0.15)"
+        />
+
         {/* ABOUT ME: Authentic portrait with distant -> approach -> focus journey */}
         <About onOpenResume={() => setIsResumeOpen(true)} />
+
+        <SectionTransitionDivider
+          gradient="from-transparent via-amber-500/10 to-transparent"
+          lineGradient="from-transparent via-amber-400/30 to-transparent"
+          glowColor="rgba(245, 158, 11, 0.15)"
+        />
 
         {/* TECH / WEB DEVELOPMENT: 3D skill cards with tilt, elevate, glow */}
         <ErrorBoundary>
           <TechWorld />
         </ErrorBoundary>
 
+        <SectionTransitionDivider
+          gradient="from-transparent via-blue-500/10 to-transparent"
+          lineGradient="from-transparent via-blue-400/30 to-transparent"
+          glowColor="rgba(59, 130, 246, 0.15)"
+        />
+
         {/* WEB PROJECTS: 3D interactive browser environments */}
         <Projects />
+
+        <SectionTransitionDivider
+          gradient="from-transparent via-purple-500/10 to-transparent"
+          lineGradient="from-transparent via-purple-400/30 to-transparent"
+          glowColor="rgba(168, 85, 247, 0.15)"
+        />
 
         {/* CODE -> CAMERA PHYSICAL TRANSFORMATION */}
         <CodeCameraTransition />
 
+        <SectionTransitionDivider
+          gradient="from-transparent via-amber-500/10 to-transparent"
+          lineGradient="from-transparent via-amber-400/30 to-transparent"
+          glowColor="rgba(251, 191, 36, 0.15)"
+        />
+
         {/* PHOTOGRAPHY: 10 authentic moments, pinned 3D sequence & DNA Helix */}
         <Photography />
+
+        <SectionTransitionDivider
+          gradient="from-transparent via-rose-500/10 to-transparent"
+          lineGradient="from-transparent via-rose-400/30 to-transparent"
+          glowColor="rgba(244, 63, 94, 0.15)"
+        />
 
         {/* VIDEO EDITING: Scroll-driven playhead timeline & Team O7 */}
         <ErrorBoundary>
           <VideoEditing />
         </ErrorBoundary>
 
+        <SectionTransitionDivider
+          gradient="from-transparent via-fuchsia-500/10 to-transparent"
+          lineGradient="from-transparent via-fuchsia-400/30 to-transparent"
+          glowColor="rgba(217, 70, 239, 0.15)"
+        />
+
         {/* GRAPHIC DESIGN: Layer assembly & Creative suite */}
         <GraphicDesign />
+
+        <SectionTransitionDivider
+          gradient="from-transparent via-pink-500/10 to-transparent"
+          lineGradient="from-transparent via-pink-400/30 to-transparent"
+          glowColor="rgba(236, 72, 153, 0.15)"
+        />
 
         {/* EXPERIENCE: 2025, 2026, Rotaract Club timeline */}
         <Experience />
 
+        <SectionTransitionDivider
+          gradient="from-transparent via-blue-500/10 to-transparent"
+          lineGradient="from-transparent via-cyan-400/30 to-transparent"
+          glowColor="rgba(37, 99, 235, 0.15)"
+        />
+
         {/* SERVICES: Modern Web, Photography, Design, Video, Modelling */}
         <Services />
 
+        <SectionTransitionDivider
+          gradient="from-transparent via-violet-500/10 to-transparent"
+          lineGradient="from-transparent via-violet-400/30 to-transparent"
+          glowColor="rgba(139, 92, 246, 0.15)"
+        />
+
         {/* BEYOND WORK: Personal passions */}
         <BeyondWork />
+
+        <SectionTransitionDivider
+          gradient="from-transparent via-emerald-500/10 to-transparent"
+          lineGradient="from-transparent via-emerald-400/30 to-transparent"
+          glowColor="rgba(16, 185, 129, 0.15)"
+        />
 
         {/* CONTACT: Converging layout & All clickable channels */}
         <Contact />

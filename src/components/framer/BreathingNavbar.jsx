@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, Eye, Download } from "lucide-react";
 import TubeLight from "./TubeLight";
+import { smoothScrollTo } from "../../animations/lenisScroll";
 
 const navItems = [
   { label: "ABOUT", href: "#about" },
@@ -44,11 +45,7 @@ export default function BreathingNavbar({ onToggleAesthetics, isEnhanced, onOpen
     const id = href.replace("#", "");
     const el = document.getElementById(id);
     if (el) {
-      if (window.lenis) {
-        window.lenis.scrollTo(el, { offset: -60, duration: 1.2 });
-      } else {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
+      smoothScrollTo(el, { offset: -75, duration: 1.25 });
       setMobileMenuOpen(false);
     }
   };
