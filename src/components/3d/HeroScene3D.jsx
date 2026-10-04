@@ -36,29 +36,29 @@ export default function HeroScene3D({ className = "" }) {
     const worldGroup = new THREE.Group();
     scene.add(worldGroup);
 
-    // 1. Abstract Geometric Crystal (Icosahedron Wireframe + Inner Core)
+    // 1. Abstract Geometric Crystal (Subtle, minimal wireframe)
     const geom = new THREE.IcosahedronGeometry(7, 1);
     const wireMat = new THREE.MeshBasicMaterial({
       color: 0x00f2fe,
       wireframe: true,
       transparent: true,
-      opacity: 0.28
+      opacity: 0.08
     });
     const icosahedron = new THREE.Mesh(geom, wireMat);
     worldGroup.add(icosahedron);
 
-    // Inner Glowing Core
+    // Inner Core (Very subtle accent)
     const innerGeom = new THREE.OctahedronGeometry(4, 0);
     const innerMat = new THREE.MeshBasicMaterial({
       color: 0x8b5cf6,
       wireframe: true,
       transparent: true,
-      opacity: 0.45
+      opacity: 0.12
     });
     const innerCore = new THREE.Mesh(innerGeom, innerMat);
     worldGroup.add(innerCore);
 
-    // 2. Floating Particle Constellation
+    // 2. Floating Particle Constellation (Minimal, elegant star dust)
     const particleGeo = new THREE.BufferGeometry();
     const posArray = new Float32Array(particleCount * 3);
     const scaleArray = new Float32Array(particleCount);
@@ -67,16 +67,16 @@ export default function HeroScene3D({ className = "" }) {
       posArray[i] = (Math.random() - 0.5) * 80;
       posArray[i + 1] = (Math.random() - 0.5) * 60;
       posArray[i + 2] = (Math.random() - 0.5) * 60;
-      scaleArray[i / 3] = Math.random() * 2 + 0.5;
+      scaleArray[i / 3] = Math.random() * 1.5 + 0.5;
     }
 
     particleGeo.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      size: 0.35,
+      size: 0.22,
       color: 0x00f2fe,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.25,
       blending: THREE.AdditiveBlending
     });
     const particles = new THREE.Points(particleGeo, particleMat);

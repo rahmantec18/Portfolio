@@ -1,16 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Code, Camera, Sparkles, Terminal, Layers, Eye, Download } from "lucide-react";
 import HeroScene3D from "./3d/HeroScene3D";
-import Ridgelume from "./framer/Ridgelume";
 import ShaderButton from "./framer/ShaderButton";
 import FluidButton from "./framer/FluidButton";
-import TubeLight from "./framer/TubeLight";
-import VolumetricCursorLighting from "./framer/VolumetricCursorLighting";
 
 export default function Hero({ isEnhanced = true, onOpenResume }) {
   const heroRef = useRef(null);
-  const [lightingOpacity, setLightingOpacity] = useState(0.38);
 
   const phrases = ["I DESIGN.", "I CAPTURE.", "I EDIT."];
 
@@ -20,68 +16,72 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
       ref={heroRef}
       className="relative min-h-screen w-full flex items-center justify-center pt-24 pb-16 overflow-hidden bg-transparent"
     >
-      {/* 3D Canvas Background */}
+      {/* 3D Canvas Background with subtle, minimal wireframe crystal */}
       {isEnhanced && <HeroScene3D />}
 
-      {/* Interactive Volumetric Cursor Lighting with ABDUR RAHMAN (Reduced opacity for subtle elegance) */}
-      <VolumetricCursorLighting opacity={lightingOpacity} isEnhanced={isEnhanced} />
-
-      {/* Atmospheric Horizon Light */}
-      <div className="absolute -bottom-20 left-0 right-0 h-40 opacity-40">
-        <Ridgelume colorA="#0A9FBD" colorB="#00D2FF" colorC="#8b5cf6" />
-      </div>
-
-      {/* Adaptive Hero Aurora Glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[800px] h-[450px] bg-gradient-to-tr from-cyan-500/15 via-purple-600/15 to-transparent blur-[130px] pointer-events-none rounded-full" />
-      <div className="absolute -top-10 right-10 w-72 h-72 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+      {/* Neat & Minimal Ambient Center Glow - Ultra-soft 4% opacity */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[320px] bg-cyan-500/[0.035] rounded-full blur-[100px] pointer-events-none" />
 
       {/* Hero Content Container */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 xs:px-6 flex flex-col items-center text-center">
-        {/* Subtle Tube Light accent */}
-        <div className="w-36 sm:w-48 mb-6">
-          <TubeLight stop4="#00f2fe" stop3="#8b5cf6" height={2} />
-        </div>
-
-        {/* Small Intro Badge */}
+        {/* Minimal Kicker Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/80 backdrop-blur-md mb-6 shadow-lg shadow-cyan-950/20"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900/60 border border-slate-800 backdrop-blur-sm mb-6"
         >
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-          <span className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.25em] text-slate-300 font-semibold">
-            ABDUR RAHMAN I
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/80 animate-pulse" />
+          <span className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.25em] text-slate-300 font-medium">
+            PORTFOLIO &bull; ABDUR RAHMAN I
           </span>
         </motion.div>
 
-        {/* Main Headline - Perfect 3-System Responsive Scaling */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-black tracking-tight text-white max-w-4xl leading-[1.08] break-words"
-        >
-          I BUILD{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-purple-400">
-            DIGITAL EXPERIENCES.
-          </span>
-        </motion.h1>
-
-        {/* Secondary Animated Phrases: I DESIGN. I CAPTURE. I EDIT. */}
+        {/* Main Cinematic Name Headline - Neat, Sharp, Prestigious */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-5 sm:mt-6 flex flex-wrap items-center justify-center gap-2 xs:gap-3 sm:gap-5 font-display font-bold text-xs xs:text-sm sm:text-lg md:text-xl text-slate-300"
+          transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="relative flex flex-col items-center justify-center w-full"
+        >
+          <h1 className="font-['Syne',sans-serif] font-black tracking-tight text-white uppercase text-center leading-[0.98] select-none text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+            <span className="inline-block text-white">
+              ABDUR
+            </span>{" "}
+            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-300">
+              RAHMAN
+            </span>
+          </h1>
+        </motion.div>
+
+        {/* Secondary Title / Creative Technologist Roles - Minimal Monospace */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-5 sm:mt-6 flex flex-wrap items-center justify-center gap-2 xs:gap-3 sm:gap-4 font-mono text-xs sm:text-sm tracking-[0.2em] text-slate-400 uppercase font-medium"
+        >
+          <span>CREATIVE TECHNOLOGIST</span>
+          <span className="w-1 h-1 rounded-full bg-cyan-500/50" />
+          <span>WEB DEVELOPER</span>
+          <span className="w-1 h-1 rounded-full bg-purple-500/50" />
+          <span>CYBER SECURITY</span>
+        </motion.div>
+
+        {/* Creative Disciplines: I DESIGN. I CAPTURE. I EDIT. */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="mt-5 flex flex-wrap items-center justify-center gap-2 xs:gap-3 sm:gap-5 font-display font-bold text-xs xs:text-sm sm:text-lg text-slate-300"
         >
           {phrases.map((phrase, idx) => (
             <span key={phrase} className="flex items-center gap-2 xs:gap-3 sm:gap-5">
-              <span className="hover:text-cyan-300 transition-colors duration-300 tracking-wider">
+              <span className="hover:text-cyan-300 transition-colors duration-200 tracking-wider">
                 {phrase}
               </span>
               {idx < phrases.length - 1 && (
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-400/80" />
+                <span className="w-1 h-1 rounded-full bg-slate-600" />
               )}
             </span>
           ))}
@@ -89,51 +89,51 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
 
         {/* Supporting Line */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-5 sm:mt-6 text-xs xs:text-sm sm:text-base md:text-lg font-ui font-semibold text-cyan-200/90 max-w-2xl tracking-wide px-2"
+          transition={{ duration: 0.7, delay: 0.5 }}
+          className="mt-4 text-xs xs:text-sm sm:text-base font-ui font-medium text-slate-300 max-w-2xl tracking-wide px-2"
         >
-          Web Developer • Creative Designer • Photographer • Video Editor
+          Web Developer &bull; Creative Designer &bull; Photographer &bull; Video Editor
         </motion.p>
 
-        {/* Additional Line */}
+        {/* Personal Mission Statement */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-3 text-xs sm:text-sm font-body text-slate-300/90 max-w-xl leading-relaxed px-2"
+          transition={{ duration: 0.7, delay: 0.6 }}
+          className="mt-2.5 text-xs sm:text-sm font-body text-slate-400 max-w-xl leading-relaxed px-2"
         >
           A Cyber Security student with a creative mind and a passion for building experiences beyond code.
         </motion.p>
 
-        {/* Floating Creative Tech Badges */}
+        {/* Floating Creative Tech Badges - Neat & Clean */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-2"
+          transition={{ duration: 0.7, delay: 0.7 }}
+          className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 px-2"
         >
-          <div className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-lg bg-slate-900/70 border border-cyan-500/25 text-cyan-300 text-[11px] sm:text-xs font-mono backdrop-blur-sm shadow-sm">
-            <Code className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/50 border border-slate-800 text-slate-300 text-[11px] sm:text-xs font-mono">
+            <Code className="w-3.5 h-3.5 text-cyan-400" />
             <span>Creative Tech</span>
           </div>
-          <div className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-lg bg-slate-900/70 border border-emerald-500/25 text-emerald-300 text-[11px] sm:text-xs font-mono backdrop-blur-sm shadow-sm">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/50 border border-slate-800 text-slate-300 text-[11px] sm:text-xs font-mono">
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
             <span>Cyber Security Focus</span>
           </div>
-          <div className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-lg bg-slate-900/70 border border-purple-500/25 text-purple-300 text-[11px] sm:text-xs font-mono backdrop-blur-sm shadow-sm">
-            <Camera className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/50 border border-slate-800 text-slate-300 text-[11px] sm:text-xs font-mono">
+            <Camera className="w-3.5 h-3.5 text-purple-400" />
             <span>Cinematic Visuals</span>
           </div>
         </motion.div>
 
-        {/* Action Buttons - Clean alignment across Laptop, Tablet, Mobile */}
+        {/* Action Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-2.5 xs:gap-3 sm:gap-4 max-w-2xl px-2 w-full"
+          transition={{ duration: 0.7, delay: 0.8 }}
+          className="mt-8 sm:mt-9 flex flex-wrap items-center justify-center gap-2.5 xs:gap-3 sm:gap-4 max-w-2xl px-2 w-full"
         >
           <ShaderButton
             href="#projects"
@@ -144,10 +144,10 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
             EXPLORE WORK
           </ShaderButton>
 
-          <div className="inline-flex rounded-xl p-0.5 bg-gradient-to-r from-cyan-950/90 to-slate-900/90 border border-cyan-400/40 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(0,242,254,0.25)] transition-all duration-300 w-full xs:w-auto justify-between sm:justify-start">
+          <div className="inline-flex rounded-xl p-0.5 bg-slate-900/80 border border-slate-700/60 hover:border-cyan-400/50 transition-all duration-300 w-full xs:w-auto justify-between sm:justify-start">
             <button
               onClick={onOpenResume}
-              className="flex-1 xs:flex-initial inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3 rounded-lg font-ui font-semibold text-xs sm:text-sm tracking-wide text-cyan-200 hover:text-white hover:bg-cyan-500/15 transition-all cursor-pointer"
+              className="flex-1 xs:flex-initial inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3 rounded-lg font-ui font-semibold text-xs sm:text-sm tracking-wide text-slate-200 hover:text-white hover:bg-white/5 transition-all cursor-pointer"
             >
               <Eye className="w-4 h-4 text-cyan-400" />
               <span>VIEW RESUME</span>
@@ -157,7 +157,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
               download="Abdur_Rahman_I_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 px-3 sm:px-3.5 py-3 rounded-lg hover:bg-white/10 text-cyan-300 text-xs font-mono font-semibold transition-all border-l border-cyan-400/30"
+              className="inline-flex items-center justify-center gap-1.5 px-3 sm:px-3.5 py-3 rounded-lg hover:bg-white/10 text-slate-300 text-xs font-mono font-semibold transition-all border-l border-slate-800"
               title="Download Official PDF"
             >
               <Download className="w-3.5 h-3.5 text-cyan-400" />
@@ -182,35 +182,18 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
         </motion.div>
       </div>
 
-      {/* Floating Glassmorphic HUD Elements in Corners - Safe for wide desktop, hidden on laptop/tablet to prevent layer overlap */}
-      <div className="hidden xl:block absolute bottom-12 left-10 text-left font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800">
+      {/* Minimal Glassmorphic HUD Elements in Corners */}
+      <div className="hidden xl:block absolute bottom-10 left-10 text-left font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800/80 pointer-events-none">
         <div className="text-cyan-400 font-semibold mb-1 flex items-center gap-1.5">
           <Terminal className="w-3 h-3" />
-          <span>SYS.TELEMETRY • SEC_OPS</span>
+          <span>SYS.TELEMETRY &bull; SEC_OPS</span>
         </div>
         <div>ROLE: CREATIVE TECHNOLOGIST</div>
         <div>SEC_CORE: ZERO TRUST / SHA-256</div>
         <div>STATUS: ACTIVE &amp; VERIFIED</div>
-        <div className="mt-2 pt-2 border-t border-slate-800/80 flex items-center gap-1.5 text-[10px]">
-          <span className="text-cyan-300 font-semibold">LIGHTING:</span>
-          {[0.2, 0.38, 0.65, 0.9].map((lvl) => (
-            <button
-              key={lvl}
-              onClick={() => setLightingOpacity(lvl)}
-              className={`px-1.5 py-0.5 rounded cursor-pointer transition-all ${
-                lightingOpacity === lvl
-                  ? "bg-cyan-500/25 text-cyan-300 border border-cyan-400/50 shadow-[0_0_8px_rgba(0,242,254,0.3)]"
-                  : "bg-slate-800/60 text-slate-400 hover:text-slate-200 hover:bg-slate-700/60"
-              }`}
-              title={`Set cursor lighting opacity to ${lvl}`}
-            >
-              {lvl === 0.38 ? "0.4x (Def)" : `${lvl}x`}
-            </button>
-          ))}
-        </div>
       </div>
 
-      <div className="hidden xl:block absolute bottom-12 right-10 text-right font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800 pointer-events-none">
+      <div className="hidden xl:block absolute bottom-10 right-10 text-right font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800/80 pointer-events-none">
         <div className="text-purple-400 font-semibold mb-1 flex items-center justify-end gap-1.5">
           <Layers className="w-3 h-3" />
           <span>EXPERIENCE FLOW</span>

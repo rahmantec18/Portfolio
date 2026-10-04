@@ -23,7 +23,7 @@ import CinematicIntroPage from "./components/framer/CinematicIntroPage";
 
 export default function App() {
   const [isPreloaded, setIsPreloaded] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
   const [isEnhanced, setIsEnhanced] = useState(true);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
