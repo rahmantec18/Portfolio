@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Code, Camera, Sparkles, Terminal, Layers, Eye, Download } from "lucide-react";
 import HeroScene3D from "./3d/HeroScene3D";
@@ -7,8 +7,91 @@ import FluidButton from "./framer/FluidButton";
 
 export default function Hero({ isEnhanced = true, onOpenResume }) {
   const heroRef = useRef(null);
+  const nameRef = useRef(null);
 
   const phrases = ["I DESIGN.", "I CAPTURE.", "I EDIT."];
+
+  // Interactive Cursor Color Fill tracking with smooth physics lerp
+  useEffect(() => {
+    let animId;
+    let targetX = -1000;
+    let targetY = -1000;
+    let currentX = -1000;
+    let currentY = -1000;
+    let targetOpacity = 0;
+    let currentOpacity = 0;
+
+    const handleMouseMove = (e) => {
+      const el = nameRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      targetX = e.clientX - rect.left;
+      targetY = e.clientY - rect.top;
+
+      // Distance from cursor to name rect boundaries
+      const dx = Math.max(rect.left - e.clientX, 0, e.clientX - rect.right);
+      const dy = Math.max(rect.top - e.clientY, 0, e.clientY - rect.bottom);
+      const distance = Math.hypot(dx, dy);
+
+      // Activate color fill when cursor goes over or around the name (within 280px radius)
+      if (distance < 280) {
+        targetOpacity = Math.max(0, Math.min(1, 1 - (distance / 280) * 0.65));
+      } else {
+        targetOpacity = 0;
+      }
+    };
+
+    const handleMouseLeave = () => {
+      targetOpacity = 0;
+    };
+
+    // Touch support for tablets & mobile devices
+    const handleTouchMove = (e) => {
+      if (!e.touches || e.touches.length === 0) return;
+      const touch = e.touches[0];
+      const el = nameRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      targetX = touch.clientX - rect.left;
+      targetY = touch.clientY - rect.top;
+      targetOpacity = 1;
+    };
+
+    const handleTouchEnd = () => {
+      targetOpacity = 0;
+    };
+
+    // Continuous 60/120 FPS lerp loop for silky momentum
+    const render = () => {
+      animId = requestAnimationFrame(render);
+      const el = nameRef.current;
+      if (!el) return;
+
+      currentX += (targetX - currentX) * 0.22;
+      currentY += (targetY - currentY) * 0.22;
+      currentOpacity += (targetOpacity - currentOpacity) * 0.16;
+
+      el.style.setProperty("--mouse-x", `${currentX.toFixed(1)}px`);
+      el.style.setProperty("--mouse-y", `${currentY.toFixed(1)}px`);
+      el.style.setProperty("--mask-opacity", currentOpacity.toFixed(3));
+    };
+
+    animId = requestAnimationFrame(render);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, []);
 
   return (
     <section
@@ -19,7 +102,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
       {/* 3D Canvas Background with subtle, minimal wireframe crystal */}
       {isEnhanced && <HeroScene3D />}
 
-      {/* Neat & Minimal Ambient Center Glow - Ultra-soft 4% opacity */}
+      {/* Neat & Minimal Ambient Center Glow - Ultra-soft 3.5% opacity */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[320px] bg-cyan-500/[0.035] rounded-full blur-[100px] pointer-events-none" />
 
       {/* Hero Content Container */}
@@ -37,21 +120,61 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
           </span>
         </motion.div>
 
-        {/* Main Cinematic Name Headline - Neat, Sharp, Prestigious */}
+        {/* Main Cinematic Name Headline with Interactive Cursor Color Fill */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="relative flex flex-col items-center justify-center w-full"
+          className="relative flex flex-col items-center justify-center w-full my-2"
         >
-          <h1 className="font-['Syne',sans-serif] font-black tracking-tight text-white uppercase text-center leading-[0.98] select-none text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
-            <span className="inline-block text-white">
-              ABDUR
-            </span>{" "}
-            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-300">
-              RAHMAN
-            </span>
-          </h1>
+          <div
+            ref={nameRef}
+            className="relative select-none text-center inline-block cursor-default"
+            style={{
+              "--mouse-x": "-1000px",
+              "--mouse-y": "-1000px",
+              "--mask-opacity": "0"
+            }}
+          >
+            {/* Minimal ambient cursor spotlight glow behind the text */}
+            <div
+              className="absolute pointer-events-none rounded-full blur-2xl transition-opacity duration-200 -z-10"
+              style={{
+                width: "280px",
+                height: "280px",
+                transform: "translate(-50%, -50%)",
+                left: "var(--mouse-x, -1000px)",
+                top: "var(--mouse-y, -1000px)",
+                background:
+                  "radial-gradient(circle, rgba(0, 242, 254, 0.16) 0%, rgba(139, 92, 246, 0.08) 50%, transparent 75%)",
+                opacity: "var(--mask-opacity, 0)"
+              }}
+            />
+
+            {/* Base Typography Layer: Crisp Pure White */}
+            <h1 className="font-['Syne',sans-serif] font-black tracking-tight text-white uppercase text-center leading-[0.92] text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl">
+              <span className="block">ABDUR</span>
+              <span className="block">RAHMAN</span>
+            </h1>
+
+            {/* Color Fill Layer: Dynamic Gradient revealed by Cursor Radial Mask */}
+            <h1
+              aria-hidden="true"
+              className="absolute inset-0 font-['Syne',sans-serif] font-black tracking-tight uppercase text-center leading-[0.92] text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl pointer-events-none"
+              style={{
+                opacity: "var(--mask-opacity, 0)",
+                WebkitMaskImage:
+                  "radial-gradient(circle 240px at var(--mouse-x, -1000px) var(--mouse-y, -1000px), black 0%, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.2) 75%, transparent 100%)",
+                maskImage:
+                  "radial-gradient(circle 240px at var(--mouse-x, -1000px) var(--mouse-y, -1000px), black 0%, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.2) 75%, transparent 100%)"
+              }}
+            >
+              <div className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400">
+                <span className="block">ABDUR</span>
+                <span className="block">RAHMAN</span>
+              </div>
+            </h1>
+          </div>
         </motion.div>
 
         {/* Secondary Title / Creative Technologist Roles - Minimal Monospace */}
@@ -59,7 +182,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-5 sm:mt-6 flex flex-wrap items-center justify-center gap-2 xs:gap-3 sm:gap-4 font-mono text-xs sm:text-sm tracking-[0.2em] text-slate-400 uppercase font-medium"
+          className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-2 xs:gap-3 sm:gap-4 font-mono text-xs sm:text-sm tracking-[0.2em] text-slate-400 uppercase font-medium"
         >
           <span>CREATIVE TECHNOLOGIST</span>
           <span className="w-1 h-1 rounded-full bg-cyan-500/50" />

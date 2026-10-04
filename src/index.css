@@ -67,7 +67,6 @@
   }
 
   html {
-    scroll-behavior: smooth;
     background-color: #020205;
     color: #f1f5f9;
     overflow-x: hidden;
@@ -101,8 +100,12 @@
   }
 
   /* Lenis smooth scrolling rules */
-  html.lenis, html.lenis body {
+  html.lenis,
+  html.lenis body {
     height: auto;
+  }
+  html.lenis {
+    scroll-behavior: auto !important;
   }
   .lenis.lenis-smooth {
     scroll-behavior: auto !important;

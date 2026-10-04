@@ -43,6 +43,15 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    // Recalculate dimensions once preloader completes
+    if (isPreloaded && window.lenis) {
+      setTimeout(() => {
+        window.lenis.resize();
+      }, 350);
+    }
+  }, [isPreloaded]);
+
   return (
     <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#020205] text-slate-100 selection:bg-cyan-500/20 selection:text-cyan-300">
       {/* 1. Preloader */}
