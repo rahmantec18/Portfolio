@@ -95,17 +95,6 @@ export default function Projects() {
     return () => ctx.revert();
   }, []);
 
-  const handleSelectProject = (idx) => {
-    setActiveProjectIdx(idx);
-    const cardEl = projectCardsRef.current[idx];
-    if (cardEl) {
-      if (window.lenis) {
-        window.lenis.scrollTo(cardEl, { offset: -80, duration: 1.0 });
-      } else {
-        cardEl.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    }
-  };
 
   const activeTheme = projectThemes[activeProjectIdx] || projectThemes[0];
 
@@ -167,46 +156,6 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Project Number Navigation Bar - Adaptive selector for 3 portable systems */}
-        <div className="flex items-center justify-center">
-          <div className="inline-flex flex-wrap items-center justify-center gap-1.5 xs:gap-2 p-1.5 sm:p-2 rounded-2xl bg-slate-950/80 border border-slate-800 backdrop-blur-xl shadow-2xl max-w-full">
-            {webProjects.map((p, idx) => {
-              const isActive = activeProjectIdx === idx;
-              const theme = projectThemes[idx];
-              return (
-                <button
-                  key={p.id}
-                  onClick={() => handleSelectProject(idx)}
-                  className={`group relative flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs font-mono transition-all duration-300 cursor-pointer ${
-                    isActive
-                      ? "bg-slate-900 text-white shadow-lg border border-white/20"
-                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/50"
-                  }`}
-                  style={{
-                    borderColor: isActive ? theme.accentColor : undefined,
-                    boxShadow: isActive ? `0 0 15px ${theme.primaryGlow}` : undefined
-                  }}
-                >
-                  <span
-                    className="font-bold text-xs"
-                    style={{ color: isActive ? theme.accentColor : "#94a3b8" }}
-                  >
-                    0{idx + 1}
-                  </span>
-                  <span className="font-ui font-medium hidden sm:inline truncate max-w-[120px] md:max-w-none">
-                    {p.title.split(" ")[0]}
-                  </span>
-                  {isActive && (
-                    <span
-                      className="w-1.5 h-1.5 rounded-full animate-ping"
-                      style={{ backgroundColor: theme.accentColor }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
 
         {/* Cinematic Projects Showcase: Large 3D Browser Environments */}
         <div className="space-y-14 sm:space-y-20 perspective-2000">

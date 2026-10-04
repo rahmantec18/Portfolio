@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Code, Camera, Sparkles, Terminal, Layers, Eye, Download } from "lucide-react";
 import HeroScene3D from "./3d/HeroScene3D";
@@ -6,9 +6,11 @@ import Ridgelume from "./framer/Ridgelume";
 import ShaderButton from "./framer/ShaderButton";
 import FluidButton from "./framer/FluidButton";
 import TubeLight from "./framer/TubeLight";
+import VolumetricCursorLighting from "./framer/VolumetricCursorLighting";
 
 export default function Hero({ isEnhanced = true, onOpenResume }) {
   const heroRef = useRef(null);
+  const [lightingOpacity, setLightingOpacity] = useState(0.38);
 
   const phrases = ["I DESIGN.", "I CAPTURE.", "I EDIT."];
 
@@ -20,6 +22,9 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
     >
       {/* 3D Canvas Background */}
       {isEnhanced && <HeroScene3D />}
+
+      {/* Interactive Volumetric Cursor Lighting with ABDUR RAHMAN (Reduced opacity for subtle elegance) */}
+      <VolumetricCursorLighting opacity={lightingOpacity} isEnhanced={isEnhanced} />
 
       {/* Atmospheric Horizon Light */}
       <div className="absolute -bottom-20 left-0 right-0 h-40 opacity-40">
@@ -178,7 +183,7 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
       </div>
 
       {/* Floating Glassmorphic HUD Elements in Corners - Safe for wide desktop, hidden on laptop/tablet to prevent layer overlap */}
-      <div className="hidden xl:block absolute bottom-12 left-10 text-left font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800 pointer-events-none">
+      <div className="hidden xl:block absolute bottom-12 left-10 text-left font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800">
         <div className="text-cyan-400 font-semibold mb-1 flex items-center gap-1.5">
           <Terminal className="w-3 h-3" />
           <span>SYS.TELEMETRY • SEC_OPS</span>
@@ -186,6 +191,23 @@ export default function Hero({ isEnhanced = true, onOpenResume }) {
         <div>ROLE: CREATIVE TECHNOLOGIST</div>
         <div>SEC_CORE: ZERO TRUST / SHA-256</div>
         <div>STATUS: ACTIVE &amp; VERIFIED</div>
+        <div className="mt-2 pt-2 border-t border-slate-800/80 flex items-center gap-1.5 text-[10px]">
+          <span className="text-cyan-300 font-semibold">LIGHTING:</span>
+          {[0.2, 0.38, 0.65, 0.9].map((lvl) => (
+            <button
+              key={lvl}
+              onClick={() => setLightingOpacity(lvl)}
+              className={`px-1.5 py-0.5 rounded cursor-pointer transition-all ${
+                lightingOpacity === lvl
+                  ? "bg-cyan-500/25 text-cyan-300 border border-cyan-400/50 shadow-[0_0_8px_rgba(0,242,254,0.3)]"
+                  : "bg-slate-800/60 text-slate-400 hover:text-slate-200 hover:bg-slate-700/60"
+              }`}
+              title={`Set cursor lighting opacity to ${lvl}`}
+            >
+              {lvl === 0.38 ? "0.4x (Def)" : `${lvl}x`}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="hidden xl:block absolute bottom-12 right-10 text-right font-mono text-[11px] text-slate-500 glass-card p-3 rounded-xl border border-slate-800 pointer-events-none">

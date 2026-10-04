@@ -54,70 +54,24 @@
             transition: all 0.3s ease;
         }
 
-        /* Interactive Technique Switcher (Clickable on any device) */
-        #controls-bar {
-            position: absolute;
-            top: 18%;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            z-index: 25;
-            background: rgba(10, 10, 20, 0.75);
-            padding: 8px 16px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-        }
-
-        .tech-btn {
-            background: rgba(255, 255, 255, 0.06);
-            color: #ccc;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            letter-spacing: 2px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            outline: none;
-            font-family: inherit;
-        }
-
-        .tech-btn:hover {
-            color: #fff;
-            transform: translateY(-1px);
-        }
-
-        .tech-btn.active {
-            color: #fff;
-            border-color: currentColor;
-            box-shadow: 0 0 15px currentColor;
-        }
-
-        .tech-btn[data-tech="neutral"].active { color: #00ffff; }
-        .tech-btn[data-tech="red"].active { color: #ff3333; }
-        .tech-btn[data-tech="void"].active { color: #00ffff; }
-        .tech-btn[data-tech="purple"].active { color: #bb00ff; }
-        .tech-btn[data-tech="shrine"].active { color: #ff2222; }
-
         /* Gesture Cheat-Sheet Guide */
         #gesture-hint {
             position: absolute;
-            top: 25%;
+            top: 19%;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 0.7rem;
-            color: #777;
+            font-size: 0.72rem;
+            color: #888;
             letter-spacing: 2px;
             text-transform: uppercase;
             text-align: center;
             z-index: 10;
             pointer-events: none;
+            background: rgba(10, 10, 20, 0.6);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
         }
 
         /* Large Centered Camera Hub - Taller for Reel Context */
@@ -144,10 +98,6 @@
                 bottom: 2%;
                 height: 25vh;
                 max-width: 280px;
-            }
-            #controls-bar {
-                top: 22%;
-                width: 90%;
             }
         }
 
@@ -207,14 +157,6 @@
         <div id="technique-name">CURSED ENERGY</div>
     </div>
 
-    <!-- Manual or Fallback Technique Control Bar -->
-    <div id="controls-bar">
-        <button class="tech-btn active" data-tech="neutral">NEUTRAL</button>
-        <button class="tech-btn" data-tech="red">RED 🔴</button>
-        <button class="tech-btn" data-tech="void">INFINITE VOID 🔵</button>
-        <button class="tech-btn" data-tech="purple">HOLLOW PURPLE 🟣</button>
-        <button class="tech-btn" data-tech="shrine">MALEVOLENT SHRINE ⛩️</button>
-    </div>
 
     <div id="gesture-hint">
         HAND GESTURES: PINCH = PURPLE | 4 FINGERS UP = SHRINE | 2 FINGERS UP = VOID | 1 FINGER UP = RED
@@ -323,10 +265,6 @@
         const nameEl = document.getElementById('technique-name');
         shakeIntensity = tech !== 'neutral' ? 0.4 : 0;
 
-        // Update active button state
-        document.querySelectorAll('.tech-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-tech') === tech);
-        });
 
         if(tech === 'shrine') { 
             glowColor = '#ff0000'; 
@@ -388,13 +326,6 @@
         }
     }
 
-    // Attach click listeners to controls bar
-    document.querySelectorAll('.tech-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tech = btn.getAttribute('data-tech');
-            window.updateState(tech);
-        });
-    });
 
     // Initialize MediaPipe Hands
     try {

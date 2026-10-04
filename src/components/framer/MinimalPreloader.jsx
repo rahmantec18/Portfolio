@@ -11,6 +11,13 @@ export default function MinimalPreloader({ onLoaded }) {
   }, [onLoaded]);
 
   useEffect(() => {
+    // Fast-pass for quick previews and automated testing
+    if (typeof window !== "undefined" && window.location.search.includes("fast=true")) {
+      setIsDone(true);
+      if (onLoadedRef.current) onLoadedRef.current();
+      return;
+    }
+
     let current = 0;
     const interval = setInterval(() => {
       // Smooth dynamic increments

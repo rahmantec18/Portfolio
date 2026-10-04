@@ -14,7 +14,7 @@ const navItems = [
   { label: "CONTACT", href: "#contact" }
 ];
 
-export default function BreathingNavbar({ onToggleAesthetics, isEnhanced, onOpenResume }) {
+export default function BreathingNavbar({ onToggleAesthetics, isEnhanced, onOpenResume, onOpenIntro }) {
   const [activeSection, setActiveSection] = useState("hero");
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -71,22 +71,29 @@ export default function BreathingNavbar({ onToggleAesthetics, isEnhanced, onOpen
             <TubeLight stop4="#00f2fe" stop3="#8b5cf6" height={1.5} />
           </div>
 
-          {/* Brand Logo */}
-          <a
-            href="#hero"
-            onClick={(e) => scrollToSection(e, "#hero")}
-            data-cursor="TOP"
-            className="flex items-center gap-2.5 group"
-          >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 p-[1px]">
+          {/* Brand Logo & Intro Stage Trigger */}
+          <div className="flex items-center gap-2.5 group">
+            <button
+              onClick={() => {
+                if (onOpenIntro) onOpenIntro();
+              }}
+              data-cursor="INTRO"
+              className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 p-[1px] hover:scale-105 transition-transform cursor-pointer"
+              title="Experience Cinematic Intro Stage"
+            >
               <div className="w-full h-full bg-deep-950 rounded-[7px] flex items-center justify-center">
                 <span className="font-display font-black text-xs text-cyan-300">AR</span>
               </div>
-            </div>
-            <span className="font-ui font-bold text-xs tracking-wider uppercase text-slate-200 group-hover:text-cyan-400 transition-colors hidden sm:inline">
+            </button>
+            <a
+              href="#hero"
+              onClick={(e) => scrollToSection(e, "#hero")}
+              data-cursor="TOP"
+              className="font-ui font-bold text-xs tracking-wider uppercase text-slate-200 group-hover:text-cyan-400 transition-colors hidden sm:inline"
+            >
               ABDUR RAHMAN I
-            </span>
-          </a>
+            </a>
+          </div>
 
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-1">

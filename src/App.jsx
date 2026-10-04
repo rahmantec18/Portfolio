@@ -19,11 +19,20 @@ import Contact from "./components/Contact";
 import BreathingFooter from "./components/framer/BreathingFooter";
 import ResumeModal from "./components/ResumeModal";
 import ErrorBoundary from "./components/ErrorBoundary";
+import CinematicIntroPage from "./components/framer/CinematicIntroPage";
 
 export default function App() {
   const [isPreloaded, setIsPreloaded] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
   const [isEnhanced, setIsEnhanced] = useState(true);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
+
+  useEffect(() => {
+    // If user accesses via #intro, ensure intro is shown
+    if (window.location.hash === "#intro") {
+      setShowIntro(true);
+    }
+  }, []);
 
   useEffect(() => {
     // Initialize Lenis smooth scrolling once DOM is ready
@@ -39,18 +48,27 @@ export default function App() {
       {/* 1. Preloader */}
       <MinimalPreloader onLoaded={() => setIsPreloaded(true)} />
 
+      {/* 1.5 Dedicated Cinematic Intro Page (Before home landing page, after loader) */}
+      <CinematicIntroPage
+        isVisible={isPreloaded && showIntro}
+        onEnter={() => setShowIntro(false)}
+      />
+
       {/* 2. Custom Smooth Spring Cursor */}
       <SmoothCursor />
 
       {/* 3. Time of Day Ambient Glow System */}
       <TimeBasedBG />
 
-      {/* 4. Fixed Breathing Navbar */}
-      <BreathingNavbar
-        onToggleAesthetics={(val) => setIsEnhanced(val)}
-        isEnhanced={isEnhanced}
-        onOpenResume={() => setIsResumeOpen(true)}
-      />
+      {/* 4. Fixed Breathing Navbar (Slides in after entering portfolio) */}
+      {!showIntro && (
+        <BreathingNavbar
+          onToggleAesthetics={(val) => setIsEnhanced(val)}
+          isEnhanced={isEnhanced}
+          onOpenResume={() => setIsResumeOpen(true)}
+          onOpenIntro={() => setShowIntro(true)}
+        />
+      )}
 
       {/* 5. Main Cinematic Journey Sequence */}
       <main className="relative z-10 w-full overflow-hidden">
