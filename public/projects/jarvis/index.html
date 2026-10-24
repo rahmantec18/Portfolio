@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.A.R.V.I.S. Personal AI Ecosystem — Abdur Rahman I</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=JetBrains+Mono:wght@400;600;700&family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cyan: #00f2fe;
+            --blue: #0284c7;
+            --deep: #030712;
+            --panel: rgba(8, 15, 33, 0.78);
+            --border: rgba(0, 242, 254, 0.22);
+            --glow: rgba(0, 242, 254, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--deep);
+            color: #e2e8f0;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 242, 254, 0.15), transparent),
+                radial-gradient(circle at 10% 40%, rgba(14, 165, 233, 0.08), transparent 40%),
+                radial-gradient(circle at 90% 70%, rgba(99, 102, 241, 0.08), transparent 40%);
+        }
+
+        /* Subtle grid background */
+        .cyber-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(0, 242, 254, 0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 242, 254, 0.035) 1px, transparent 1px);
+            background-size: 3.5rem 3.5rem;
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 60%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Header Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(16px);
+            background: rgba(3, 7, 18, 0.75);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 16px;
+            border-radius: 9999px;
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid var(--border);
+            color: var(--cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 242, 254, 0.18);
+            box-shadow: 0 0 16px var(--glow);
+            transform: translateX(-3px);
+        }
+
+        .header-title-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .arc-mini-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid var(--cyan);
+            box-shadow: 0 0 10px var(--cyan);
+            position: relative;
+            animation: pulse-ring 2.5s infinite;
+        }
+
+        .arc-mini-icon::after {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            background: var(--cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--cyan);
+        }
+
+        @keyframes pulse-ring {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.12); opacity: 1; }
+        }
+
+        .header-system-tag {
+            font-family: 'Orbitron', monospace;
+            font-size: 13px;
+            letter-spacing: 0.18em;
+            color: #ffffff;
+            font-weight: 800;
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .telemetry-chip {
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes ping-slow {
+            75%, 100% { transform: scale(1.3); opacity: 0.4; }
+        }
+
+        /* Hero Showcase Section */
+        .hero-stage {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 20px 60px 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-stage {
+                grid-template-columns: 1.15fr 0.85fr;
+                align-items: stretch;
+            }
+        }
+
+        /* 3D Arc Reactor Canvas Card */
+        .arc-viewport-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 242, 254, 0.12);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 540px;
+        }
+
+        .arc-viewport-card-header {
+            padding: 14px 20px;
+            background: rgba(3, 7, 18, 0.85);
+            border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #67e8f9;
+        }
+
+        .canvas-container {
+            flex: 1;
+            position: relative;
+            min-height: 420px;
+            cursor: grab;
+        }
+
+        .canvas-container:active {
+            cursor: grabbing;
+        }
+
+        #three-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Arc Reactor Overlay Info */
+        .arc-telemetry-hud {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            pointer-events: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: rgba(0, 242, 254, 0.7);
+            line-height: 1.6;
+            text-shadow: 0 0 6px rgba(0, 242, 254, 0.5);
+        }
+
+        .arc-state-controller {
+            padding: 14px 18px;
+            background: rgba(3, 7, 18, 0.9);
+            border-top: 1px solid rgba(0, 242, 254, 0.15);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .state-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #94a3b8;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .state-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .state-btn {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            color: #94a3b8;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .state-btn:hover {
+            color: var(--cyan);
+            border-color: var(--cyan);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.25);
+        }
+
+        .state-btn.active {
+            background: rgba(0, 242, 254, 0.15);
+            color: #ffffff;
+            border-color: var(--cyan);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Right Panel: Interactive Directive Console */
+        .console-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 242, 254, 0.12);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .console-header {
+            padding: 16px 20px;
+            background: rgba(3, 7, 18, 0.85);
+            border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .console-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            color: #ffffff;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .audio-toggle-btn {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            color: var(--cyan);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .audio-toggle-btn:hover {
+            background: rgba(0, 242, 254, 0.2);
+            box-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+        }
+
+        /* Directive Prompt Inputs */
+        .console-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .intro-text {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .directive-chips-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .chip-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--cyan);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .directive-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .directive-chip {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 7px 12px;
+            border-radius: 10px;
+            color: #cbd5e1;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .directive-chip:hover {
+            border-color: var(--cyan);
+            background: rgba(0, 242, 254, 0.12);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.18);
+        }
+
+        /* Interactive input bar */
+        .command-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 14px;
+            padding: 6px 10px;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.08);
+        }
+
+        .command-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            padding: 6px 8px;
+        }
+
+        .command-input::placeholder {
+            color: #64748b;
+        }
+
+        .transmit-btn {
+            background: var(--cyan);
+            color: #030712;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+        }
+
+        .transmit-btn:hover {
+            background: #38bdf8;
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.65);
+            transform: scale(1.02);
+        }
+
+        /* Live Response Audit Trail Terminal */
+        .terminal-feed {
+            background: rgba(2, 6, 23, 0.92);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 14px;
+            padding: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #94a3b8;
+            min-height: 180px;
+            max-height: 220px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .terminal-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            word-break: break-word;
+        }
+
+        .term-ts {
+            color: #64748b;
+            flex-shrink: 0;
+            font-size: 10px;
+        }
+
+        .term-route {
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        .term-success {
+            color: #34d399;
+        }
+
+        .term-speech {
+            color: #f8fafc;
+            font-style: italic;
+            border-left: 2px solid var(--cyan);
+            padding-left: 8px;
+            margin-top: 4px;
+        }
+
+        /* Architecture Section */
+        .architecture-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px 80px 20px;
+        }
+
+        .section-header-block {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 40px auto;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            border-radius: 9999px;
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid var(--border);
+            color: var(--cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .section-desc {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Subsystem 3-Card Grid */
+        .subsystem-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .subsystem-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .subsystem-card {
+            background: rgba(8, 15, 33, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subsystem-card:hover {
+            border-color: var(--cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 14px 40px -10px rgba(0, 242, 254, 0.2);
+        }
+
+        .card-num {
+            font-family: 'Orbitron', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--cyan);
+            letter-spacing: 0.2em;
+        }
+
+        .card-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .card-port {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--cyan);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            width: fit-content;
+        }
+
+        .card-body {
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .card-tech-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .tech-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(15, 23, 42, 0.8);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* 20-Point Agency & Verification Section */
+        .verification-banner {
+            background: linear-gradient(135deg, rgba(8, 15, 33, 0.95), rgba(3, 7, 18, 0.95));
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            box-shadow: 0 0 40px rgba(0, 242, 254, 0.1);
+        }
+
+        @media (min-width: 900px) {
+            .verification-banner {
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
+            }
+        }
+
+        .verify-stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .stat-box {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--cyan);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #94a3b8;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Live Screenshot Showcase Preview */
+        .screenshot-card {
+            background: rgba(8, 15, 33, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 36px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .screenshot-header {
+            padding: 14px 20px;
+            background: rgba(3, 7, 18, 0.95);
+            border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .screenshot-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* Footer CTA Bar */
+        footer {
+            border-top: 1px solid var(--border);
+            background: rgba(3, 7, 18, 0.95);
+            padding: 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .footer-btn-primary {
+            background: var(--cyan);
+            color: #030712;
+            box-shadow: 0 0 16px rgba(0, 242, 254, 0.35);
+        }
+
+        .footer-btn-primary:hover {
+            background: #38bdf8;
+            box-shadow: 0 0 24px rgba(0, 242, 254, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .footer-btn-secondary {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            color: #e2e8f0;
+        }
+
+        .footer-btn-secondary:hover {
+            background: rgba(0, 242, 254, 0.15);
+            color: var(--cyan);
+            border-color: var(--cyan);
+        }
+
+        .copyright-text {
+            color: #64748b;
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="cyber-grid"></div>
+
+    <!-- Header Navigation Bar -->
+    <header>
+        <a href="../../#projects" class="back-btn">
+            <span>←</span>
+            <span>BACK TO PORTFOLIO</span>
+        </a>
+
+        <div class="header-title-badge">
+            <div class="arc-mini-icon"></div>
+            <div>
+                <span class="header-system-tag">J.A.R.V.I.S. // MARK-VIII</span>
+            </div>
+        </div>
+
+        <div class="header-meta">
+            <a href="https://github.com/rahmantec18/JARVIS" target="_blank" rel="noopener noreferrer" class="back-btn" style="color: #cbd5e1; border-color: rgba(255, 255, 255, 0.15);">
+                <span>SOURCE CODE ↗</span>
+            </a>
+            <div class="telemetry-chip">
+                <span class="status-dot"></span>
+                <span>DESKTOP AGENCY: 200 OK</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Showcase Hero -->
+    <main class="hero-stage">
+        <!-- 3D WebGL Arc Reactor Canvas Card -->
+        <section class="arc-viewport-card">
+            <div class="arc-viewport-card-header">
+                <span>CHAMBER: ARC_REACTOR_CORE_01</span>
+                <span id="active-state-tag" style="color: var(--cyan);">STATE: IDLE</span>
+            </div>
+
+            <div class="canvas-container" id="canvas-wrapper">
+                <canvas id="three-canvas"></canvas>
+                <div class="arc-telemetry-hud">
+                    RADAR_VECTOR // 04.92°<br>
+                    FREQ_STABLE // 104.2 MHZ<br>
+                    CORE_TEMP // 32°C NOMINAL<br>
+                    DRAG TO TILT CORE 3D
+                </div>
+            </div>
+
+            <!-- Assistant State Mode Buttons -->
+            <div class="arc-state-controller">
+                <span class="state-label">Simulate State:</span>
+                <div class="state-buttons">
+                    <button class="state-btn active" data-state="idle">IDLE</button>
+                    <button class="state-btn" data-state="listening">LISTENING</button>
+                    <button class="state-btn" data-state="understanding">UNDERSTANDING</button>
+                    <button class="state-btn" data-state="planning">PLANNING</button>
+                    <button class="state-btn" data-state="executing">EXECUTING</button>
+                    <button class="state-btn" data-state="speaking">SPEAKING</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Side: Interactive Directive Simulator & Audit Trail -->
+        <section class="console-card">
+            <div class="console-header">
+                <div class="console-title">
+                    <span>⚡ DIRECTIVE TRANSMISSION CONSOLE</span>
+                </div>
+                <button class="audio-toggle-btn" id="audio-toggle-btn">
+                    <span id="audio-icon">🔊</span>
+                    <span id="audio-text">VOICE: ON</span>
+                </button>
+            </div>
+
+            <div class="console-body">
+                <p class="intro-text">
+                    Interact with J.A.R.V.I.S. using natural directives. Select a quick action below or type a command to observe live reflex dispatch, speech synthesis, and 3D reactor modulation.
+                </p>
+
+                <!-- Quick Directive Presets -->
+                <div class="directive-chips-container">
+                    <span class="chip-label">Featured Directives:</span>
+                    <div class="directive-chips">
+                        <button class="directive-chip" data-cmd="Play Believer by Imagine Dragons on Spotify">
+                            <span>🎵</span>
+                            <span>Play Spotify: Believer</span>
+                        </button>
+                        <button class="directive-chip" data-cmd="Turn master volume down to 30 percent">
+                            <span>🔊</span>
+                            <span>Set Volume: 30%</span>
+                        </button>
+                        <button class="directive-chip" data-cmd="Send 'Meeting at 5 PM' to Ahmed on WhatsApp">
+                            <span>💬</span>
+                            <span>WhatsApp to Ahmed</span>
+                        </button>
+                        <button class="directive-chip" data-cmd="Find my project report in Downloads">
+                            <span>📁</span>
+                            <span>Find Downloads Report</span>
+                        </button>
+                        <button class="directive-chip" data-cmd="Check system diagnostics and telemetry">
+                            <span>⚡</span>
+                            <span>System Diagnostics</span>
+                        </button>
+                        <button class="directive-chip" data-cmd="Spotify open pannu">
+                            <span>🗣️</span>
+                            <span>Tamil: Spotify open pannu</span>
+                        </button>
+                        <button class="directive-chip" data-cmd="Lock workstation">
+                            <span>🔒</span>
+                            <span>Lock Workstation</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input Command Bar -->
+                <form class="command-bar" id="command-form">
+                    <input 
+                        type="text" 
+                        id="command-input" 
+                        class="command-input" 
+                        placeholder="Ask J.A.R.V.I.S. or enter a Windows desktop directive..."
+                        autocomplete="off"
+                    />
+                    <button type="submit" class="transmit-btn">TRANSMIT</button>
+                </form>
+
+                <!-- Real-time Terminal Execution Log -->
+                <div class="terminal-feed" id="terminal-feed">
+                    <div class="terminal-line">
+                        <span class="term-ts">[SYSTEM]</span>
+                        <span class="term-route">FAST-PATH REFLEX ROUTER ACTIVE (&lt;15ms)</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="term-ts">[SYSTEM]</span>
+                        <span class="term-success">WINDOWS DESKTOP AGENT LOOPBACK SECURED (PORT 8001)</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="term-ts">[SYSTEM]</span>
+                        <span>Awaiting first directive, sir. Click any preset above.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Subsystems & Architecture Deep Dive -->
+    <section class="architecture-section">
+        <div class="section-header-block">
+            <div class="section-badge">CORE ENGINEERING</div>
+            <h2 class="section-h2">THREE-TIER AUTONOMOUS ARCHITECTURE</h2>
+            <p class="section-desc">
+                Engineered for zero-latency local execution, resilient offline desktop autonomy, and multi-modal intelligence powered by Google Gemini.
+            </p>
+        </div>
+
+        <div class="subsystem-grid">
+            <!-- Subsystem 1 -->
+            <div class="subsystem-card">
+                <span class="card-num">SUBSYSTEM 01</span>
+                <span class="card-port">PORT 5173 / 8000 SPA</span>
+                <h3 class="card-title">Cinematic Holographic Frontend</h3>
+                <p class="card-body">
+                    Reactive 3D WebGL Arc Reactor built with Three.js and Framer Motion. Features live interim speech recognition, real-time audio FFT visualization, British speech synthesis, and 6 unified command interfaces.
+                </p>
+                <div class="card-tech-pills">
+                    <span class="tech-pill">React 19</span>
+                    <span class="tech-pill">TypeScript</span>
+                    <span class="tech-pill">Three.js WebGL</span>
+                    <span class="tech-pill">Tailwind CSS</span>
+                </div>
+            </div>
+
+            <!-- Subsystem 2 -->
+            <div class="subsystem-card">
+                <span class="card-num">SUBSYSTEM 02</span>
+                <span class="card-port">PORT 8000 FASTAPI</span>
+                <h3 class="card-title">AI Core & Reflex Engine</h3>
+                <p class="card-body">
+                    Sub-15ms zero-latency reflex router executing immediate desktop actions without external API delays. Sequential compound task execution planner and Google GenAI SDK integration with offline neural fallback.
+                </p>
+                <div class="card-tech-pills">
+                    <span class="tech-pill">Python 3.13</span>
+                    <span class="tech-pill">FastAPI</span>
+                    <span class="tech-pill">Gemini 2.5 Flash</span>
+                    <span class="tech-pill">SQLAlchemy Async</span>
+                </div>
+            </div>
+
+            <!-- Subsystem 3 -->
+            <div class="subsystem-card">
+                <span class="card-num">SUBSYSTEM 03</span>
+                <span class="card-port">PORT 8001 DESKTOP AGENT</span>
+                <h3 class="card-title">Windows Desktop Agency</h3>
+                <p class="card-body">
+                    Hardware-level OS control via pycaw master volume mixer, Spotify CoreAudio session verification, WhatsApp message dispatch, Send2Trash recycle safety, and frameless draggable HUD with system tray minimization.
+                </p>
+                <div class="card-tech-pills">
+                    <span class="tech-pill">pycaw CoreAudio</span>
+                    <span class="tech-pill">Spotify Protocol</span>
+                    <span class="tech-pill">WhatsApp Automation</span>
+                    <span class="tech-pill">pystray HUD</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Verification & Quality Metrics -->
+        <div class="verification-banner">
+            <div>
+                <div class="section-badge" style="margin-bottom: 8px;">VERIFICATION AUDIT</div>
+                <h3 style="font-family: 'Orbitron', sans-serif; font-size: 22px; color: #fff; margin-bottom: 10px;">
+                    100% AUTOMATED TEST SUITE PASS RATE
+                </h3>
+                <p style="color: #94a3b8; font-size: 13px; line-height: 1.6;">
+                    Rigorous test-driven verification encompassing 20-point Windows agency checklist, reflex routing speed tests, multi-step planner verification, and loopback Bearer token security across 7 isolated test suites.
+                </p>
+            </div>
+
+            <div class="verify-stat-grid">
+                <div class="stat-box">
+                    <div class="stat-value">49/49</div>
+                    <div class="stat-label">Tests Passed</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">&lt; 15ms</div>
+                    <div class="stat-label">Reflex Latency</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">20 / 20</div>
+                    <div class="stat-label">Agency Checklist</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Offline Agency</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Screenshot of Command Center -->
+        <div class="screenshot-card">
+            <div class="screenshot-header">
+                <span>COMMAND CENTER LIVE CAPTURE // HOST: WINDOWS 11 // NODE: JARVIS-WORKSTATION</span>
+                <span style="color: var(--cyan);">AUTHENTIC CAPTURE</span>
+            </div>
+            <img 
+                src="../../images/jarvis-preview.png" 
+                alt="J.A.R.V.I.S. Command Center Running on Windows 11" 
+                class="screenshot-img"
+                loading="lazy"
+            />
+        </div>
+    </section>
+
+    <!-- Footer Action Bar -->
+    <footer>
+        <div class="footer-links">
+            <a href="../../#projects" class="footer-btn footer-btn-primary">
+                <span>←</span>
+                <span>RETURN TO PORTFOLIO</span>
+            </a>
+            <a href="https://github.com/rahmantec18/JARVIS" target="_blank" rel="noopener noreferrer" class="footer-btn footer-btn-secondary">
+                <span>VIEW SOURCE CODE (GITHUB)</span>
+                <span>↗</span>
+            </a>
+            <a href="https://wa.me/919176326234" target="_blank" rel="noopener noreferrer" class="footer-btn footer-btn-secondary">
+                <span>CONTACT DEVELOPER</span>
+                <span>💬</span>
+            </a>
+        </div>
+        <div class="copyright-text">
+            J.A.R.V.I.S. Personal AI Ecosystem • Designed &amp; Developed by Abdur Rahman I
+        </div>
+    </footer>
+
+    <!-- Three.js Holographic Arc Reactor Script -->
+    <script type="module">
+        import * as THREE from 'three';
+
+        // --- Three.js Scene Setup ---
+        const container = document.getElementById('canvas-wrapper');
+        const canvas = document.getElementById('three-canvas');
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.z = 24;
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Arc Reactor Main Group
+        const reactorGroup = new THREE.Group();
+        scene.add(reactorGroup);
+
+        // State & Colors
+        const stateThemes = {
+            idle: { color: 0x00f2fe, coreSpeed: 0.015, ringSpeed: 0.008, pulse: 1.0 },
+            listening: { color: 0x38bdf8, coreSpeed: 0.035, ringSpeed: 0.022, pulse: 1.8 },
+            understanding: { color: 0xa855f7, coreSpeed: 0.045, ringSpeed: 0.03, pulse: 2.2 },
+            planning: { color: 0x06b6d4, coreSpeed: 0.06, ringSpeed: 0.04, pulse: 2.6 },
+            executing: { color: 0xffffff, coreSpeed: 0.08, ringSpeed: 0.055, pulse: 3.2 },
+            speaking: { color: 0x00f2fe, coreSpeed: 0.025, ringSpeed: 0.015, pulse: 2.0 }
+        };
+
+        let currentState = 'idle';
+
+        // 1. Central Crystalline Core (Icosahedron)
+        const coreGeo = new THREE.IcosahedronGeometry(3.2, 1);
+        const coreMat = new THREE.MeshBasicMaterial({
+            color: stateThemes.idle.color,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.85
+        });
+        const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+        reactorGroup.add(coreMesh);
+
+        // Inner glowing solid sphere
+        const innerSphereGeo = new THREE.SphereGeometry(1.6, 24, 24);
+        const innerSphereMat = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.9
+        });
+        const innerSphere = new THREE.Mesh(innerSphereGeo, innerSphereMat);
+        reactorGroup.add(innerSphere);
+
+        // 2. Concentric Holographic Rings
+        function createRing(radius, tube, segments, color, tiltX = 0, tiltY = 0) {
+            const ringGeo = new THREE.TorusGeometry(radius, tube, 8, segments);
+            const ringMat = new THREE.MeshBasicMaterial({
+                color: color,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.7
+            });
+            const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+            ringMesh.rotation.x = tiltX;
+            ringMesh.rotation.y = tiltY;
+            reactorGroup.add(ringMesh);
+            return ringMesh;
+        }
+
+        const ring1 = createRing(5.2, 0.08, 64, 0x00f2fe, Math.PI / 6, 0);
+        const ring2 = createRing(6.8, 0.09, 64, 0x0284c7, -Math.PI / 4, Math.PI / 8);
+        const ring3 = createRing(8.4, 0.12, 80, 0x38bdf8, Math.PI / 3, -Math.PI / 6);
+        const ring4 = createRing(10.2, 0.06, 96, 0x00f2fe, 0, Math.PI / 5);
+
+        // 3. Segmented Tick Marks / Arc Reactor Blocks
+        const tickGroup = new THREE.Group();
+        const tickGeo = new THREE.BoxGeometry(0.35, 1.0, 0.15);
+        const tickMat = new THREE.MeshBasicMaterial({ color: 0x00f2fe, transparent: true, opacity: 0.85 });
+
+        const tickCount = 16;
+        for (let i = 0; i < tickCount; i++) {
+            const angle = (i / tickCount) * Math.PI * 2;
+            const tick = new THREE.Mesh(tickGeo, tickMat);
+            tick.position.x = Math.cos(angle) * 6.0;
+            tick.position.y = Math.sin(angle) * 6.0;
+            tick.rotation.z = angle + Math.PI / 2;
+            tickGroup.add(tick);
+        }
+        reactorGroup.add(tickGroup);
+
+        // 4. Orbital Energy Dust Particles
+        const particleCount = 1000;
+        const particleGeo = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const particleVelocities = [];
+
+        for (let i = 0; i < particleCount; i++) {
+            const radius = 5 + Math.random() * 8;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = (Math.random() - 0.5) * Math.PI;
+
+            positions[i * 3] = radius * Math.cos(theta) * Math.cos(phi);
+            positions[i * 3 + 1] = radius * Math.sin(phi);
+            positions[i * 3 + 2] = radius * Math.sin(theta) * Math.cos(phi);
+
+            particleVelocities.push({
+                radius: radius,
+                theta: theta,
+                speed: (Math.random() * 0.015 + 0.005) * (Math.random() > 0.5 ? 1 : -1)
+            });
+        }
+
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0x00f2fe,
+            size: 0.18,
+            transparent: true,
+            opacity: 0.75,
+            blending: THREE.AdditiveBlending
+        });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        reactorGroup.add(particles);
+
+        // Interactive Mouse Tilt / Parallax
+        let targetRotX = 0;
+        let targetRotY = 0;
+        let isPointerDown = false;
+        let prevMouseX = 0;
+        let prevMouseY = 0;
+
+        container.addEventListener('pointerdown', (e) => {
+            isPointerDown = true;
+            prevMouseX = e.clientX;
+            prevMouseY = e.clientY;
+        });
+
+        window.addEventListener('pointerup', () => { isPointerDown = false; });
+
+        window.addEventListener('pointermove', (e) => {
+            const rect = container.getBoundingClientRect();
+            if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                const normX = (e.clientX - rect.left) / rect.width - 0.5;
+                const normY = (e.clientY - rect.top) / rect.height - 0.5;
+
+                if (!isPointerDown) {
+                    targetRotY = normX * 0.8;
+                    targetRotX = normY * 0.8;
+                } else {
+                    const deltaX = (e.clientX - prevMouseX) * 0.008;
+                    const deltaY = (e.clientY - prevMouseY) * 0.008;
+                    reactorGroup.rotation.y += deltaX;
+                    reactorGroup.rotation.x += deltaY;
+                    prevMouseX = e.clientX;
+                    prevMouseY = e.clientY;
+                }
+            }
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            if (!container) return;
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+
+        // Set State Function
+        window.setJarvisState = function(state) {
+            if (!stateThemes[state]) return;
+            currentState = state;
+
+            const theme = stateThemes[state];
+            coreMat.color.setHex(theme.color);
+            ring1.material.color.setHex(theme.color);
+            tickMat.color.setHex(theme.color);
+            particleMat.color.setHex(theme.color);
+
+            document.getElementById('active-state-tag').textContent = `STATE: ${state.toUpperCase()}`;
+            document.querySelectorAll('.state-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.state === state);
+            });
+        };
+
+        // Hook up State Buttons
+        document.querySelectorAll('.state-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.setJarvisState(btn.dataset.state);
+            });
+        });
+
+        // Animation Loop
+        let clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const elapsed = clock.getElapsedTime();
+            const theme = stateThemes[currentState];
+
+            // Smooth parallax lerp
+            if (!isPointerDown) {
+                reactorGroup.rotation.y += (targetRotY - reactorGroup.rotation.y) * 0.05;
+                reactorGroup.rotation.x += (targetRotX - reactorGroup.rotation.x) * 0.05;
+            }
+
+            // Core rotations
+            coreMesh.rotation.x += theme.coreSpeed;
+            coreMesh.rotation.y += theme.coreSpeed * 1.3;
+
+            // Concentric rings counter-rotation
+            ring1.rotation.z += theme.ringSpeed * 1.5;
+            ring2.rotation.z -= theme.ringSpeed * 1.8;
+            ring3.rotation.z += theme.ringSpeed * 1.2;
+            ring4.rotation.z -= theme.ringSpeed * 0.9;
+            tickGroup.rotation.z += theme.ringSpeed * 0.6;
+
+            // Pulse Core Size
+            const scale = 1 + Math.sin(elapsed * theme.pulse * 3) * 0.08;
+            innerSphere.scale.set(scale, scale, scale);
+
+            // Orbiting particles
+            const posAttr = particleGeo.attributes.position;
+            for (let i = 0; i < particleCount; i++) {
+                const vel = particleVelocities[i];
+                vel.theta += vel.speed * (theme.ringSpeed / 0.008);
+                posAttr.array[i * 3] = vel.radius * Math.cos(vel.theta);
+                posAttr.array[i * 3 + 2] = vel.radius * Math.sin(vel.theta);
+            }
+            posAttr.needsUpdate = true;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+
+    <!-- Directive Simulator & Voice Synthesis Logic -->
+    <script>
+        const terminalFeed = document.getElementById('terminal-feed');
+        const commandForm = document.getElementById('command-form');
+        const commandInput = document.getElementById('command-input');
+        const audioToggleBtn = document.getElementById('audio-toggle-btn');
+        const audioIcon = document.getElementById('audio-icon');
+        const audioText = document.getElementById('audio-text');
+
+        let audioEnabled = true;
+
+        audioToggleBtn.addEventListener('click', () => {
+            audioEnabled = !audioEnabled;
+            if (audioEnabled) {
+                audioIcon.textContent = '🔊';
+                audioText.textContent = 'VOICE: ON';
+                audioToggleBtn.style.color = 'var(--cyan)';
+            } else {
+                audioIcon.textContent = '🔇';
+                audioText.textContent = 'VOICE: MUTED';
+                audioToggleBtn.style.color = '#94a3b8';
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                }
+            }
+        });
+
+        // Web Audio Futuristic Chirp
+        function playChirp(type = 'success') {
+            if (!audioEnabled) return;
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'transmit') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(440, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12);
+                    gain.gain.setValueAtTime(0.12, ctx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.12);
+                } else {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(880, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(1320, ctx.currentTime + 0.18);
+                    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.18);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.18);
+                }
+            } catch (err) {
+                // Ignore audio context constraints
+            }
+        }
+
+        // Web Speech Synthesis (British English Voice)
+        function speakJarvis(phrase) {
+            if (!audioEnabled) return;
+            if (!('speechSynthesis' in window)) return;
+
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(phrase);
+            utterance.rate = 1.05;
+            utterance.pitch = 0.95;
+
+            // Pick British English Voice if available
+            const voices = window.speechSynthesis.getVoices();
+            const britishVoice = voices.find(v => v.lang.includes('en-GB') || v.name.includes('UK') || v.name.includes('British') || v.name.includes('George'));
+            if (britishVoice) {
+                utterance.voice = britishVoice;
+            }
+
+            utterance.onstart = () => {
+                if (window.setJarvisState) window.setJarvisState('speaking');
+            };
+
+            utterance.onend = () => {
+                if (window.setJarvisState) window.setJarvisState('idle');
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Add Log Line to Terminal
+        function logLine(route, text, isSpeech = false) {
+            const time = new Date().toLocaleTimeString();
+            const line = document.createElement('div');
+            line.className = 'terminal-line';
+
+            if (isSpeech) {
+                line.innerHTML = `<span class="term-ts">[${time}]</span> <span class="term-speech">"${text}"</span>`;
+            } else {
+                line.innerHTML = `<span class="term-ts">[${time}]</span> <span class="term-route">[${route}]</span> <span>${text}</span>`;
+            }
+
+            terminalFeed.appendChild(line);
+            terminalFeed.scrollTop = terminalFeed.scrollHeight;
+        }
+
+        // Directives Database & Responses
+        const directiveResponses = {
+            spotify: {
+                match: (q) => q.toLowerCase().includes('spotify') || q.toLowerCase().includes('believer') || q.toLowerCase().includes('play') || q.toLowerCase().includes('song'),
+                route: "REFLEX_ROUTER <15ms",
+                action: "Spotify CoreAudio Protocol -> URI dispatched -> Session verified",
+                speech: "Right away, sir. Spotify playback initiated and master CoreAudio session verified."
+            },
+            volume: {
+                match: (q) => q.toLowerCase().includes('volume') || q.toLowerCase().includes('mute') || q.toLowerCase().includes('percent'),
+                route: "WINDOWS_AGENT pycaw",
+                action: "Master volume calibrated via Windows CoreAudio IAudioEndpointVolume",
+                speech: "Calibrating master audio to designated levels, sir."
+            },
+            whatsapp: {
+                match: (q) => q.toLowerCase().includes('whatsapp') || q.toLowerCase().includes('ahmed') || q.toLowerCase().includes('send'),
+                route: "FAST-PATH DESKTOP DISPATCH",
+                action: "WhatsApp desktop foregrounded -> Contact lookup -> Unicode payload sent",
+                speech: "Composing WhatsApp transmission to Ahmed now, sir."
+            },
+            find: {
+                match: (q) => q.toLowerCase().includes('find') || q.toLowerCase().includes('download') || q.toLowerCase().includes('report') || q.toLowerCase().includes('folder'),
+                route: "STORAGE_ENGINE RecencyRank",
+                action: "Scanning KnownFolders (Downloads) -> Filter: .pdf/.docx -> Ranked by mtime",
+                speech: "Scanning storage directories. Project report located in Downloads and prioritized by recency."
+            },
+            tamil: {
+                match: (q) => q.toLowerCase().includes('pannu') || q.toLowerCase().includes('vaada') || q.toLowerCase().includes('solradha'),
+                route: "NATURAL TAMIL PARSER",
+                action: "Conversational intent matched -> Zero-latency reflex execute",
+                speech: "Kandippa sir, launching Spotify and queuing your favorite playlist."
+            },
+            diagnostics: {
+                match: (q) => q.toLowerCase().includes('diagnostic') || q.toLowerCase().includes('status') || q.toLowerCase().includes('telemetry'),
+                route: "FASTAPI AI_CORE 8000",
+                action: "Telemetry nominal: Host Windows 11, 8 Cores, RAM 16GB, Reflex <15ms",
+                speech: "All systems nominal, sir. Core temperature stable at thirty-two degrees and reflex router active."
+            },
+            lock: {
+                match: (q) => q.toLowerCase().includes('lock') || q.toLowerCase().includes('pc') || q.toLowerCase().includes('workstation'),
+                route: "WINDOWS_AGENT LockWorkstation",
+                action: "user32.dll LockWorkStation invoked -> Workstation secured",
+                speech: "Securing workstation, sir. Windows lock sequence engaged."
+            }
+        };
+
+        function executeDirective(cmdText) {
+            if (!cmdText.trim()) return;
+
+            playChirp('transmit');
+
+            if (window.setJarvisState) window.setJarvisState('understanding');
+            logLine('INPUT', `Directive received: "${cmdText}"`);
+
+            setTimeout(() => {
+                if (window.setJarvisState) window.setJarvisState('executing');
+
+                let matched = null;
+                for (const key of Object.keys(directiveResponses)) {
+                    if (directiveResponses[key].match(cmdText)) {
+                        matched = directiveResponses[key];
+                        break;
+                    }
+                }
+
+                if (!matched) {
+                    matched = {
+                        route: "GEMINI_2.5_FLASH",
+                        action: "Open-domain intent resolved via Google GenAI SDK",
+                        speech: `Processing command: ${cmdText}. All subsystems responding 200 OK.`
+                    };
+                }
+
+                logLine(matched.route, matched.action);
+                logLine('J.A.R.V.I.S.', matched.speech, true);
+
+                playChirp('success');
+                speakJarvis(matched.speech);
+            }, 600);
+        }
+
+        // Form Submit
+        commandForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = commandInput.value.trim();
+            if (text) {
+                executeDirective(text);
+                commandInput.value = '';
+            }
+        });
+
+        // Preset Chips
+        document.querySelectorAll('.directive-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const cmd = chip.dataset.cmd;
+                executeDirective(cmd);
+            });
+        });
+    </script>
+</body>
+</html>

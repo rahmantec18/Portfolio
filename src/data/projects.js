@@ -2,6 +2,19 @@ const base = import.meta.env.BASE_URL;
 
 export const webProjects = [
   {
+    id: "jarvis",
+    title: "J.A.R.V.I.S. Personal AI Ecosystem",
+    category: "Autonomous AI • Voice Assistant • Windows Desktop Agency",
+    url: `${base}projects/jarvis/`,
+    githubUrl: "https://github.com/rahmantec18/JARVIS",
+    description: "Inspired by Iron Man, J.A.R.V.I.S. is an autonomous personal AI ecosystem built specifically for Windows. Features an interactive Three.js 3D WebGL holographic Arc Reactor core, real-time voice interaction with British speech synthesis, a <15ms zero-latency reflex router, compound multi-step task execution, Google Gemini 2.5 Flash intelligence, and deep local desktop agency controlling Spotify, WhatsApp, pycaw master audio, and file automation.",
+    tags: ["React 19 & Three.js", "Python 3.13 & FastAPI", "Google Gemini 2.5", "Windows Desktop Agency", "Voice Synthesis"],
+    badge: "Flagship Desktop AI",
+    accentColor: "#00f2fe",
+    accentGradient: "from-cyan-500/30 via-blue-600/20 to-teal-400/30",
+    previewImage: `${base}images/jarvis-preview.png`
+  },
+  {
     id: "jjk-cursed-energy",
     title: "Jujutsu Kaisen Cursed Energy",
     category: "Exclusive 3D WebGL & AI Computer Vision Experience",

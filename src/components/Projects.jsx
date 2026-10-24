@@ -11,6 +11,16 @@ gsap.registerPlugin(ScrollTrigger);
 // Custom adaptive lighting signatures for each project
 const projectThemes = [
   {
+    id: "jarvis",
+    name: "J.A.R.V.I.S. AI",
+    primaryGlow: "rgba(0, 242, 254, 0.22)",
+    secondaryGlow: "rgba(14, 165, 233, 0.16)",
+    accentColor: "#00f2fe",
+    ringColor: "border-cyan-400/50",
+    glowFilter: "shadow-[0_0_40px_rgba(0,242,254,0.3)]",
+    ambientGradient: "radial-gradient(circle at 65% 35%, rgba(0,242,254,0.22) 0%, rgba(59,130,246,0.12) 40%, transparent 70%)"
+  },
+  {
     id: "jjk-cursed-energy",
     name: "JJK Cursed Energy",
     primaryGlow: "rgba(187, 0, 255, 0.18)",
@@ -96,7 +106,8 @@ export default function Projects() {
   }, []);
 
 
-  const activeTheme = projectThemes[activeProjectIdx] || projectThemes[0];
+  const activeProject = webProjects[activeProjectIdx] || webProjects[0];
+  const activeTheme = projectThemes.find((t) => t.id === activeProject?.id) || projectThemes[0];
 
   return (
     <section
@@ -152,7 +163,7 @@ export default function Projects() {
           </div>
 
           <p className="text-xs xs:text-sm sm:text-base md:text-lg font-ui text-slate-300 leading-relaxed px-2">
-            Explorations in high-performance web development, digital storefronts, and 3D healthcare interfaces.
+            Explorations in autonomous desktop AI ecosystems, high-performance web systems, 3D WebGL experiences, and healthcare platforms.
           </p>
         </div>
 
@@ -160,7 +171,7 @@ export default function Projects() {
         {/* Cinematic Projects Showcase: Large 3D Browser Environments */}
         <div className="space-y-14 sm:space-y-20 perspective-2000">
           {webProjects.map((project, idx) => {
-            const theme = projectThemes[idx] || projectThemes[0];
+            const theme = projectThemes.find((t) => t.id === project.id) || projectThemes[idx] || projectThemes[0];
             const isActive = activeProjectIdx === idx;
 
             return (
@@ -212,8 +223,11 @@ export default function Projects() {
                         borderWidth: "1px"
                       }}
                     >
-                      {project.id === "jjk-cursed-energy" && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-ping" />
+                      {(project.id === "jjk-cursed-energy" || project.id === "jarvis") && (
+                        <span
+                          className="w-1.5 h-1.5 rounded-full animate-ping"
+                          style={{ backgroundColor: theme.accentColor }}
+                        />
                       )}
                       <span>{project.badge}</span>
                     </div>
@@ -272,13 +286,37 @@ export default function Projects() {
                           href={project.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          cursorText={project.id === "jjk-cursed-energy" ? "LAUNCH" : "EXPLORE"}
+                          cursorText={
+                            project.id === "jarvis"
+                              ? "ARC REACTOR"
+                              : project.id === "jjk-cursed-energy"
+                              ? "LAUNCH"
+                              : "EXPLORE"
+                          }
                           icon={ArrowUpRight}
                           variant="primary"
                           className="w-full xs:w-auto"
                         >
-                          {project.id === "jjk-cursed-energy" ? "LAUNCH 3D EXPERIENCE ⚡" : "EXPLORE PROJECT →"}
+                          {project.id === "jarvis"
+                            ? "LAUNCH JARVIS AI ⚡"
+                            : project.id === "jjk-cursed-energy"
+                            ? "LAUNCH 3D EXPERIENCE ⚡"
+                            : "EXPLORE PROJECT →"}
                         </ShaderButton>
+
+                        {project.githubUrl && (
+                          <ShaderButton
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            cursorText="CODE"
+                            icon={Code2}
+                            variant="secondary"
+                            className="w-full xs:w-auto"
+                          >
+                            SOURCE CODE
+                          </ShaderButton>
+                        )}
                       </div>
                     </div>
                   </div>
